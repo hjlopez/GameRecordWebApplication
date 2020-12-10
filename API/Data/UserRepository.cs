@@ -17,6 +17,11 @@ namespace API.Data
             this.mapper = mapper;
         }
 
+        public void DeleteUser(AppUser appUser)
+        {
+            context.Users.Remove(appUser);
+        }
+
         public Task<AppUser> GetUserByIdAsync(int id)
         {
             throw new System.NotImplementedException();
@@ -29,7 +34,9 @@ namespace API.Data
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await context.Users.Include(p => p.Photos).ToListAsync();
+            return await context.Users
+                .Include(p => p.Photos)
+                .ToListAsync();
         }
 
         public void Update(AppUser user)
