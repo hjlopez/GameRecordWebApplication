@@ -1,3 +1,13 @@
 .nav-item{
     cursor: pointer;
 }
+
+.dropdown{
+    cursor: pointer;
+}
+
+.userPic{
+    max-height: 35px;
+    max-width: 35px;
+    border-radius: 50%;
+}

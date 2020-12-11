@@ -5,7 +5,10 @@ namespace API.DTOs
     public class RegisterDto
     {
         [Required] public string Username { get; set; }
-        [Required] public string GamerTag { get; set; }
+
+        [Required] 
+        [StringLength(20)]
+        public string GamerTag { get; set; }
         [Required] public bool PlayMH { get; set; }
         [Required] public bool PlayDota { get; set; }
 

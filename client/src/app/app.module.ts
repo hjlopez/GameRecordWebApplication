@@ -12,7 +12,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import { LoggedInComponent } from './home/logged-in/logged-in.component';
 import { LoggedOutComponent } from './home/logged-out/logged-out.component';
 import { ToastrModule } from 'ngx-toastr';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { NotFoundComponent } from './dummy-components/not-found/not-found.component';
 import { NavLoggedComponent } from './nav-logged/nav-logged.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
@@ -20,7 +20,10 @@ import { TextInputsComponent } from './_forms/text-inputs/text-inputs.component'
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RegisterComponent } from './account/register/register.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-
+import { BilliardsComponent } from './games/billiards/billiards.component';
+import { DummyMainComponent } from './dummy-components/dummy-main/dummy-main.component';
+import { UrlSerializer } from '@angular/router';
+import { LowerCaseUrlSerializer } from './_serializer/LowerCaseUrlSerializer';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     NavLoggedComponent,
     TextInputsComponent,
     RegisterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    BilliardsComponent,
+    DummyMainComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,8 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: UrlSerializer, useClass: LowerCaseUrlSerializer}
   ],
   bootstrap: [AppComponent]
 })

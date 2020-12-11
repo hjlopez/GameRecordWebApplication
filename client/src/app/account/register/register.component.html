@@ -1,1 +1,57 @@
-<p>register works!</p>
+<h1 style="text-align: center;">Register Here!</h1>
+<div class="register-container">
+    
+    <form [formGroup]="registerForm" autocomplete="off">
+        <input class="form-control" formControlName="username" name="username" placeholder="Username">
+        <ng-container *ngIf="registerForm.controls['username'].invalid && (registerForm.controls['username'].dirty 
+                || registerForm.controls['username'].touched)" class="alert" >
+                <label style="color: red;">Please enter a username!</label>
+        </ng-container>
+       
+
+        <input class="form-control" formControlName="gamerTag" name="gamerTag" placeholder="Gamer Tag">
+        <input type="checkbox" (click)="sameAsUsername($event)"> Same as username<br>
+        <ng-container *ngIf="registerForm.controls['gamerTag'].invalid && (registerForm.controls['gamerTag'].dirty 
+                || registerForm.controls['gamerTag'].touched)" class="alert" >
+                <label style="color: red;" *ngIf="registerForm.controls['gamerTag'].errors?.required">Please enter a gamer tag!</label>
+                <label style="color: red;" *ngIf="registerForm.controls['gamerTag'].errors?.maxlength">Maximum length is 15 characters!</label>
+        </ng-container>
+
+        <div class="form-group mt-2" >
+            <label class="control-label" style="margin-right: 10px; font-weight: bold;">Do you play Monster Hunter World?</label><br>
+            <label class="radio-inline">
+                <input type="radio" value="no" formControlName="playMH"> No
+            </label>
+            <label class="radio-inline">
+                <input type="radio" value="yes" formControlName="playMH" class="ml-3"> Yes
+            </label>
+        </div>
+
+        <div class="form-group mt-2" >
+            <label class="control-label" style="margin-right: 10px; font-weight: bold;">Do you play DOTA 2?</label><br>
+            <label class="radio-inline">
+                <input type="radio" value="no" formControlName="playDota"> No
+            </label>
+            <label class="radio-inline">
+                <input type="radio" value="yes" formControlName="playDota" class="ml-3"> Yes
+            </label>
+        </div>
+
+        <input class="form-control" formControlName="password" name="password" type="password" placeholder="Password">
+        <ng-container *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].dirty 
+                || registerForm.controls['password'].touched)" class="alert" >
+                <label style="color: red;">Minimum length is 8 characters!</label>
+        </ng-container>
+        
+        <input class="form-control" formControlName="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password">
+        <ng-container *ngIf="registerForm.controls['confirmPassword'].invalid && (registerForm.controls['confirmPassword'].dirty 
+                || registerForm.controls['confirmPassword'].touched)" class="alert" >
+                <label style="color: red;">Passwords do not match!</label>
+        </ng-container>
+        <br>
+
+        <button class="btn btn-success my-2 my-sm-0"  type="submit" (click)="register()">Register</button>
+    </form>
+    
+    
+</div>

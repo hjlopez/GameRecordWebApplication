@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
       map((user: User) => {
         if (Object.keys(user).length !== 0) { return true; }
         this.toastr.error('Unathorized!');
-        console.log('bawal');
         return false;
       })
     );
