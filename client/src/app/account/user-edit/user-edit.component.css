@@ -1,0 +1,32 @@
+.register-container{
+    max-width: 45%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-pic{
+    max-height: 120px;
+    max-width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    transform: scale(1.0, 1.0);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+
+}
+
+.user-pic:hover {
+    transform: scale(1.1, 1.1);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+    opacity: 0.7;
+}
+
+form {
+    margin-top: 25px;
+}
+
+.form-control, .form-group{
+    margin-bottom: 5px;
+}

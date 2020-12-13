@@ -28,6 +28,7 @@ export class AccountService {
         const user: User = response;
         if (user)
         {
+          // console.log(user);
           this.setLoginRegister(user);
 
           // const user1: User = JSON.parse(localStorage.getItem('user') || '{}');
@@ -66,6 +67,7 @@ export class AccountService {
   {
     // commented out
     user.roles = [];
+    // console.log(user);
     const roles = this.getDecodedToken(user.token).role; // the role is not an array if there is only 1 role
 
     // check if return is an array

@@ -19,13 +19,7 @@ export class RegisterComponent implements OnInit {
     playMH: new FormControl('no'),
     playDota: new FormControl('no'),
     password: new FormControl(),
-    confirmPassword: new FormControl(),
-    // username: new FormControl('', Validators.required),
-    // gamerTag: new FormControl('', Validators.required),
-    // playMH: new FormControl('no', Validators.required),
-    // playDota: new FormControl('no', Validators.required),
-    // password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(50)]),
-    // confirmPassword: new FormControl('', Validators.required),
+    confirmPassword: new FormControl()
   });
 
   constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder,
@@ -67,7 +61,6 @@ export class RegisterComponent implements OnInit {
 
   register(): void
   {
-    console.log(this.registerForm.controls.gamerTag.errors);
     // convert to boolean
     this.registerForm.controls.playMH.setValue(this.registerForm.get('playMH')?.value === 'no' ? false : true);
     this.registerForm.controls.playDota.setValue(this.registerForm.get('playDota')?.value === 'no' ? false : true);

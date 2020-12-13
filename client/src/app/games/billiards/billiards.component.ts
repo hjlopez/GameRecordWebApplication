@@ -10,7 +10,7 @@ import { AccountService } from 'src/app/_services/account.service';
 export class BilliardsComponent implements OnInit {
   currentUser!: User;
 
-  constructor(private accountService: AccountService) { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe(users => this.currentUser = users);

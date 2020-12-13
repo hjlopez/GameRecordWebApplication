@@ -20,6 +20,7 @@ export class NavComponent implements OnInit {
   currentUser!: User;
   @ViewChild('loginForm') public loginForm!: NgForm;
   @Input() out: LoggedOutComponent = new LoggedOutComponent();
+  isAdmin = false;
   // loginForm!: FormGroup;
 
   constructor(public accountService: AccountService, public router: Router, private toastr: ToastrService) {
@@ -49,6 +50,15 @@ export class NavComponent implements OnInit {
     this.accountService.login(this.loginModel).subscribe(response => {
       this.router.navigateByUrl('user/billiards');
       this.loginForm.resetForm();
+      this.checkRole();
+    });
+  }
+
+  checkRole(): void
+  {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+      if (user.roles.length > 1) {this.isAdmin = true; }
+      else { this.isAdmin = false; }
     });
   }
 

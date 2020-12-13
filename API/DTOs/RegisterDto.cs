@@ -11,6 +11,7 @@ namespace API.DTOs
         public string GamerTag { get; set; }
         [Required] public bool PlayMH { get; set; }
         [Required] public bool PlayDota { get; set; }
+        [Required] public bool JoinBilliards { get; set; }
 
         [EmailAddress]
         public string Email { get; set; }

@@ -36,6 +36,9 @@ namespace API.Controllers
 
             user.UserName = registerDto.Username.ToLower();
 
+            // set email to sample@email.com
+            user.Email = "sample@email.com";
+
             // create user and save to db
             var result = await userManager.CreateAsync(user, registerDto.Password);
 
@@ -51,7 +54,8 @@ namespace API.Controllers
                 Token = await tokenService.CreateToken(user),
                 GamerTag = user.GamerTag,
                 PlayMH = user.PlayMH,
-                PlayDota = user.PlayDota
+                PlayDota = user.PlayDota,
+                JoinBilliards = user.JoinBilliards
             };
         }
 
@@ -66,19 +70,26 @@ namespace API.Controllers
             var user = await userManager.Users.Include(p => p.Photos).SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username!");
+            
+            // set email to sample@email.com if empty
+            if (user.Email == "" || user.Email == null) user.Email = "sample@email.com";
 
             // sign in the user
             var result = await signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded) return Unauthorized();
 
+            // var userDto = new UserDto();
+
+            
             return new UserDto
             {
                 Username = user.UserName,
                 Token = await tokenService.CreateToken(user),
                 GamerTag = user.GamerTag,
                 PlayMH = user.PlayMH,
-                PlayDota = user.PlayDota
+                PlayDota = user.PlayDota,
+                JoinBilliards = user.JoinBilliards
             };
         }
 

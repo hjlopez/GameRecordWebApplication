@@ -24,6 +24,7 @@ import { BilliardsComponent } from './games/billiards/billiards.component';
 import { DummyMainComponent } from './dummy-components/dummy-main/dummy-main.component';
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './_serializer/LowerCaseUrlSerializer';
+import { UserEditComponent } from './account/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LowerCaseUrlSerializer } from './_serializer/LowerCaseUrlSerializer';
     RegisterComponent,
     SideMenuComponent,
     BilliardsComponent,
-    DummyMainComponent
+    DummyMainComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

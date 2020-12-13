@@ -5,5 +5,6 @@ export interface User {
     gamerTag: string;
     playMH: boolean;
     playDota: boolean;
+    joinBilliards: boolean;
     roles: string[];
 }

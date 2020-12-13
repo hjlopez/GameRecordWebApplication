@@ -13,6 +13,8 @@ namespace API.Helpers
             // for member -> what property are we going to affect
             // ForMember(destination, map from(source))
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<UserUpdateDto, AppUser>();
+            CreateMap<AppUser, UserDto>();
         }
 
         

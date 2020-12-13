@@ -11,6 +11,7 @@ namespace API.Entities
         public string GamerTag { get; set; }
         public bool PlayMH { get; set; } = false;
         public bool PlayDota { get; set; } = false;
+        public bool JoinBilliards { get; set; } = false;
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
         public ICollection<Photo> Photos { get; set; }
