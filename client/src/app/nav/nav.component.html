@@ -17,9 +17,14 @@
         <a class="nav-link" routerLink='register' routerLinkActive="active">Register</a>
       </li>
 
+      <li class="nav-item" *ngIf="!(accountService.currentUser$ | async)">
+        <a class="nav-link" routerLink='forgot' routerLinkActive="active">Forgot Password</a>
+      </li>
+
       <li class="nav-item" *ngIf="(accountService.currentUser$ | async) && isAdmin">
         <a class="nav-link" routerLink='#' routerLinkActive="active">User Management</a>
       </li>
+
     </ul>
 
     
@@ -43,6 +48,10 @@
         <a class="dropdown-toggle text-light" dropdownToggle> Welcome {{user.gamerTag || user.username | titlecase}}</a>
             <div class="dropdown-menu " *dropdownMenu>
                 <a class="dropdown-item" routerLink='/user/edit'>Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" routerLink='/user/photo-edit'>Change Photo</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" routerLink='/user/changepassword'>Change Password</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" (click)="logout()">Logout</a>   
             </div>

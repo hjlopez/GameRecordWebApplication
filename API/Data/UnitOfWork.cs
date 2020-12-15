@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {

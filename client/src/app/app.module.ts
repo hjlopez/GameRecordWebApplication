@@ -25,6 +25,10 @@ import { DummyMainComponent } from './dummy-components/dummy-main/dummy-main.com
 import { UrlSerializer } from '@angular/router';
 import { LowerCaseUrlSerializer } from './_serializer/LowerCaseUrlSerializer';
 import { UserEditComponent } from './account/user-edit/user-edit.component';
+import { ChangePasswordComponent } from './account/change-password/change-password.component';
+import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
+import { PhotoEditComponent } from './account/photo-edit/photo-edit.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,10 @@ import { UserEditComponent } from './account/user-edit/user-edit.component';
     SideMenuComponent,
     BilliardsComponent,
     DummyMainComponent,
-    UserEditComponent
+    UserEditComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
+    PhotoEditComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,7 @@ import { UserEditComponent } from './account/user-edit/user-edit.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    FileUploadModule,
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({

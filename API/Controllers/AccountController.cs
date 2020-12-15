@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -79,9 +80,11 @@ namespace API.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
-            // var userDto = new UserDto();
+            // if there is no photo
+            var url = "";
+            if (user.Photos.Count == 0) url = "";
+            else url = user.Photos.FirstOrDefault().Url;
 
-            
             return new UserDto
             {
                 Username = user.UserName,
@@ -89,7 +92,8 @@ namespace API.Controllers
                 GamerTag = user.GamerTag,
                 PlayMH = user.PlayMH,
                 PlayDota = user.PlayDota,
-                JoinBilliards = user.JoinBilliards
+                JoinBilliards = user.JoinBilliards,
+                PhotoUrl = url
             };
         }
 

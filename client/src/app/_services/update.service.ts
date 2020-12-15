@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ChangePassword } from '../_models/ChangePassword';
 import { User } from '../_models/User';
 import { AccountService } from './account.service';
 
@@ -16,17 +17,24 @@ export class UpdateService {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
     });
-   }
+  }
 
-   updateMember(user: User): Observable<any> {
-    // console.log(user);
-    return this.http.put(environment.apiUrl + 'users', user).pipe(
-      map((response: any) => {
-        // console.log('update service');
-        // console.log(response);
-        return response;
-        this.accountService.setCurrentUser(response);
-      })
-    );
+  updateMember(user: User): Observable<any> {
+  return this.http.put(environment.apiUrl + 'users', user).pipe(
+    map((response: any) => {
+      return response;
+    })
+  );
+
+  }
+
+  ChangePassword(changePassword: ChangePassword): Observable<any>
+  {
+    return this.http.post(environment.apiUrl + 'users/change', changePassword);
+  }
+
+  deleteUserPhoto(): Observable<any>
+  {
+    return this.http.delete(environment.apiUrl + 'users/delete-photo', {});
   }
 }

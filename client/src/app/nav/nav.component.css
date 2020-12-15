@@ -11,3 +11,7 @@
     max-width: 35px;
     border-radius: 50%;
 }
+
+.dropdown-item:hover{
+    background-color: grey;
+}

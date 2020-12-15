@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.Entities;
 using API.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -18,6 +22,11 @@ namespace API.Data
             this.mapper = mapper;
         }
 
+        public void DeletePhoto(Photo photo)
+        {
+            context.Photo.Remove(photo);
+        }
+
         public void DeleteUser(AppUser appUser)
         {
             context.Users.Remove(appUser);
@@ -28,21 +37,35 @@ namespace API.Data
             return await context.Users.FindAsync(id);
         }
 
+        public async Task<AppUser> GetUserByUsernameAndTagAsync(ForgotPasswordDto forgotPasswordDto)
+        {
+            return await context.Users.AsQueryable()
+                    .Where(a => a.GamerTag == forgotPasswordDto.GamerTag && a.UserName == forgotPasswordDto.Username)
+                    .SingleOrDefaultAsync();
+        }
+
         public async Task<AppUser> GetUserByUsernameAsync(string username)
         {
-            return await context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            return await context.Users.Include(p => p.Photos).SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await context.Users
-                .Include(p => p.Photos)
-                .ToListAsync();
+            var user = await context.Users
+                .Include(p => p.Photos).ToListAsync();
+
+            return user;
+            
         }
 
         public void Update(AppUser user)
         {
             context.Entry(user).State = EntityState.Modified;
+        }
+
+        public async Task UpdatePassword(AppUser appUser, IUserPasswordStore<AppUser> passwordStore)
+        {
+            await passwordStore.UpdateAsync(appUser, cancellationToken: default);
         }
     }
 }

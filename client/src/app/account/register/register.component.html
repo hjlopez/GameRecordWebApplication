@@ -50,7 +50,7 @@
         </ng-container>
         <br>
 
-        <button class="btn btn-success my-2 my-sm-0"  type="submit" (click)="register()">Register</button>
+        <button class="btn btn-success my-2 my-sm-0" [disabled]="!registerForm.valid" type="submit" (click)="register()">Register</button>
     </form>
     
     

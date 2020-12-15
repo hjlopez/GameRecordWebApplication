@@ -32,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               else if (typeof(error.error) === 'object') { // check if error is an object
                 this.toastr.error(error.statusText === 'OK' ? 'Bad Request' : error.statusText, error.status);
-                console.log(error);
+                // console.log(error);
               }
               else {
                 this.toastr.error(error.error, error.status);

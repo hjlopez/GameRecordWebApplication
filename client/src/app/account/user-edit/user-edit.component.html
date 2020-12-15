@@ -1,3 +1,5 @@
+
+
 <div class="register-container">
     <img class="user-pic"  src="{{currentUser.photoUrl || './assets/user.png'}}">
     <form [formGroup]="updateInfoForm" autocomplete="off">
@@ -15,7 +17,7 @@
                 <label style="color: red;" *ngIf="updateInfoForm.controls['gamerTag'].errors?.maxlength">Maximum length is 15 characters!</label>
         </ng-container>
 
-        <input class="form-control" formControlName="email" name="email" placeholder="Email (optional)">
+        <input class="form-control" formControlName="email" name="email" placeholder="Email (optional - use gmail)">
         <ng-container *ngIf="updateInfoForm.controls['email'].invalid && (updateInfoForm.controls['email'].dirty 
                 || updateInfoForm.controls['email'].touched)" class="alert" >
                 <label style="color: red;">Please enter a valid email!</label>

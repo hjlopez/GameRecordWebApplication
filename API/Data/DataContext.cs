@@ -12,6 +12,8 @@ namespace API.Data
         {
         }
 
+        public DbSet<Photo> Photo { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

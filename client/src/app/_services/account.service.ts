@@ -65,8 +65,8 @@ export class AccountService {
 
   setCurrentUser(user: User): void
   {
-    // commented out
     user.roles = [];
+
     // console.log(user);
     const roles = this.getDecodedToken(user.token).role; // the role is not an array if there is only 1 role
 
