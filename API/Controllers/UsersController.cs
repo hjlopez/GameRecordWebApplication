@@ -47,7 +47,8 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult<UserDto>> UpdateUser(UserUpdateDto userUpdateDto)
         {
-            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var userById = await unitOfWork.UserRepository.GetUserByIdAsync(userUpdateDto.Id);
+            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(userById.UserName);
 
             mapper.Map(userUpdateDto, user);
             unitOfWork.UserRepository.Update(user);
@@ -55,6 +56,7 @@ namespace API.Controllers
             {
                 return new UserDto
                 {
+                    Id = user.Id,
                     Username = user.UserName,
                     Token = await tokenService.CreateToken(user),
                     GamerTag = user.GamerTag,

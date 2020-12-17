@@ -1,0 +1,25 @@
+<div class="row">
+    <table class="table scrollbar scrollbar-primary">
+        <tr>
+            <th class="sticky" style="color: whitesmoke;">Options</th>
+            <th class="not-sticky">Username</th>
+            <th class="not-sticky">Gamer Tag</th>
+            <th class="not-sticky">Email</th>
+            <th class="not-sticky">Monster Hunter</th>
+            <th class="not-sticky">DOTA 2</th>
+            <th class="not-sticky">Include in Billiards Tournament</th>
+        </tr>
+
+        <tr *ngFor="let user of userList">
+            <td class="sticky" >
+                <span class="fa fa-edit mr-3" (click)="openEditModal(user)"></span>
+                <span class="fa fa-trash" (click)="openDeleteModal(user)"></span></td>
+            <td>{{user?.username}}</td>
+            <td>{{user?.gamerTag}}</td>
+            <td>{{user?.email === 'sample@gmail.com' ? '' : user?.email}}</td>
+            <td>{{user?.playMH}}</td>
+            <td>{{user?.playDota}}</td>
+            <td>{{user?.joinBilliards}}</td>
+        </tr>
+    </table>
+</div>

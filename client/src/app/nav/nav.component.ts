@@ -29,6 +29,9 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.currentUser = user;
+
+      if (user.roles.length > 1) {this.isAdmin = true; }
+      else { this.isAdmin = false; }
     });
   }
 
@@ -50,7 +53,7 @@ export class NavComponent implements OnInit {
     this.accountService.login(this.loginModel).subscribe(response => {
       this.router.navigateByUrl('user/billiards');
       this.loginForm.resetForm();
-      this.checkRole();
+      this.ngOnInit();
     });
   }
 

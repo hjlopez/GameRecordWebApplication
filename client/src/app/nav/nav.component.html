@@ -3,10 +3,25 @@
   <a class="navbar-brand" routerLink='user/billiards' *ngIf="accountService.currentUser$ | async">Game Record Application</a>
   <div class="navbar-collapse" id="navbarCollapse" [ngClass]="showMenu ? 'expand' : 'collapse'">
     <ul class="navbar-nav mr-auto">
-        
-      <li class="nav-item">
-        <a class="nav-link" routerLink='user/billiards' *ngIf="accountService.currentUser$ | async" routerLinkActive="active">Games </a>
-        <a class="nav-link" routerLink='billiards' *ngIf="!(accountService.currentUser$ | async)" routerLinkActive="active">Games </a>
+      <li class="nav-item dropdown" dropdown>
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"  dropdownToggle>
+          Games
+        </a>
+        <div class="dropdown-menu" *dropdownMenu >
+          <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" 
+            routerLink='billiards' routerLinkActive="active">Billiards</a>
+          <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" 
+            routerLinkActive="active">Monster Hunter</a>
+          <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" 
+            routerLinkActive="active">DOTA 2</a>
+
+          <a class="dropdown-item" *ngIf="accountService.currentUser$ | async"
+            routerLink='user/billiards' routerLinkActive="active">Billiards</a>
+          <a class="dropdown-item" *ngIf="accountService.currentUser$ | async"
+            routerLinkActive="active">Monster Hunter</a>
+          <a class="dropdown-item" *ngIf="accountService.currentUser$ | async"
+            routerLinkActive="active">DOTA 2</a>
+        </div>
       </li>
 
       <li class="nav-item" *ngIf="accountService.currentUser$ | async">
@@ -22,7 +37,7 @@
       </li>
 
       <li class="nav-item" *ngIf="(accountService.currentUser$ | async) && isAdmin">
-        <a class="nav-link" routerLink='#' routerLinkActive="active">User Management</a>
+        <a class="nav-link" routerLink='user/user-management' routerLinkActive="active">User Management</a>
       </li>
 
     </ul>
@@ -46,15 +61,15 @@
       <div class="dropdown" dropdown *ngIf="(accountService.currentUser$ | async) as user">
         <img class="userPic" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username || user.gamerTag}}">
         <a class="dropdown-toggle text-light" dropdownToggle> Welcome {{user.gamerTag || user.username | titlecase}}</a>
-            <div class="dropdown-menu " *dropdownMenu>
-                <a class="dropdown-item" routerLink='/user/edit'>Edit Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" routerLink='/user/photo-edit'>Change Photo</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" routerLink='/user/changepassword'>Change Password</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="logout()">Logout</a>   
-            </div>
+        <div class="dropdown-menu " *dropdownMenu>
+            <a class="dropdown-item" routerLink='/user/edit'>Edit Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink='/user/photo-edit'>Change Photo</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink='/user/changepassword'>Change Password</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()">Logout</a>   
+        </div>
       </div>
 
       

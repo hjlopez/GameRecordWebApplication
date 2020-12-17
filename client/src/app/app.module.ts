@@ -29,6 +29,9 @@ import { ChangePasswordComponent } from './account/change-password/change-passwo
 import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
 import { PhotoEditComponent } from './account/photo-edit/photo-edit.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { UserManagementComponent } from './account/user-management/user-management.component';
+import { DeleteUserModalComponent } from './account/delete-user-modal/delete-user-modal.component';
+import { UpdateUserModalComponent } from './account/update-user-modal/update-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { FileUploadModule } from 'ng2-file-upload';
     UserEditComponent,
     ChangePasswordComponent,
     ForgotPasswordComponent,
-    PhotoEditComponent
+    PhotoEditComponent,
+    UserManagementComponent,
+    DeleteUserModalComponent,
+    UpdateUserModalComponent
   ],
   imports: [
     BrowserModule,

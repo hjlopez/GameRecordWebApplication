@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { User } from 'src/app/_models/User';
@@ -16,6 +15,7 @@ export class UserEditComponent implements OnInit {
   user!: User;
   currentUser!: User;
   updateInfoForm = new FormGroup({
+    id: new FormControl(),
     username: new FormControl(),
     gamerTag: new FormControl(),
     email: new FormControl(),
@@ -25,7 +25,7 @@ export class UserEditComponent implements OnInit {
   });
 
   constructor(public accountService: AccountService, private fb: FormBuilder, private toastr: ToastrService,
-              private updateService: UpdateService, private router: Router) { }
+              private updateService: UpdateService) { }
 
   ngOnInit(): void {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
@@ -38,6 +38,7 @@ export class UserEditComponent implements OnInit {
   createForm(): void
   {
     this.updateInfoForm = this.fb.group({
+      id: [this.currentUser.id],
       username: ['', Validators.required ],
       gamerTag: ['', [Validators.required, Validators.maxLength(20) ] ],
       email: ['', Validators.email],

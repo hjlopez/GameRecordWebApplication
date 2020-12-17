@@ -51,6 +51,7 @@ namespace API.Controllers
 
             return new UserDto
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Token = await tokenService.CreateToken(user),
                 GamerTag = user.GamerTag,
@@ -87,6 +88,7 @@ namespace API.Controllers
 
             return new UserDto
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Token = await tokenService.CreateToken(user),
                 GamerTag = user.GamerTag,

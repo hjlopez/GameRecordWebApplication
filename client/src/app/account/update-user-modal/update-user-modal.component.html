@@ -1,10 +1,12 @@
-
-
-<div class="register-container">
-    <img class="user-pic"  src="{{currentUser.photoUrl || './assets/user.png'}}">
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Update User {{user.username}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
     <form [formGroup]="updateInfoForm" autocomplete="off">
         <input class="form-control" formControlName="id" name="id" hidden>
-
         <input class="form-control" formControlName="username" name="username" placeholder="Username">
         <ng-container *ngIf="updateInfoForm.controls['username'].invalid && (updateInfoForm.controls['username'].dirty 
                 || updateInfoForm.controls['username'].touched)" class="alert" >
@@ -46,7 +48,7 @@
         </div>
 
         <div class="form-group mt-2">
-            <label class="control-label" style="margin-right: 10px; font-weight: bold;">Included in Billiards Mini-Tournament? (Only the admin can edit this)</label><br>
+            <label class="control-label" style="margin-right: 10px; font-weight: bold;">Included in Billiards Mini-Tournament?</label><br>
             <label class="radio-inline">
                 <input type="radio" value="no" formControlName="joinBilliards" > No
             </label>
@@ -55,9 +57,7 @@
             </label>
         </div>
 
-        <button class="btn btn-success my-2 my-sm-0" [disabled]="!updateInfoForm.valid" 
-            (click)="saveChanges()" type="submit">Save Changes</button>
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="submit" class="btn btn-success" (click)="updateUser(updateInfoForm)">Update</button>
     </form>
-    
-    
 </div>

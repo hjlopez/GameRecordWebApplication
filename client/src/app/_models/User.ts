@@ -1,4 +1,5 @@
 export interface User {
+    id: number;
     username: string;
     token: string;
     photoUrl: string;
@@ -7,4 +8,5 @@ export interface User {
     playDota: boolean;
     joinBilliards: boolean;
     roles: string[];
+    email: string;
 }

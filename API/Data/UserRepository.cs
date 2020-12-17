@@ -22,6 +22,11 @@ namespace API.Data
             this.mapper = mapper;
         }
 
+        public void AdminUpdate(AdminUserUpdateDto admin)
+        {
+            context.Entry(admin).State = EntityState.Modified;
+        }
+
         public void DeletePhoto(Photo photo)
         {
             context.Photo.Remove(photo);

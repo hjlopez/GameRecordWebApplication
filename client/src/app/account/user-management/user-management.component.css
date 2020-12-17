@@ -1,0 +1,25 @@
+.row{
+    max-width: 80%; 
+    text-align: center;
+    margin: 0 auto;
+    border: 2px dotted green;
+    overflow-x: auto;
+}
+
+span {
+    cursor: pointer;
+    display: inline; 
+    color: whitesmoke;
+}
+
+.sticky {
+    /* position: absolute; */
+    width: 100px;
+    background-color: grey;
+    
+}
+
+.not-sticky{
+    /* position: relative; */
+    margin-left: 100px;
+}
