@@ -32,6 +32,9 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UserManagementComponent } from './account/user-management/user-management.component';
 import { DeleteUserModalComponent } from './account/delete-user-modal/delete-user-modal.component';
 import { UpdateUserModalComponent } from './account/update-user-modal/update-user-modal.component';
+import { BilliardsSettingsComponent } from './games/billiards/settings/billiards-settings/billiards-settings.component';
+import { TournamentModalComponent } from './games/billiards/settings/billiards-settings/tournament-modal/tournament-modal.component';
+import { MemberModalComponent } from './games/billiards/settings/billiards-settings/member-modal/member-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { UpdateUserModalComponent } from './account/update-user-modal/update-use
     PhotoEditComponent,
     UserManagementComponent,
     DeleteUserModalComponent,
-    UpdateUserModalComponent
+    UpdateUserModalComponent,
+    BilliardsSettingsComponent,
+    TournamentModalComponent,
+    MemberModalComponent
   ],
   imports: [
     BrowserModule,

@@ -42,6 +42,13 @@ namespace API.Data
             return await context.Users.FindAsync(id);
         }
 
+        public async Task<AppUser> GetUserByKnownAs(string knownAs)
+        {
+            return await context.Users.AsQueryable()
+                .Where((x => x.UserName.ToLower() == knownAs || x.GamerTag.ToLower() == knownAs))
+                .SingleOrDefaultAsync();
+        }
+
         public async Task<AppUser> GetUserByUsernameAndTagAsync(ForgotPasswordDto forgotPasswordDto)
         {
             return await context.Users.AsQueryable()

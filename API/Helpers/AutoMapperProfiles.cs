@@ -19,6 +19,11 @@ namespace API.Helpers
             CreateMap<RegisterDto, AppUser>();
             CreateMap<UserUpdateDto, AppUser>();
             CreateMap<AdminUserUpdateDto, AppUser>();
+            CreateMap<Games, GamesDto>();
+            CreateMap<Tournament, BilliardsTournamentDto>();
+            CreateMap<BilliardsTournamentDto, Tournament>();
+            CreateMap<BilliardsTournamentMembersDto, TournamentMembers>();
+            CreateMap<TournamentMembers, BilliardsTournamentMembersDto>();
             //CreateMap<AppUser, UserDto>();
         }
 

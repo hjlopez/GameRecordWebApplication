@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tr>
+            <th style="text-align: center;" colspan="2" *ngIf="name === 'Add Member'">Members of {{tournament?.tournamentName}}</th>
+            <th style="text-align: center;" colspan="3" *ngIf="name === 'Remove Member'">Members of {{tournament?.tournamentName}}</th>
+        </tr>
+
+        <tr *ngFor="let member of members" style="text-align: center;">
+            <td >{{member.username}}</td>
+            <td style="font-weight: bold;">{{member.gamerTag}}</td>
+            <td><span class="fa fa-times" style="cursor: pointer;" (click)="removeMember(member)"></span></td>
+        </tr>
+    </table>
+    <form #searchMember="ngForm" autocomplete="off" *ngIf="name === 'Add Member'">
+        <input type="text" name="knownAs" [(ngModel)]="searchedTag" class="form-control mb-2" placeholder="Username or Gamer Tag">
+        <button type="submit" (click)="search()" [disabled]='searchedTag === ""' class="btn btn-success mb-2">Search</button>
+    </form>
+
+    <div class="search" *ngIf="searchedUser !== undefined">
+        <table class="table" >
+            <tr>
+                <th>Username</th>
+                <th>Options</th>
+            </tr>
+
+            <tr>
+                <td>{{searchedUser?.username}}</td>
+                <td><span class="fa fa-plus" style="cursor: pointer;" (click)="addMember()"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -4,9 +4,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { LoggedOutComponent } from '../home/logged-out/logged-out.component';
+import { Games } from '../_models/Games';
 import { Login } from '../_models/Login';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service';
+import { GamesService } from '../_services/games.service';
 
 @Component({
   selector: 'app-nav',
@@ -21,9 +23,11 @@ export class NavComponent implements OnInit {
   @ViewChild('loginForm') public loginForm!: NgForm;
   @Input() out: LoggedOutComponent = new LoggedOutComponent();
   isAdmin = false;
+  gameList!: Games[];
   // loginForm!: FormGroup;
 
-  constructor(public accountService: AccountService, public router: Router, private toastr: ToastrService) {
+  constructor(public accountService: AccountService, public router: Router, private toastr: ToastrService,
+              private gamesService: GamesService) {
                }
 
   ngOnInit(): void {
@@ -33,8 +37,14 @@ export class NavComponent implements OnInit {
       if (user.roles.length > 1) {this.isAdmin = true; }
       else { this.isAdmin = false; }
     });
+
+    this.getGames();
   }
 
+  getGames(): void
+  {
+    this.gamesService.getGames().subscribe(games => this.gameList = games);
+  }
 
   logout(): void
   {

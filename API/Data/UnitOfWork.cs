@@ -17,6 +17,12 @@ namespace API.Data
 
         public IUserRepository UserRepository => new UserRepository(context, mapper);
 
+        public IGamesRepository GamesRepository => new GamesRepository(context, mapper);
+
+        public IBilliardsTournamentRepository BilliardsTournamentRepository => new BilliardsTournamentRepository(context, mapper);
+
+        public IBilliardsTournamentMembersRepository BilliardsTournamentMembersRepository => new BilliardsTournamentMembersRepository(context, mapper);
+
         public async Task<bool> Complete()
         {
             return await context.SaveChangesAsync() > 0;

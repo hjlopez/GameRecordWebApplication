@@ -1,0 +1,44 @@
+<ng-container class="billiards-settings">
+    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTournament = !isTournament">Tournament</button>
+    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTourMembers = !isTourMembers">Tournament Members</button>
+    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTourMembers = !isTourMembers">Tournament Members</button>
+    
+    <br><br>
+    <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isTournament" [isAnimated]="true">
+        <div class="well well-sm card card-block card-header" style="width: 70%;">
+            <table class="table">
+                <tr>
+                    <th>Tournament List</th>
+                    <th ><span class="fa fa-plus" (click)="addTournament()" style="cursor: pointer;"></span></th>
+                </tr>
+
+                <tr *ngFor="let tournament of tournamentList">
+                    <td>{{tournament?.tournamentName}}</td>
+                    <td >
+                        <span class="fa fa-edit mr-3" (click)="editTournament(tournament)" style="cursor: pointer;"></span>
+                        <span class="fa fa-trash" (click)="deleteTournament(tournament)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isTourMembers" [isAnimated]="true">
+        <div class="well well-sm card card-block card-header" style="width: 70%;">
+            <table class="table">
+                <tr>
+                    <th>Add Members to Tournament</th>
+                    <th></th>
+                </tr>
+
+                <tr *ngFor="let tournament of tournamentList">
+                    <td>{{tournament?.tournamentName}}</td>
+                    <td >
+                        <span class="fa fa-edit" (click)="editMembers(tournament)" style="cursor: pointer;"></span>
+                        <span class="fa fa-trash ml-3" (click)="removeMember(tournament)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</ng-container>

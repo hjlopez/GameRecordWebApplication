@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201218065554_AddedGameLinks")]
+    partial class AddedGameLinks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,49 +204,6 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Entities.Tournament", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("TournamentName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("Tournament");
-                });
-
-            modelBuilder.Entity("API.Entities.TournamentMembers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("AppUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("TournamentMembers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -368,30 +327,6 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("API.Entities.Tournament", b =>
-                {
-                    b.HasOne("API.Entities.AppUser", null)
-                        .WithMany("Tournaments")
-                        .HasForeignKey("AppUserId");
-                });
-
-            modelBuilder.Entity("API.Entities.TournamentMembers", b =>
-                {
-                    b.HasOne("API.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
-                    b.HasOne("API.Entities.Tournament", "Tournament")
-                        .WithMany("TournamentMembers")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Tournament");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("API.Entities.AppRole", null)
@@ -437,19 +372,12 @@ namespace API.Data.Migrations
                 {
                     b.Navigation("Photos");
 
-                    b.Navigation("Tournaments");
-
                     b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("API.Entities.Games", b =>
                 {
                     b.Navigation("GameTypes");
-                });
-
-            modelBuilder.Entity("API.Entities.Tournament", b =>
-                {
-                    b.Navigation("TournamentMembers");
                 });
 #pragma warning restore 612, 618
         }

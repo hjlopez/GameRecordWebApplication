@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './account/forgot-password/forgot-passwo
 import { PhotoEditComponent } from './account/photo-edit/photo-edit.component';
 import { UserManagementComponent } from './account/user-management/user-management.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { BilliardsSettingsComponent } from './games/billiards/settings/billiards-settings/billiards-settings.component';
 
 // angular follows first match wins policy
 const routes: Routes = [
@@ -18,7 +19,9 @@ const routes: Routes = [
   {path: 'billiards', component: BilliardsComponent, pathMatch: 'full'},
   {path: 'register', component: RegisterComponent, pathMatch: 'full'},
   {path: 'forgot', component: ForgotPasswordComponent, pathMatch: 'full'},
-  {path: 'user/billiards', component: BilliardsComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard]},
+  {path: 'user/billiards', component: BilliardsComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard], pathMatch: 'full'},
+  {path: 'user/billiards/settings', component: BilliardsSettingsComponent, runGuardsAndResolvers: 'always',
+      canActivate: [AuthGuard], pathMatch: 'full'},
   {path: 'user/photo-edit', component: PhotoEditComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard], pathMatch: 'full'},
   {path: 'user/user-management', component: UserManagementComponent, runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard, AdminGuard] , pathMatch: 'full'},

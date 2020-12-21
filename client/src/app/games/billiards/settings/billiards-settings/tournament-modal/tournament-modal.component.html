@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="addTournament" autocomplete="off" *ngIf="name === 'Add Tournament'">
+        <input class="form-control mb-3" formControlName="tournamentName" name="tournamentName" placeholder="Enter Name">
+        <ng-container *ngIf="addTournament.controls['tournamentName'].invalid && (addTournament.controls['tournamentName'].dirty 
+                || addTournament.controls['tournamentName'].touched)" class="alert" >
+                <label style="color: red;">Please enter a name!</label><br>
+        </ng-container>
+        
+
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="submit" class="btn btn-success" [disabled]="!addTournament.valid" (click)="submit(addTournament)">Add</button>
+    </form>
+
+    <form [formGroup]="editDeleteTournament" autocomplete="off" *ngIf="name !== 'Add Tournament'">
+        <input class="form-control mb-3" formControlName="id" name="id" hidden>
+
+        <input class="form-control mb-3" formControlName="tournamentName" name="tournamentName" placeholder="Enter Name">
+        <ng-container *ngIf="editDeleteTournament.controls['tournamentName'].invalid && (editDeleteTournament.controls['tournamentName'].dirty 
+                || editDeleteTournament.controls['tournamentName'].touched)" class="alert" >
+                <label style="color: red;">Please enter a name!</label><br>
+        </ng-container>
+        
+
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="submit" class="btn btn-success" [disabled]="!editDeleteTournament.valid" 
+            (click)="submit(editDeleteTournament)">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+.billiards-settings{
+    margin-left: 5px;
+}
+
+.settings-button{
+    margin-left: 3px;
+}
+
+.collapseBasic{
+    width: 300px;
+    overflow-x: scroll;
+    margin: 0 auto;
+}
+

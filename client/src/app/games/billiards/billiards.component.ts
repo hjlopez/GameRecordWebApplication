@@ -9,6 +9,7 @@ import { AccountService } from 'src/app/_services/account.service';
 })
 export class BilliardsComponent implements OnInit {
   currentUser!: User;
+  tournamentList: string[] = [];
 
   constructor(public accountService: AccountService) { }
 

@@ -5,6 +5,9 @@ namespace API.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository UserRepository {get;}
+        IGamesRepository GamesRepository {get;}
+        IBilliardsTournamentRepository BilliardsTournamentRepository {get;}
+        IBilliardsTournamentMembersRepository BilliardsTournamentMembersRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }
