@@ -16,6 +16,10 @@ namespace API.Data
         public DbSet<GameTypes> GameTypes { get; set; }
         public DbSet<Tournament> Tournament { get; set; }
         public DbSet<TournamentMembers> TournamentMembers { get; set; }
+        public DbSet<BilliardsMatchType> BilliardsMatchTypes { get; set; }
+        public DbSet<TournamentMatchType> TournamentMatchTypes { get; set; }
+        public DbSet<BilliardsMode> BilliardsModes { get; set; }
+        public DbSet<TournamentMode> TournamentModes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -59,6 +63,47 @@ namespace API.Data
 
             builder.Entity<TournamentMembers>()
                 .HasKey(k => k.Id);
+
+            builder.Entity<BilliardsMatchType>()
+                .HasKey(b => b.Id);
+
+            builder.Entity<TournamentMatchType>()
+                .HasKey(b => b.Id);
+                
+            builder.Entity<TournamentMatchType>()
+                .HasOne(s => s.BilliardsMatchTypes)
+                .WithMany(t => t.TournamentMatchType)
+                .HasForeignKey(s => s.MatchTypeId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<TournamentMatchType>()
+                .HasOne(s => s.Tournament)
+                .WithMany(t => t.TournamentMatchTypes)
+                .HasForeignKey(s => s.TournamentId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            builder.Entity<BilliardsMode>()
+                .HasKey(b => b.Id);
+
+            builder.Entity<TournamentMode>()
+                .HasKey(b => b.Id);
+                
+            builder.Entity<TournamentMode>()
+                .HasIndex(x => x.Order)
+                .IsUnique();
+            
+            builder.Entity<TournamentMode>()
+                .HasIndex(x => x.HighestRank)
+                .IsUnique();
+            
+            builder.Entity<TournamentMode>()
+                .HasOne(s => s.BilliardsMode)
+                .WithMany(t => t.TournamentMode)
+                .HasForeignKey(s => s.ModeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
         }
     }
 }

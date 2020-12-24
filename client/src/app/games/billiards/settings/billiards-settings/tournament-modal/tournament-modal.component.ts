@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { BilliardsTournament } from 'src/app/_models/BilliardsTournament';
+import { BilliardsTournament } from 'src/app/_models/billiards/BilliardsTournament';
 
 @Component({
   selector: 'app-tournament-modal',

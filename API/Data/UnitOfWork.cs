@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using API.Data.Billiards;
 using API.Interfaces;
+using API.Interfaces.Billiards;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,6 +24,10 @@ namespace API.Data
         public IBilliardsTournamentRepository BilliardsTournamentRepository => new BilliardsTournamentRepository(context, mapper);
 
         public IBilliardsTournamentMembersRepository BilliardsTournamentMembersRepository => new BilliardsTournamentMembersRepository(context, mapper);
+
+        public IBilliardsMatchTypesRepository BilliardsMatchTypesRepository => new BilliardsMatchTypesRepository(context, mapper);
+
+        public IBilliardsModeRepository BilliardsModeRepository => new BilliardsModeRepository(context, mapper);
 
         public async Task<bool> Complete()
         {

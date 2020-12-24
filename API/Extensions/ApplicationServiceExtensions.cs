@@ -1,7 +1,9 @@
 using API.Data;
+using API.Data.Billiards;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using API.Interfaces.Billiards;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -25,6 +27,8 @@ namespace API.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IBilliardsTournamentRepository, BilliardsTournamentRepository>();
             services.AddScoped<IBilliardsTournamentMembersRepository, BilliardsTournamentMembersRepository>();
+            services.AddScoped<IBilliardsMatchTypesRepository, BilliardsMatchTypesRepository>();
+            services.AddScoped<IBilliardsModeRepository, BilliardsModeRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options => 
             {

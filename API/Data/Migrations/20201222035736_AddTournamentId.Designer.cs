@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201222035736_AddTournamentId")]
+    partial class AddTournamentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,9 +311,6 @@ namespace API.Data.Migrations
                     b.Property<bool>("IsLast")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsPlayoff")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ModeId")
                         .HasColumnType("INTEGER");
 
@@ -469,7 +468,7 @@ namespace API.Data.Migrations
                     b.HasOne("API.Entities.BilliardsMatchType", "BilliardsMatchTypes")
                         .WithMany("TournamentMatchType")
                         .HasForeignKey("MatchTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Entities.Tournament", "Tournament")
@@ -505,7 +504,7 @@ namespace API.Data.Migrations
                     b.HasOne("API.Entities.BilliardsMode", "BilliardsMode")
                         .WithMany("TournamentMode")
                         .HasForeignKey("ModeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BilliardsMode");

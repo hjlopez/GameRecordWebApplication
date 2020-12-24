@@ -1,21 +1,26 @@
 <ng-container class="billiards-settings">
     <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTournament = !isTournament">Tournament</button>
     <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTourMembers = !isTourMembers">Tournament Members</button>
-    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isTourMembers = !isTourMembers">Tournament Members</button>
+    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isType = !isType">Match Type</button>
+    <button type="button" class="btn btn-primary ml-3 mb-3" (click)="isMode = !isMode">Mode</button>
     
     <br><br>
+
+    <!-- DIV FOR TOURNAMENT -->
     <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isTournament" [isAnimated]="true">
         <div class="well well-sm card card-block card-header" style="width: 70%;">
             <table class="table">
                 <tr>
                     <th>Tournament List</th>
-                    <th ><span class="fa fa-plus" (click)="addTournament()" style="cursor: pointer;"></span></th>
+                    <th colspan="2"><span class="fa fa-plus" (click)="addTournament()" style="cursor: pointer;"></span></th>
                 </tr>
 
                 <tr *ngFor="let tournament of tournamentList">
                     <td>{{tournament?.tournamentName}}</td>
-                    <td >
+                    <td>
                         <span class="fa fa-edit mr-3" (click)="editTournament(tournament)" style="cursor: pointer;"></span>
+                    </td>
+                    <td >
                         <span class="fa fa-trash" (click)="deleteTournament(tournament)" style="cursor: pointer;"></span>
                     </td>
                 </tr>
@@ -23,22 +28,93 @@
         </div>
     </div>
 
+    <!-- DIV FOR TOURNAMENT MEMBERS -->
     <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isTourMembers" [isAnimated]="true">
         <div class="well well-sm card card-block card-header" style="width: 70%;">
             <table class="table">
                 <tr>
-                    <th>Add Members to Tournament</th>
-                    <th></th>
+                    <th colspan="3">Add Members to Tournament</th>
                 </tr>
 
                 <tr *ngFor="let tournament of tournamentList">
                     <td>{{tournament?.tournamentName}}</td>
-                    <td >
+                    <td>
                         <span class="fa fa-edit" (click)="editMembers(tournament)" style="cursor: pointer;"></span>
+                    </td>
+                    <td >
                         <span class="fa fa-trash ml-3" (click)="removeMember(tournament)" style="cursor: pointer;"></span>
                     </td>
                 </tr>
             </table>
+        </div>
+    </div>
+
+    <!-- DIV FOR TYPES -->
+    <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isType" [isAnimated]="true">
+        <div class="well well-sm card card-block card-header" style="width: 70%;">
+            <table class="table">
+                <tr>
+                    <th style="width: 50%;">Types</th>
+                    <th colspan="2"><span class="fa fa-plus" (click)="addType()" style="cursor: pointer;"></span></th>
+                </tr>
+
+                <tr *ngFor="let type of types">
+                    <td>{{type?.type}}</td>
+                    <td><span class="fa fa-edit" (click)="editType(type)" style="cursor: pointer;"></span></td>
+                    <td >
+                        <span class="fa fa-trash ml-3" (click)="removeType(type)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table>
+            <table class="table">
+                <tr>
+                    <th colspan="2">Tournament Types</th>
+                </tr>
+
+                <tr *ngFor="let tournament of tournamentList">
+                    <td style="width: 50%;">{{tournament?.tournamentName}}</td>
+                    <td >
+                        <span class="fa fa-plus" (click)="tournamentType(tournament.id)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- DIV FOR MODES -->
+    <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="isMode" [isAnimated]="true">
+        <div class="well well-sm card card-block card-header" style="width: 70%;">
+            <table class="table">
+                <tr>
+                    <th style="width: 70%;">Modes</th>
+                    <th colspan="3"><span class="fa fa-plus" (click)="addMode()" style="cursor: pointer;"></span></th>
+                </tr>
+
+                <tr *ngFor="let mode of modes">
+                    <td>{{mode?.mode}}</td>
+                    <td><span class="fa fa-cart-plus" (click)="tournamentMode(mode)" style="cursor: pointer;"></span></td>
+                    <td><span class="fa fa-edit" (click)="editMode(mode)" style="cursor: pointer;"></span></td>
+                    <td >
+                        <span class="fa fa-trash" (click)="removeMode(mode)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- <table class="table">
+                <tr>
+                    <th colspan="3">Tournament Modes</th>
+                </tr>
+
+                <tr *ngFor="let tournament of tournamentList">
+                    <td style="width: 70%;">{{tournament?.tournamentName}}</td>
+                    <td>
+                        <span class="fa fa-plus" (click)="addTournamentMode(tournament.id)" style="cursor: pointer;"></span>
+                    </td>
+                    <td >
+                        <span class="fa fa-trash ml-3" (click)="removeTournamentMode(tournament.id)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
+            </table> -->
         </div>
     </div>
 </ng-container>

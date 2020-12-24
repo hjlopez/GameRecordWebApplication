@@ -35,6 +35,8 @@ import { UpdateUserModalComponent } from './account/update-user-modal/update-use
 import { BilliardsSettingsComponent } from './games/billiards/settings/billiards-settings/billiards-settings.component';
 import { TournamentModalComponent } from './games/billiards/settings/billiards-settings/tournament-modal/tournament-modal.component';
 import { MemberModalComponent } from './games/billiards/settings/billiards-settings/member-modal/member-modal.component';
+import { TypeModalComponent } from './games/billiards/settings/billiards-settings/type-modal/type-modal.component';
+import { ModesModalComponent } from './games/billiards/settings/billiards-settings/modes-modal/modes-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { MemberModalComponent } from './games/billiards/settings/billiards-setti
     UpdateUserModalComponent,
     BilliardsSettingsComponent,
     TournamentModalComponent,
-    MemberModalComponent
+    MemberModalComponent,
+    TypeModalComponent,
+    ModesModalComponent
   ],
   imports: [
     BrowserModule,

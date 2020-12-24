@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.Interfaces.Billiards;
 
 namespace API.Interfaces
 {
@@ -8,6 +9,8 @@ namespace API.Interfaces
         IGamesRepository GamesRepository {get;}
         IBilliardsTournamentRepository BilliardsTournamentRepository {get;}
         IBilliardsTournamentMembersRepository BilliardsTournamentMembersRepository {get;}
+        IBilliardsMatchTypesRepository BilliardsMatchTypesRepository {get;}
+        IBilliardsModeRepository BilliardsModeRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

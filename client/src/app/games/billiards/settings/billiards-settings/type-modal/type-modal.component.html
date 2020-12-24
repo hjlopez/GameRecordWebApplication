@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+   <form autocomplete="off" [formGroup]="modalForm" *ngIf="id === 0">
+        <input class="form-control mb-3" formControlName="id" name="id" hidden>
+
+        <input class="form-control mb-3" formControlName="type" name="type" placeholder="Enter Type">
+        <ng-container *ngIf="modalForm.controls['type'].invalid && (modalForm.controls['type'].dirty 
+                || modalForm.controls['type'].touched)" class="alert" >
+                <label style="color: red;">Please enter a type!</label><br>
+        </ng-container>
+
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!modalForm.valid" (click)="submit()">Submit</button>
+   </form>
+
+   <table class="table" style="text-align: center;" *ngIf="id !== 0">
+        <tr>
+            <td colspan="2">Types for {{tournamentName}}</td>
+        </tr>
+
+        <tr *ngFor="let type of tournamentTypes">
+            <td>{{type.matchType}}</td>
+            <td><span class="fa fa-trash" style="cursor: pointer;" (click)="deleteFromTournament(type.id)"></span></td>
+        </tr>
+   </table>
+
+   <form *ngIf="id !== 0" #tournamentForm="ngForm" autocomplete="off">
+        <input class="form-control mb-3" [(ngModel)]="searchType" name="searchType" placeholder="Search Type">
+        <button type="submit" class="btn btn-primary" [disabled]="searchType === ''" (click)="addToTournament()">Search</button>
+   </form>
+</div>

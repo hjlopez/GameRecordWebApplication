@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201221133343_BilliardsModeAndType")]
+    partial class BilliardsModeAndType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,14 +260,9 @@ namespace API.Data.Migrations
                     b.Property<int>("MatchTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MatchTypeId");
-
-                    b.HasIndex("TournamentId");
 
                     b.ToTable("TournamentMatchTypes");
                 });
@@ -307,9 +304,6 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLast")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsPlayoff")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ModeId")
@@ -469,18 +463,10 @@ namespace API.Data.Migrations
                     b.HasOne("API.Entities.BilliardsMatchType", "BilliardsMatchTypes")
                         .WithMany("TournamentMatchType")
                         .HasForeignKey("MatchTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Tournament", "Tournament")
-                        .WithMany("TournamentMatchTypes")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BilliardsMatchTypes");
-
-                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("API.Entities.TournamentMembers", b =>
@@ -505,7 +491,7 @@ namespace API.Data.Migrations
                     b.HasOne("API.Entities.BilliardsMode", "BilliardsMode")
                         .WithMany("TournamentMode")
                         .HasForeignKey("ModeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BilliardsMode");
@@ -578,8 +564,6 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Tournament", b =>
                 {
-                    b.Navigation("TournamentMatchTypes");
-
                     b.Navigation("TournamentMembers");
                 });
 #pragma warning restore 612, 618

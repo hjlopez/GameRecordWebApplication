@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="list">
+        <table class="table" style="text-align: center;">
+            <tr>
+                <th colspan="2" >Active Tournaments</th>
+            </tr>
+
+            <tr *ngFor="let tournament of tournaments">
+                <td>{{tournament?.tournamentName}}</td>
+                <td><span class="fa fa-eye" style="cursor: pointer;" (click)="loadTournamentForm(tournament.id)"></span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- add mode to tournament form -->
+    <div class="tournament-form" *ngIf="name === 'Select Tournament'">
+        <input class="form-control mb-3" [(ngModel)]="tour" placeholder="No Tournament Selected" disabled>
+        <input class="form-control mb-3" [(ngModel)]="mode.mode" placeholder="Mode" disabled>
+
+        <form autocomplete="off" [formGroup]="tournamentForm">
+            <input class="form-control mb-3" formControlName="id" name="id" placeholder="ID" hidden>
+    
+            <input class="form-control mb-3" formControlName="tournamentId" name="tournamentId" placeholder="Tournament ID" hidden>
+            <ng-container *ngIf="tournamentForm.controls['tournamentId'].invalid && (tournamentForm.controls['tournamentId'].dirty 
+                    || tournamentForm.controls['tournamentId'].touched)" class="alert" >
+                    <label style="color: red;">Please enter a mode!</label><br>
+            </ng-container>
+    
+            Order: 
+            <input class="form-control mb-3" formControlName="order" name="order" placeholder="Order" type="number" min="1">
+            <ng-container *ngIf="tournamentForm.controls['order'].invalid && (tournamentForm.controls['order'].dirty 
+                    || tournamentForm.controls['order'].touched)" class="alert" >
+                    <label style="color: red;">Cannot be less than 1!</label><br>
+            </ng-container>
+    
+            
+            <span>Last?<input class="form-control mb-3" formControlName="isLast" name="isLast" type="checkbox" 
+                style="max-height: 15px; display: inline; max-width: 25px;"></span>
+    
+            <span>Consolation?<input class="form-control mb-3" formControlName="isConsolation" name="isConsolation" type="checkbox" 
+                style="max-height: 15px; display: inline; max-width: 25px;"></span>
+        
+            <br>
+            Highest Rank: 
+            <input class="form-control mb-3" formControlName="highestRank" name="highestRank" type="number" min="1">
+            <ng-container *ngIf="tournamentForm.controls['highestRank'].invalid && (tournamentForm.controls['highestRank'].dirty 
+                    || tournamentForm.controls['highestRank'].touched)" class="alert" >
+                    <label style="color: red;">Cannot be less than 1!</label><br>
+            </ng-container>
+    
+            <span>Playoff Mode?<input class="form-control mb-3" formControlName="isPlayoff" name="isPlayoff" type="checkbox" 
+                style="max-height: 15px; display: inline; max-width: 25px;"></span>
+    
+            <input class="form-control mb-3" formControlName="modeId" name="modeId" placeholder="Mode ID" hidden>
+            
+            <br>
+            <button type="button" class="btn btn-dark mr-2" *ngIf="hideEdit || !hideEdit" (click)="bsModalRef.hide()">Cancel</button>
+            <button type="submit" class="btn btn-primary" *ngIf="!hideSubmit"
+                [disabled]="!tournamentForm.valid" (click)="confirmTournament()">Confirm</button>
+            <button type="submit" class="btn btn-success mr-2" *ngIf="!hideEdit"
+                [disabled]="!tournamentForm.valid" (click)="editTournament()">Edit</button>
+            <button type="submit" class="btn btn-danger" *ngIf="!hideDelete"
+                [disabled]="!tournamentForm.valid" (click)="deleteTournament()">Delete</button>
+        </form>
+    </div>
+
+    <!-- add mode form -->
+    <form autocomplete="off" [formGroup]="modeForm" *ngIf="name !== 'Select Tournament'">
+        <input class="form-control mb-3" formControlName="id" name="id" hidden>
+
+        <input class="form-control mb-3" formControlName="mode" name="mode" placeholder="Enter Mode">
+        <ng-container *ngIf="modeForm.controls['mode'].invalid && (modeForm.controls['mode'].dirty 
+                || modeForm.controls['mode'].touched)" class="alert" >
+                <label style="color: red;">Please enter a mode!</label><br>
+        </ng-container>
+
+        <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!modeForm.valid" (click)="submit()">Submit</button>
+    </form>
+
+</div>

@@ -6,9 +6,9 @@
     margin-left: 3px;
 }
 
-.collapseBasic{
-    width: 300px;
-    overflow-x: scroll;
+.card-header{
+    max-width: 80%; 
     margin: 0 auto;
+    overflow-x: auto;
 }
 
