@@ -2,6 +2,7 @@ using System.Linq;
 using API.DTOs;
 using API.DTOs.Billiards;
 using API.Entities;
+using API.Entities.Billiards;
 using AutoMapper;
 
 namespace API.Helpers
@@ -33,7 +34,10 @@ namespace API.Helpers
             CreateMap<BilliardsModeDto, BilliardsMode>();
             CreateMap<TournamentModeDto, TournamentMode>();
             CreateMap<TournamentMode, TournamentModeDto>();
-            //CreateMap<AppUser, UserDto>();
+            CreateMap<SeasonDto, Season>();
+            CreateMap<Season, SeasonDto>();
+            CreateMap<SeasonHistoryDto, SeasonHistory>();
+            CreateMap<SeasonHistory, SeasonHistoryDto>();
         }
 
         

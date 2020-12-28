@@ -11,6 +11,7 @@ namespace API.Interfaces
         IBilliardsTournamentMembersRepository BilliardsTournamentMembersRepository {get;}
         IBilliardsMatchTypesRepository BilliardsMatchTypesRepository {get;}
         IBilliardsModeRepository BilliardsModeRepository {get;}
+        IBilliardsRepository BilliardsRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using API.Entities.Billiards;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
@@ -17,5 +18,6 @@ namespace API.Entities
         public ICollection<Photo> Photos { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
         public ICollection<Tournament> Tournaments { get; set; }
+        public ICollection<SeasonHistory> SeasonHistories { get; set; }
     }
 }

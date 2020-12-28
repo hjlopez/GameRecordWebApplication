@@ -1,22 +1,186 @@
 <div class="container">
+  <div class="tab-panel">
+    <tabset class="member-tabset">
+        <tab heading="Matches" >
+            <div class="container" >
+
+              <form autocomplete="off" class="form-inline">
+                <div class="form-group">
+                  <select name="tournament" class="form-control" >
+                    <option *ngIf="tournamentList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="tournamentList.length !== 0">
+                      <option *ngFor="let tournament of tournamentList">
+                        {{tournament.tournamentName}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+  
+                <div class="form-group">
+                  <select name="tournament" class="form-control ml-1" >
+                    <option *ngIf="tournamentList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="tournamentList.length !== 0">
+                      <option *ngFor="let tournament of tournamentList">
+                        {{tournament.tournamentName}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <select name="tournament" class="form-control ml-1 mr-2" >
+                    <option *ngIf="tournamentList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="tournamentList.length !== 0">
+                      <option *ngFor="let tournament of tournamentList">
+                        {{tournament.tournamentName}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <button class="btn btn-success">Filter</button>
+                </div>
+
+                <div class="form-group" *ngIf="(accountService.currentUser$ | async)">
+                  <button class="btn btn-outline-dark ml-1" >Add Match</button>
+                </div>
+              </form>
+
+              <!-- match records here -->
+              <ng-container class="match-history" *ngIf="tournamentList.length !== 0">
+                <div class="row mt-2">
+                  <div class="col-sm-4">
+                    <div class="card mb-2" >
+                      <img src="./../assets/user.png" class="card-img-top" alt="">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      </div>
+                      <ul class="list-group list-group-flush"></ul>
+
+                      <!-- buttons -->
+                      <div class="card-body">
+                        <button class="btn btn-info ml-1"><span class="fa fa-eye"></span></button>
+                        <ng-container *ngIf="(accountService.currentUser$ | async)">
+                          <button class="btn btn-info ml-1"><span class="fa fa-edit"></span></button>
+                          <button class="btn btn-danger ml-1"><span class="fa fa-trash"></span></button>
+                        </ng-container>
+                      </div>
+                      
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-4">
+                    <div class="card">
+                      <div class="card">
+                        <img src="" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                        <ul class="list-group list-group-flush"></ul>
+                        <div class="card-body">
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-4">
+                    <div class="card">
+                      <div class="card">
+                        <img src="" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">Card title</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                        <ul class="list-group list-group-flush"></ul>
+                        <div class="card-body">
+                          <a href="#" class="card-link">Card link</a>
+                          <a href="#" class="card-link">Another link</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-4">
+                    <div class="card" >
+                      <img src="" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      </div>
+                      <ul class="list-group list-group-flush"></ul>
+                      <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-4">
+                    <div class="card" >
+                      <img src="" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      </div>
+                      <ul class="list-group list-group-flush"></ul>
+                      <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-sm-4">
+                    <div class="card" >
+                      <img src="" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      </div>
+                      <ul class="list-group list-group-flush"></ul>
+                      <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <!-- match records here -->
+
+
+            </div>
+
+        </tab>
+
+        <tab heading="Individual">
+            <div class="container">
+              b
+            </div>
+        </tab>
+
+        <tab heading="Tournament">
+          <div class="container">
+            c
+          </div>
+        </tab>
+    </tabset>
+  </div>
+  
     <main class="col-md-12 ms-sm-auto "><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2" *ngIf="(accountService.currentUser$ | async)">Dashboard Logged</h1>
-        <h1 class="h2" *ngIf="!(accountService.currentUser$ | async)">Dashboard</h1>
+        <h1 class="h2">Matches</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
           </div>
-          <select name="tournament">
-            <option *ngIf="tournamentList.length === 0">-- No Tournament Yet --</option>
-            <ng-container *ngIf="tournamentList.length !== 0">
-              <option *ngFor="let tournament of tournamentList">
-                {{tournament}}
-              </option>
-            </ng-container>
-            
-          </select>
+          
           <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             This week
@@ -24,105 +188,7 @@
         </div>
       </div>
     
-      <!-- match records here -->
-      <ng-container class="match-history" *ngIf="tournamentList.length !== 0">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="card" >
-              <img src="./../assets/user.png" class="card-img-top" alt="">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-              <ul class="list-group list-group-flush"></ul>
-              <div class="card-body">
-                <button class="btn btn-primary"><span class="fa fa-edit"></span></button>
-                <button class="btn btn-primary"><span class="fa fa-trash"></span></button>
-                <button class="btn btn-primary"><span class="fa fa-eye"></span></button>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-sm-4">
-            <div class="card">
-              <div class="card">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush"></ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-sm-4">
-            <div class="card">
-              <div class="card">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush"></ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-sm-4">
-            <div class="card" >
-              <img src="" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-              <ul class="list-group list-group-flush"></ul>
-              <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-sm-4">
-            <div class="card" >
-              <img src="" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-              <ul class="list-group list-group-flush"></ul>
-              <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div>
-          </div>
-  
-          <div class="col-sm-4">
-            <div class="card" >
-              <img src="" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
-              <ul class="list-group list-group-flush"></ul>
-              <div class="card-body">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
+      
 
       <!-- <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="1076" height="454" style="display: block; width: 1076px; height: 454px;"></canvas> -->
     

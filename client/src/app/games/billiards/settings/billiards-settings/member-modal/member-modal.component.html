@@ -14,7 +14,7 @@
         <tr *ngFor="let member of members" style="text-align: center;">
             <td >{{member.username}}</td>
             <td style="font-weight: bold;">{{member.gamerTag}}</td>
-            <td><span class="fa fa-times" style="cursor: pointer;" (click)="removeMember(member)"></span></td>
+            <td *ngIf="name === 'Remove Member'"><span class="fa fa-times" style="cursor: pointer;" (click)="removeMember(member)"></span></td>
         </tr>
     </table>
     <form #searchMember="ngForm" autocomplete="off" *ngIf="name === 'Add Member'">

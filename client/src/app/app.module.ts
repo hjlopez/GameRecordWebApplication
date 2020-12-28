@@ -37,6 +37,7 @@ import { TournamentModalComponent } from './games/billiards/settings/billiards-s
 import { MemberModalComponent } from './games/billiards/settings/billiards-settings/member-modal/member-modal.component';
 import { TypeModalComponent } from './games/billiards/settings/billiards-settings/type-modal/type-modal.component';
 import { ModesModalComponent } from './games/billiards/settings/billiards-settings/modes-modal/modes-modal.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ModesModalComponent } from './games/billiards/settings/billiards-settin
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

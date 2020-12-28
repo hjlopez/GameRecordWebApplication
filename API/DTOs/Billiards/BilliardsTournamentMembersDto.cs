@@ -7,5 +7,6 @@ namespace API.DTOs
         public string Username { get; set; }
         public string GamerTag { get; set; }
         public int TournamentId { get; set; }
+        public string TournamentName { get; set; }
     }
 }

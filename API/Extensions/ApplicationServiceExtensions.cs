@@ -28,7 +28,9 @@ namespace API.Extensions
             services.AddScoped<IBilliardsTournamentRepository, BilliardsTournamentRepository>();
             services.AddScoped<IBilliardsTournamentMembersRepository, BilliardsTournamentMembersRepository>();
             services.AddScoped<IBilliardsMatchTypesRepository, BilliardsMatchTypesRepository>();
+            services.AddScoped<IBilliardsRepository, BilliardsRepository>();
             services.AddScoped<IBilliardsModeRepository, BilliardsModeRepository>();
+            services.AddScoped<IBilliardsGameRepository, BilliardsGameRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options => 
             {

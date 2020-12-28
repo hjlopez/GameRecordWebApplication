@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
   <a class="navbar-brand" routerLink='billiards' *ngIf="!(accountService.currentUser$ | async)">Game Record Application</a>
   <a class="navbar-brand" routerLink='user/billiards' *ngIf="accountService.currentUser$ | async">Game Record Application</a>
+  
   <div class="navbar-collapse" id="navbarCollapse" [ngClass]="showMenu ? 'expand' : 'collapse'">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" dropdown>

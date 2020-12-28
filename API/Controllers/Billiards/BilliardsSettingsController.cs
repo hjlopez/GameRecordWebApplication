@@ -17,15 +17,13 @@ namespace API.Controllers.Games_Settings
     [Authorize(Policy = "RequireAdminRole")]
     public class BilliardsSettingsController : BaseApiController
     {
-        private readonly UserManager<AppUser> userManager;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         
-        public BilliardsSettingsController(UserManager<AppUser> userManager, IUnitOfWork unitOfWork, IMapper mapper)
+        public BilliardsSettingsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
-            this.userManager = userManager;
         }
         
         [HttpPost("insert-billiards-tournament")]
@@ -76,6 +74,7 @@ namespace API.Controllers.Games_Settings
             return BadRequest("Cannot delete tournament name!");
         }
 
+        [AllowAnonymous]
         [HttpGet("get-billiards-tournament")]
         public async Task<ActionResult<IEnumerable<BilliardsTournamentDto>>> GetBilliardsTournaments()
         {

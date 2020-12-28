@@ -1,4 +1,5 @@
 using API.Entities;
+using API.Entities.Billiards;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,8 @@ namespace API.Data
         public DbSet<TournamentMatchType> TournamentMatchTypes { get; set; }
         public DbSet<BilliardsMode> BilliardsModes { get; set; }
         public DbSet<TournamentMode> TournamentModes { get; set; }
+        public DbSet<Season> Seasons { get; set; }
+        public DbSet<SeasonHistory> SeasonHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -102,6 +105,42 @@ namespace API.Data
                 .HasOne(s => s.BilliardsMode)
                 .WithMany(t => t.TournamentMode)
                 .HasForeignKey(s => s.ModeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+
+            builder.Entity<Season>()
+                .HasKey(s => s.Id);
+            builder.Entity<Season>()
+                .HasOne(t => t.Tournament)
+                .WithOne(x => x.Season)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            builder.Entity<SeasonHistory>()
+                .HasKey(x => x.Id);
+            builder.Entity<SeasonHistory>()
+                .HasOne(s => s.Season)
+                .WithMany(ss => ss.SeasonHistories)
+                .HasForeignKey(s => s.SeasonNumberId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<SeasonHistory>()
+                .HasOne(b => b.BilliardsMatchType)
+                .WithMany(bb => bb.SeasonHistories)
+                .HasForeignKey(b => b.TypeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<SeasonHistory>()
+                .HasOne(t => t.Tournament)
+                .WithMany(tt => tt.SeasonHistories)
+                .HasForeignKey(t => t.TournamentId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<SeasonHistory>()
+                .HasOne(u => u.AppUser)
+                .WithMany(uu => uu.SeasonHistories)
+                .HasForeignKey(u => u.UserId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         }
