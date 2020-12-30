@@ -4,51 +4,78 @@
         <tab heading="Matches" >
             <div class="container" >
 
-              <form autocomplete="off" class="form-inline">
+              <ng-container class="add-match" *ngIf="showAddForm">
+                <app-new-game 
+                  [tournamentMemberList]="tournamentList"
+                  (formEmit)="changeStatus($event)"></app-new-game>
+              </ng-container>
+
+              <form autocomplete="off" class="form-inline" *ngIf="!showAddForm">
                 <div class="form-group">
-                  <select name="tournament" class="form-control" >
+                  <select name="tournaments" #tournament class="form-control" 
+                    (change)="loadOtherValues(tournament.value)"
+                    (toggle)="sample()">
                     <option *ngIf="tournamentList.length === 0">-- N/A --</option>
                     <ng-container *ngIf="tournamentList.length !== 0">
-                      <option *ngFor="let tournament of tournamentList">
+                      <option *ngFor="let tournament of tournamentList" [value]="tournament.id">
                         {{tournament.tournamentName}}
                       </option>
                     </ng-container>
                   </select>
                 </div>
+
+                <div class="form-group">
+                  <select name="types" class="form-control ml-1 mr-2" style="width: 95%;">
+                    <option *ngIf="typeList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="typeList.length !== 0">
+                      <option *ngIf="typeList.length !== 0" [value]="0">All</option>
+                      <option *ngFor="let type of typeList">
+                        {{type.matchType}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <select name="modes" class="form-control ml-1 mr-2" style="width: 95%;">
+                    <option *ngIf="modeList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="modeList.length !== 0">
+                      <option *ngIf="modeList.length !== 0" [value]="0">All</option>
+                      <option *ngFor="let mode of modeList" [value]="mode.modeId">
+                        {{mode.modeName}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <select name="seasons" class="form-control ml-1 mr-2" style="width: 95%;">
+                    <option *ngIf="seasonList.length === 0">-- N/A --</option>
+                    <ng-container *ngIf="seasonList.length !== 0">
+                      <option *ngIf="seasonList.length !== 0" [value]="0">All</option>
+                      <option *ngFor="let season of seasonList" [value]="season.id">
+                        Season {{season.seasonNumber}}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <br><br>  
+                <div>
+                  <div class="form-group">
+                    <button class="btn btn-success">Filter</button>
+                  </div>
   
-                <div class="form-group">
-                  <select name="tournament" class="form-control ml-1" >
-                    <option *ngIf="tournamentList.length === 0">-- N/A --</option>
-                    <ng-container *ngIf="tournamentList.length !== 0">
-                      <option *ngFor="let tournament of tournamentList">
-                        {{tournament.tournamentName}}
-                      </option>
-                    </ng-container>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <select name="tournament" class="form-control ml-1 mr-2" >
-                    <option *ngIf="tournamentList.length === 0">-- N/A --</option>
-                    <ng-container *ngIf="tournamentList.length !== 0">
-                      <option *ngFor="let tournament of tournamentList">
-                        {{tournament.tournamentName}}
-                      </option>
-                    </ng-container>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <button class="btn btn-success">Filter</button>
-                </div>
-
-                <div class="form-group" *ngIf="(accountService.currentUser$ | async)">
-                  <button class="btn btn-outline-dark ml-1" >Add Match</button>
+                  
                 </div>
               </form>
 
+              <div class="form-group" *ngIf="(accountService.currentUser$ | async) && (!showAddForm)">
+                <button class="btn btn-dark ml-1" (click)='toggleAddMatch()' type="button">Add Match</button>
+              </div>
+
               <!-- match records here -->
-              <ng-container class="match-history" *ngIf="tournamentList.length !== 0">
+              <ng-container class="match-history" *ngIf="tournamentList.length !== 0 && !showAddForm">
                 <div class="row mt-2">
                   <div class="col-sm-4">
                     <div class="card mb-2" >
@@ -164,9 +191,32 @@
             </div>
         </tab>
 
-        <tab heading="Tournament">
+        <tab heading="Tournament" (selectTab)="sample()">
           <div class="container">
-            c
+
+            <!-- DIV FOR ADD SEASON -->
+            <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="false" [isAnimated]="true" 
+              *ngIf="(accountService.currentUser$ | async)">
+              <div class="well well-sm card card-block card-header" style="width: 100%; margin: auto; overflow-x: auto;">
+                  Add Season
+                  <table class="table" style="text-align: center;">
+                      <tr>
+                        <th>Tournament</th>
+                        <th>Latest Season</th>
+                        <th>Add New Season</th>
+                      </tr>
+
+                      <tr>
+                        <td>{{currentTournamentSelected}}</td>
+                        <td *ngIf="seasonList.length === 0">0</td>
+                        <td *ngIf="seasonList.length !== 0">{{seasonList[seasonList.length-1].seasonNumber}}</td>
+                        <td><span class="fa fa-plus" style="cursor: pointer;" 
+                          (click)="addSeason(seasonList[seasonList.length-1]?.seasonNumber || 0)"></span></td>
+                      </tr>
+                  </table>
+              </div>
+            </div>
+
           </div>
         </tab>
     </tabset>

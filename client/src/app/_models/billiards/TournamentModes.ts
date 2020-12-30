@@ -8,4 +8,5 @@ export interface TournamentModes
     highestRank: number;
     isPlayoff: boolean;
     modeId: number;
+    modeName: string;
 }

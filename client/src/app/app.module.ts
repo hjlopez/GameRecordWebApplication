@@ -38,6 +38,8 @@ import { MemberModalComponent } from './games/billiards/settings/billiards-setti
 import { TypeModalComponent } from './games/billiards/settings/billiards-settings/type-modal/type-modal.component';
 import { ModesModalComponent } from './games/billiards/settings/billiards-settings/modes-modal/modes-modal.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NewGameComponent } from './games/billiards/new-game/new-game.component';
+import { AddSeasonComponent } from './games/billiards/add-season/add-season.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     TournamentModalComponent,
     MemberModalComponent,
     TypeModalComponent,
-    ModesModalComponent
+    ModesModalComponent,
+    NewGameComponent,
+    AddSeasonComponent
   ],
   imports: [
     BrowserModule,

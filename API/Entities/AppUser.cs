@@ -19,5 +19,7 @@ namespace API.Entities
         public ICollection<AppUserRole> UserRoles { get; set; }
         public ICollection<Tournament> Tournaments { get; set; }
         public ICollection<SeasonHistory> SeasonHistories { get; set; }
+        public ICollection<BilliardsMatch> Winners { get; set; }
+        public ICollection<BilliardsMatch> Losers { get; set; }
     }
 }

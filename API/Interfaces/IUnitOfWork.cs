@@ -12,6 +12,7 @@ namespace API.Interfaces
         IBilliardsMatchTypesRepository BilliardsMatchTypesRepository {get;}
         IBilliardsModeRepository BilliardsModeRepository {get;}
         IBilliardsRepository BilliardsRepository {get;}
+        IBilliardsGameRepository BilliardsGameRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

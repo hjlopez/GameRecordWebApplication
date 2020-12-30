@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using API.Entities.Billiards;
 
 namespace API.Entities
 {
@@ -8,6 +9,7 @@ namespace API.Entities
         public string Mode { get; set; }
         
         public ICollection<TournamentMode> TournamentMode { get; set; }
+        public ICollection<BilliardsMatch> BilliardsMatches { get; set; }
         
     }
 }

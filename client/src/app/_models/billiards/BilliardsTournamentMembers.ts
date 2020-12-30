@@ -5,4 +5,5 @@ export interface BilliardsTournamentMembers
     username: string;
     gamerTag: string;
     tournamentId: number;
+    tournamentName: string;
 }

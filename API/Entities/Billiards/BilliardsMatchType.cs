@@ -9,5 +9,6 @@ namespace API.Entities
         public string Type { get; set; }
         public ICollection<TournamentMatchType> TournamentMatchType { get; set; }
         public ICollection<SeasonHistory> SeasonHistories { get; set; }
+        public ICollection<BilliardsMatch> BilliardsMatches { get; set; }
     }
 }

@@ -59,11 +59,53 @@ namespace API.Data.Billiards
 
         public async Task<IEnumerable<TournamentModeDto>> GetTournamentModesAsync(int tournamentId)
         {
-            var tour = await context.TournamentModes.Where(t => t.TournamentId == tournamentId)
+            var tour = await context.TournamentModes
+                .Where(t => t.TournamentId == tournamentId)
                 .OrderBy(x => x.Order)
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<TournamentModeDto>>(tour);
+        }
+
+        public async Task<IEnumerable<TournamentModeDto>> GetTournamentModesAsyncWithName(int tournamentId)
+        {
+            var tour = context.TournamentModes.AsQueryable();
+
+            var finalResult = await tour
+                .Where(t => t.TournamentId == tournamentId)
+                .Include(m => m.BilliardsMode)
+                .OrderBy(x => x.Order)
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    TournamentId = s.TournamentId,
+                    Order = s.Order,
+                    IsLast = s.IsLast,
+                    IsConsolation = s.IsConsolation,
+                    HighestRank = s.HighestRank,
+                    IsPlayoff = s.IsPlayoff,
+                    ModeId = s.ModeId,
+                    ModeName = s.BilliardsMode.Mode
+                }).ToListAsync();
+
+            var dto = new List<TournamentModeDto>();
+            foreach (var item in finalResult)
+            {
+                dto.Add(new TournamentModeDto
+                {
+                    Id = item.Id,
+                    TournamentId = item.TournamentId,
+                    Order = item.Order,
+                    IsLast = item.IsLast,
+                    IsConsolation = item.IsConsolation,
+                    HighestRank = item.HighestRank,
+                    IsPlayoff = item.IsPlayoff,
+                    ModeId = item.ModeId,
+                    ModeName = item.ModeName
+                });
+            }
+
+            return dto;
         }
 
         public void InsertMode(BilliardsMode mode)

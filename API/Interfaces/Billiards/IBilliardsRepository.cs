@@ -9,10 +9,11 @@ namespace API.Interfaces.Billiards
 {
     public interface IBilliardsRepository
     {
-        Task<IEnumerable<BilliardsTournamentMembersDto>> GetTournamentsForUserAsync(int userId);
+        Task<IEnumerable<BilliardsTournamentDto>> GetTournamentsForUserAsync(int userId);
         Task<IEnumerable<Season>> GetSeasonsForTournamentsAsync(int tournamentId);
         Task<Season> GetSeasonForTournamentAsync(int id);
         Task<Season> GetSeasonBySeasonNumber(int seasonNumber);
+        Task<Season> GetSeasonBySeasonNumberId(int seasonNumberId);
         void InsertSeasonForTournament(Season season);
         void DeleteSeasonFromTournament(Season season);
         void UpdateSeason(Season season);

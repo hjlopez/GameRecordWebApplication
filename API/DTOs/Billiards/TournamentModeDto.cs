@@ -10,5 +10,6 @@ namespace API.DTOs.Billiards
         public int HighestRank { get; set; }
         public bool IsPlayoff { get; set; }
         public int ModeId { get; set; }
+        public string ModeName { get; set; }
     }
 }

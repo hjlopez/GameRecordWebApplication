@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Billiards;
 using API.Entities;
@@ -38,6 +39,7 @@ namespace API.Helpers
             CreateMap<Season, SeasonDto>();
             CreateMap<SeasonHistoryDto, SeasonHistory>();
             CreateMap<SeasonHistory, SeasonHistoryDto>();
+            CreateMap<TournamentMembers, BilliardsTournamentDto>();
         }
 
         

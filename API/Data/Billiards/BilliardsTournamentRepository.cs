@@ -23,6 +23,13 @@ namespace API.Data
             context.Tournament.Remove(tournament);
         }
 
+        public async Task<IEnumerable<BilliardsTournamentMembersDto>> GetMemberTournamentList()
+        {
+            var tours = await context.TournamentMembers.ToListAsync();
+
+            return mapper.Map<IEnumerable<BilliardsTournamentMembersDto>>(tours);
+        }
+
         public async Task<Tournament> GetTournamentById(int id)
         {
             return await context.Tournament.FindAsync(id);

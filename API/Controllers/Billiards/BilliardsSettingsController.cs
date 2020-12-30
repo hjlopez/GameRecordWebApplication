@@ -79,6 +79,16 @@ namespace API.Controllers.Games_Settings
         public async Task<ActionResult<IEnumerable<BilliardsTournamentDto>>> GetBilliardsTournaments()
         {
             var tournaments = await unitOfWork.BilliardsTournamentRepository.GetTournamentList();
+            
+            return Ok(tournaments);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-billiards-tournament-member")]
+        public async Task<ActionResult<IEnumerable<BilliardsTournamentDto>>> GetBilliardsTournamentsMember()
+        {
+            var tournaments = await unitOfWork.BilliardsTournamentRepository.GetMemberTournamentList();
+            
             return Ok(tournaments);
         }
 
@@ -207,6 +217,8 @@ namespace API.Controllers.Games_Settings
             return BadRequest("Delete failed");
         }
 
+        [AllowAnonymous]
+        [Authorize]
         [HttpGet("get-tournament-types/{tournamentId}")]
         public async Task<ActionResult<IEnumerable<TournamentMatchTypesDto>>> GetTournamentTypes(int tournamentId)
         {
@@ -300,10 +312,21 @@ namespace API.Controllers.Games_Settings
             return BadRequest("Delete failed");
         }
 
+        [AllowAnonymous]
+        [Authorize]
         [HttpGet("get-tournament-modes/{tournamentId}")]
         public async Task<ActionResult<IEnumerable<TournamentModeDto>>> GetTournamentModes(int tournamentId)
         {
             return Ok(await unitOfWork.BilliardsModeRepository.GetTournamentModesAsync(tournamentId));
+        }
+
+        [AllowAnonymous]
+        [Authorize]
+        [HttpGet("get-tournament-modes-name/{tournamentId}")]
+        public async Task<ActionResult<IEnumerable<TournamentModeDto>>> GetTournamentModesName(int tournamentId)
+        {
+            var query = await unitOfWork.BilliardsModeRepository.GetTournamentModesAsyncWithName(tournamentId);
+            return Ok(query);
         }
 
         [HttpPost("insert-tournament-modes")]

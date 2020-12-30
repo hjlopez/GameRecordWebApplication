@@ -3,14 +3,16 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201228050323_AddedMatchTable")]
+    partial class AddedMatchTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,7 +207,8 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TournamentId");
+                    b.HasIndex("TournamentId")
+                        .IsUnique();
 
                     b.ToTable("Seasons");
                 });
@@ -600,8 +603,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Billiards.Season", b =>
                 {
                     b.HasOne("API.Entities.Tournament", "Tournament")
-                        .WithMany("Seasons")
-                        .HasForeignKey("TournamentId")
+                        .WithOne("Season")
+                        .HasForeignKey("API.Entities.Billiards.Season", "TournamentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -805,9 +808,9 @@ namespace API.Data.Migrations
                 {
                     b.Navigation("BilliardsMatches");
 
-                    b.Navigation("SeasonHistories");
+                    b.Navigation("Season");
 
-                    b.Navigation("Seasons");
+                    b.Navigation("SeasonHistories");
 
                     b.Navigation("TournamentMatchTypes");
 

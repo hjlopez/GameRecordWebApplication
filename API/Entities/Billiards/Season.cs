@@ -13,5 +13,6 @@ namespace API.Entities.Billiards
         public bool IsDone { get; set; }
 
         public ICollection<SeasonHistory> SeasonHistories { get; set; }
+        public ICollection<BilliardsMatch> BilliardsMatches { get; set; }
     }
 }

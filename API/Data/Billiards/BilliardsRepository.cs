@@ -60,6 +60,11 @@ namespace API.Data.Billiards
             return await context.Seasons.Where(s => s.SeasonNumber == seasonNumber).SingleOrDefaultAsync();
         }
 
+        public async Task<Season> GetSeasonBySeasonNumberId(int seasonNumberId)
+        {
+            return await context.Seasons.Where(s => s.Id == seasonNumberId).SingleOrDefaultAsync();
+        }
+
         public async Task<Season> GetSeasonForTournamentAsync(int id)
         {
             return await context.Seasons.Where(x => x.Id == id).SingleOrDefaultAsync();
@@ -71,11 +76,33 @@ namespace API.Data.Billiards
             
         }
 
-        public async Task<IEnumerable<BilliardsTournamentMembersDto>> GetTournamentsForUserAsync(int userId)
+        public async Task<IEnumerable<BilliardsTournamentDto>> GetTournamentsForUserAsync(int userId)
         {
-            var tours = await context.TournamentMembers.Where(s => s.UserId == userId).ToListAsync();
+            if (userId == 0)
+            {
+                var tours = await context.Tournament.ToListAsync();
+                return mapper.Map<IEnumerable<BilliardsTournamentDto>>(tours);
+            }
+            else
+            {
+                var tours = context.TournamentMembers.AsQueryable();
+                var returnValue = tours
+                                .Where(x => x.UserId == userId)
+                                .Include(t => t.Tournament)
+                                .Select(s => new {
+                                    Id = s.TournamentId,
+                                    TournamentName = s.Tournament.TournamentName
+                                }).ToListAsync();
 
-            return mapper.Map<IEnumerable<BilliardsTournamentMembersDto>>(tours);
+                var x = new List<BilliardsTournamentDto>();
+
+                foreach (var value in returnValue.Result)
+                {
+                    x.Add(new BilliardsTournamentDto {Id = value.Id, TournamentName = value.TournamentName});
+                }
+                return x;
+            }
+
         }
 
         public void InsertSeasonForTournament(Season season)

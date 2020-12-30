@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Billiards;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class BilliardsController : BaseApiController
     {
         private readonly IUnitOfWork unitOfWork;
@@ -21,17 +22,13 @@ namespace API.Controllers
             this.unitOfWork = unitOfWork;
         }
 
+        // [AllowAnonymous]
+        // [Authorize]
         [HttpGet("get-billiards-tournament/{userId}")]
         public async Task<ActionResult<IEnumerable<BilliardsTournamentDto>>> GetBilliardsTournaments(int userId)
         {
-            var tournaments = await unitOfWork.BilliardsRepository.GetTournamentsForUserAsync(userId);
-
-            foreach (var tour in tournaments)
-            {
-                var value = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(tour.TournamentId);
-                tour.TournamentName = value.TournamentName;
-            }
-            return Ok(tournaments);
+            var tours = await unitOfWork.BilliardsRepository.GetTournamentsForUserAsync(userId);
+            return Ok(tours);
         }
 
         [HttpGet("get-tournament-seasons/{tournamentId}")]

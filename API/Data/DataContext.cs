@@ -23,6 +23,7 @@ namespace API.Data
         public DbSet<TournamentMode> TournamentModes { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonHistory> SeasonHistories { get; set; }
+        public DbSet<BilliardsMatch> BilliardsMatches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -113,7 +114,7 @@ namespace API.Data
                 .HasKey(s => s.Id);
             builder.Entity<Season>()
                 .HasOne(t => t.Tournament)
-                .WithOne(x => x.Season)
+                .WithMany(x => x.Seasons)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
@@ -141,6 +142,45 @@ namespace API.Data
                 .HasOne(u => u.AppUser)
                 .WithMany(uu => uu.SeasonHistories)
                 .HasForeignKey(u => u.UserId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+
+            builder.Entity<BilliardsMatch>()
+                .HasKey(s => s.Id);
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.AppUserWin)
+                .WithMany(s => s.Winners)
+                .HasForeignKey(u => u.WinUserId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.AppUserLose)
+                .WithMany(s => s.Losers)
+                .HasForeignKey(u => u.LoseUserId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.BilliardsMatchType)
+                .WithMany(s => s.BilliardsMatches)
+                .HasForeignKey(u => u.TypeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.BilliardsMode)
+                .WithMany(s => s.BilliardsMatches)
+                .HasForeignKey(u => u.ModeId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.Season)
+                .WithMany(s => s.BilliardsMatches)
+                .HasForeignKey(u => u.SeasonNumberId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<BilliardsMatch>()
+                .HasOne(u => u.Tournament)
+                .WithMany(s => s.BilliardsMatches)
+                .HasForeignKey(u => u.TournamentId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
         }
