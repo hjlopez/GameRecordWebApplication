@@ -3,6 +3,8 @@ export interface BilliardsMatch
     id: number;
     winUserId: number;
     loseUserId: number;
+    winPhotoUrl: string;
+    losePhotoUrl: string;
     typeId: number;
     modeId: number;
     seasonNumberId: number;

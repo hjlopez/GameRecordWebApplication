@@ -9,6 +9,7 @@ namespace API.Interfaces
     {
         Task<IEnumerable<BilliardsTournamentDto>> GetTournamentList();
         Task<IEnumerable<BilliardsTournamentMembersDto>> GetMemberTournamentList();
+        Task<IEnumerable<BilliardsTournamentMembersDto>> GetMembersOfTournament(int tournamentId);
         Task<Tournament> GetTournamentDto(string tournamentName);
         Task<Tournament> GetTournamentById(int id);
         void InsertTournament(BilliardsTournamentDto dto);

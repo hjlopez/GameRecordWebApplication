@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs.Billiards;
+using API.Entities;
 using API.Entities.Billiards;
+using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -75,30 +78,76 @@ namespace API.Controllers.Billiards
             return Ok(mapper.Map<IEnumerable<BilliardsMatchDto>>(matches));
         }
 
-        [HttpGet("get-match-tournament/{tournamentId}")]
-        public async Task<ActionResult<IEnumerable<BilliardsMatchDto>>> GetMatchesByTournament(int tournamentId)
+        [AllowAnonymous]
+        [HttpGet("get-match-tournament")]
+        public async Task<ActionResult<IEnumerable<BilliardsMatchDto>>> GetMatchesByTournament([FromQuery] BilliardsMatchParams matchParams)
         {
-            var tournament = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(tournamentId);
+            
+            var tournament = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(matchParams.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
 
-            var matches = await unitOfWork.BilliardsGameRepository.GetMatchesBySeasonAsync(tournament.Id);
-            return Ok(mapper.Map<IEnumerable<BilliardsMatchDto>>(matches));
+            var matches = await unitOfWork.BilliardsGameRepository.GetMatchesByTournamentAsync(matchParams);
+
+            Response.AddPaginationHeader(matches.CurrentPage, matches.PageSize, matches.TotalCount, matches.TotalPages);
+
+            return Ok(matches);
         }
 
+        [AllowAnonymous]
+        [HttpGet("get-filtered-match")]
+        public async Task<ActionResult<IEnumerable<BilliardsMatchDto>>> GetFilteredMatches([FromQuery] BilliardsMatchParams matchParams)
+        {
+            var matches = await unitOfWork.BilliardsGameRepository.GetFilteredMatches(matchParams);
+
+            Response.AddPaginationHeader(matches.CurrentPage, matches.PageSize, matches.TotalCount, matches.TotalPages);
+
+            return Ok(matches);
+        }
+
+        private async Task<AppUser> CheckUser(int userId)
+        {
+            return await unitOfWork.UserRepository.GetUserByIdAsync(userId);
+
+        }
+
+        private async Task<BilliardsMatchType> CheckType(int typeId)
+        {
+            return await unitOfWork.BilliardsMatchTypesRepository.GetMatchTypeByIdAsync(typeId);
+        }
+
+        private async Task<BilliardsMode> CheckMode(int modeId)
+        {
+            return await unitOfWork.BilliardsModeRepository.GetModeByIdAsync(modeId);
+        }
+
+        private async Task<Season> CheckSeason(int seasonNumberId)
+        {
+            return await unitOfWork.BilliardsRepository.GetSeasonBySeasonNumberId(seasonNumberId);
+        }
+
+        private async Task<Tournament> CheckTournament(int tournamentId)
+        {
+            return await unitOfWork.BilliardsTournamentRepository.GetTournamentById(tournamentId);
+        }
+        
         [HttpPost("insert-match")]
         public async Task<ActionResult> InsertMatch(BilliardsMatchDto billiardsMatchDto)
         {
-            var userWin = await unitOfWork.UserRepository.GetUserByIdAsync(billiardsMatchDto.WinUserId);
-            if (userWin == null) return BadRequest("Invalid user.");
-            var userLose = await unitOfWork.UserRepository.GetUserByIdAsync(billiardsMatchDto.LoseUserId);
-            if (userLose == null) return BadRequest("Invalid user.");
-            var type = await unitOfWork.BilliardsMatchTypesRepository.GetMatchTypeByIdAsync(billiardsMatchDto.TypeId);
+            var user = CheckUser(billiardsMatchDto.WinUserId);
+            if (user == null) return BadRequest("Invalid user.");
+            user = CheckUser(billiardsMatchDto.LoseUserId);
+            if (user == null) return BadRequest("Invalid user.");
+
+            var type = CheckType(billiardsMatchDto.TypeId);
             if (type == null) return BadRequest("Invalid type.");
-            var mode = await unitOfWork.BilliardsModeRepository.GetModeByIdAsync(billiardsMatchDto.ModeId);
+
+            var mode = CheckMode(billiardsMatchDto.ModeId);
             if (mode == null) return BadRequest("Invalid mode.");
-            var season = await unitOfWork.BilliardsRepository.GetSeasonBySeasonNumberId(billiardsMatchDto.SeasonNumberId);
+
+            var season = CheckSeason(billiardsMatchDto.SeasonNumberId);
             if (season == null) return BadRequest("Invalid season.");
-            var tournament = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(billiardsMatchDto.TournamentId);
+
+            var tournament = CheckTournament(billiardsMatchDto.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
 
             unitOfWork.BilliardsGameRepository.InsertMatch(mapper.Map<BilliardsMatch>(billiardsMatchDto));

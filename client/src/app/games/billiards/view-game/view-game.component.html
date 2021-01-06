@@ -1,0 +1,116 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <form >
+        <ng-container *ngIf="name !== 'Delete Match?' && match">
+            
+            <div class="container match-details" style="text-align: center">
+                <div class="row" >
+                    <div class="col-sm" ></div>
+                    <div class="col-sm" >Head-to-Head Matchup</div>
+                    <div class="col-sm" ></div>
+                </div>
+                
+                <!-- picture and username -->
+                <div class="d-flex flex-row mb-2">
+                    <div class="col-sm " >
+                      <img class="userPic" src="{{match?.winPhotoUrl || './assets/user.png'}}" alt=""><br>
+                      <span>{{getNames(match?.winUserId || 0) | titlecase}}</span>
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                    <div class="col-sm" style="text-align: center;">
+                      <img class="userPic" src="{{match?.losePhotoUrl || './assets/user.png'}}" alt=""><br>
+                      <span>{{getNames(match?.loseUserId || 0) | titlecase}}</span>
+                    </div>
+                </div>
+
+                 <!-- wins -->
+                <div class="d-flex flex-row mb-2">
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">{{match?.winnerWins}}</span>
+                    </div>
+                    <div class="col-sm">
+                        Wins This Game
+                    </div>
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">{{match?.loserWins}}</span>
+                    </div>
+                </div>
+
+                <!-- season type head to head -->
+                <div class="d-flex flex-row mb-2">
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">
+                            {{winId}}
+                        </span>
+                    </div>
+                    <div class="col-sm">
+                        {{getType(match.typeId)}} Season
+                    </div>
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">
+                            {{loseId}}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- season head to head -->
+                <div class="d-flex flex-row mb-2">
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">{{match?.winnerWins}}</span>
+                    </div>
+                    <div class="col-sm">
+                        This Season
+                    </div>
+                    <div class="col-sm">
+                        <span style="font-weight: bold;">{{match?.loserWins}}</span>
+                    </div>
+                </div>
+
+                <!-- current season -->
+                <div class="d-flex flex-row mb-2">
+                    <div class="col-sm">
+                        
+                    </div>
+                    <div class="col-sm" style="color: forestgreen;">
+                        Season {{findSeason(match.seasonNumberId)}}
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                </div>
+
+                <!-- mode -->
+                <div class="d-flex flex-row mb-2" style="color: forestgreen;">
+                    <div class="col-sm">
+                        
+                    </div>
+                    <div class="col-sm">
+                        {{findMode(match.modeId)}}
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                </div>
+                
+            </div>
+
+            
+        </ng-container>
+    </form>
+    
+
+    
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-light mr-2" (click)="bsModalRef.hide()">Close</button>
+    <button class="btn btn-success" *ngIf="name !== 'Match Info'" (click)="confirmAction()">Confirm</button>
+</div>

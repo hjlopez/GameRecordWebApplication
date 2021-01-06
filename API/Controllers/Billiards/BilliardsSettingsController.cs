@@ -92,6 +92,8 @@ namespace API.Controllers.Games_Settings
             return Ok(tournaments);
         }
 
+        [AllowAnonymous]
+        [Authorize]
         [HttpGet("get-tournament-members/{tournamentId}")]
         public async Task<ActionResult<IEnumerable<BilliardsTournamentMembersDto>>> GetMembers(int tournamentId)
         {

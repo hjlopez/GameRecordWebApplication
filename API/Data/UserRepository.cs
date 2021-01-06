@@ -37,6 +37,11 @@ namespace API.Data
             context.Users.Remove(appUser);
         }
 
+        public async Task<Photo> GetPhoto(int userId)
+        {
+            return await context.Photo.Where(x => x.AppUserId == userId).SingleOrDefaultAsync();
+        }
+
         public async Task<AppUser> GetUserByIdAsync(int id)
         {
             return await context.Users.FindAsync(id);

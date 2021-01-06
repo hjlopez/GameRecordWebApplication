@@ -36,6 +36,16 @@ export class BilliardsService {
     );
   }
 
+  getMembersTournament(tournamentId: number): Observable<BilliardsTournamentMembers[]>
+  {
+    return this.http.get<BilliardsTournamentMembers[]>(environment.apiUrl + 'billiardsSettings/get-tournament-members/'
+      + tournamentId).pipe(
+      map((response: BilliardsTournamentMembers[]) => {
+        return response;
+      })
+    );
+  }
+
   addTournament(tournament: BilliardsTournament): Observable<any>
   {
     return this.http.post(environment.apiUrl + 'billiardsSettings/insert-billiards-tournament', tournament).pipe(

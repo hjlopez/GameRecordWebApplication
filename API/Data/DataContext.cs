@@ -42,6 +42,12 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<Photo>()
+                .HasOne(a => a.AppUser)
+                .WithMany(p => p.Photos)
+                .HasForeignKey(a => a.AppUserId)
+                .IsRequired();
             
             // games entity
             builder.Entity<Games>()

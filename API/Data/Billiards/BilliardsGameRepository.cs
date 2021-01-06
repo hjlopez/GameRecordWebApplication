@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs.Billiards;
 using API.Entities.Billiards;
+using API.Helpers;
 using API.Interfaces.Billiards;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Billiards
@@ -23,6 +26,22 @@ namespace API.Data.Billiards
             context.BilliardsMatches.Remove(billiardsMatch);
         }
 
+        public async Task<PagedList<BilliardsMatchDto>> GetFilteredMatches(BilliardsMatchParams matchParams)
+        {
+            var query = context.BilliardsMatches.AsQueryable();
+
+            query = query.Where(x => x.TournamentId == matchParams.TournamentId); 
+
+            if (matchParams.TypeId != 0) query = query.Where(x => x.TypeId == matchParams.TypeId); 
+            if (matchParams.ModeId != 0) query = query.Where(x => x.ModeId == matchParams.ModeId);
+            if (matchParams.SeasonNumberId != 0) query = query.Where(x => x.SeasonNumberId == matchParams.SeasonNumberId); 
+
+            query = query.OrderByDescending(s => s.Id).ThenByDescending(s => s.SeasonNumberId);
+
+            return await PagedList<BilliardsMatchDto>.CreateAsync(query.ProjectTo<BilliardsMatchDto>(mapper.ConfigurationProvider), 
+                matchParams.PageNumber, matchParams.PageSize);
+        }
+
         public async Task<IEnumerable<BilliardsMatch>> GetMatchesAsync()
         {
             return await context.BilliardsMatches.ToListAsync();
@@ -38,9 +57,16 @@ namespace API.Data.Billiards
             return await context.BilliardsMatches.Where(x => x.SeasonNumberId == seasonNumberId).ToListAsync();
         }
 
-        public async Task<IEnumerable<BilliardsMatch>> GetMatchesByTournamentAsync(int tournamentId)
+        public async Task<PagedList<BilliardsMatchDto>> GetMatchesByTournamentAsync(BilliardsMatchParams matchParams)
         {
-            return await context.BilliardsMatches.Where(x => x.TournamentId == tournamentId).ToListAsync();
+            var query = context.BilliardsMatches.AsQueryable();
+
+            query = query.Where(x => x.TournamentId == matchParams.TournamentId); 
+
+            query = query.OrderByDescending(s => s.Id).ThenByDescending(s => s.SeasonNumberId);
+
+            return await PagedList<BilliardsMatchDto>.CreateAsync(query.ProjectTo<BilliardsMatchDto>(mapper.ConfigurationProvider), 
+                matchParams.PageNumber, matchParams.PageSize);
         }
 
         public async Task<IEnumerable<BilliardsMatch>> GetMatchesByTypeAsync(int typeId)

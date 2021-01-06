@@ -84,4 +84,13 @@ export class AccountService {
     // get payload of token
     return JSON.parse(atob(token.split('.')[1]));
   }
+
+  getUserInfo(userId: number): Observable<User>
+  {
+    return this.http.get<User>(environment.apiUrl + 'account/get-user/' + userId).pipe(
+      map((response: User) => {
+        return response;
+      })
+    );
+  }
 }

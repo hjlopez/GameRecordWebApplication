@@ -17,10 +17,12 @@ namespace API.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly ITokenService tokenService;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly IUnitOfWork unitOfWork;
 
         public AccountController(UserManager<AppUser> userManager, IMapper mapper, ITokenService tokenService,
-                                    SignInManager<AppUser> signInManager)
+                                    SignInManager<AppUser> signInManager, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.signInManager = signInManager;
             this.tokenService = tokenService;
             this.userManager = userManager;
@@ -72,7 +74,7 @@ namespace API.Controllers
             var user = await userManager.Users.Include(p => p.Photos).SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username!");
-            
+
             // set email to sample@email.com if empty
             if (user.Email == "" || user.Email == null) user.Email = "sample@email.com";
 
@@ -97,6 +99,21 @@ namespace API.Controllers
                 JoinBilliards = user.JoinBilliards,
                 PhotoUrl = url
             };
+        }
+
+        [HttpGet("get-user/{userId}")]
+        public async Task<ActionResult<UserDto>> GetUserById(int userId)
+        {
+            var user = await unitOfWork.UserRepository.GetUserByIdAsync(userId);
+
+            var dto = new UserDto();
+            dto = mapper.Map(user, dto);
+
+            var photo = await unitOfWork.UserRepository.GetPhoto(userId);
+            if (photo == null) dto.PhotoUrl = "";
+            else dto.PhotoUrl = photo.Url;
+            
+            return Ok(dto);
         }
 
     }

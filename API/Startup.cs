@@ -31,7 +31,7 @@ namespace API
             // ordering does not matter
             services.AddApplicationServices(configuration);
             services.AddControllers();
-            //services.AddCors();
+            services.AddCors();
 
             // jwt authentication
             services.AddIdentityServices(configuration);

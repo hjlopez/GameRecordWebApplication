@@ -40,6 +40,8 @@ import { ModesModalComponent } from './games/billiards/settings/billiards-settin
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NewGameComponent } from './games/billiards/new-game/new-game.component';
 import { AddSeasonComponent } from './games/billiards/add-season/add-season.component';
+import { ViewGameComponent } from './games/billiards/view-game/view-game.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { AddSeasonComponent } from './games/billiards/add-season/add-season.comp
     TypeModalComponent,
     ModesModalComponent,
     NewGameComponent,
-    AddSeasonComponent
+    AddSeasonComponent,
+    ViewGameComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,8 @@ import { AddSeasonComponent } from './games/billiards/add-season/add-season.comp
       positionClass: 'toast-bottom-right'
     }),
     ModalModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

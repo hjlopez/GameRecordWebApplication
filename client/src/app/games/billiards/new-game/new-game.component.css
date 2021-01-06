@@ -1,0 +1,19 @@
+.controls {
+    margin: auto;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+.data {
+    /* flex: 0 0 65%; */
+    display: inline-flex;
+}
+
+.player-lose {
+    /* flex: 1; */
+    display: inline-flex;
+}
+
+.label-info {
+    color: blue;
+}

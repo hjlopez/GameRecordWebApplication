@@ -33,6 +33,8 @@ namespace API.Data
 
         public IBilliardsGameRepository BilliardsGameRepository => new BilliardsGameRepository(context, mapper);
 
+        public IUserWins UserWins => new UserWins(context, mapper);
+
         public async Task<bool> Complete()
         {
             return await context.SaveChangesAsync() > 0;

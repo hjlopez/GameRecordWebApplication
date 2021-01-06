@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -21,6 +22,13 @@ namespace API.Data
         public void DeleteTournament(Tournament tournament)
         {
             context.Tournament.Remove(tournament);
+        }
+
+        public async Task<IEnumerable<BilliardsTournamentMembersDto>> GetMembersOfTournament(int tournamentId)
+        {
+            var members = await context.TournamentMembers.Where(x => x.TournamentId == tournamentId).ToListAsync();
+
+            return mapper.Map<IEnumerable<BilliardsTournamentMembersDto>>(members);
         }
 
         public async Task<IEnumerable<BilliardsTournamentMembersDto>> GetMemberTournamentList()
