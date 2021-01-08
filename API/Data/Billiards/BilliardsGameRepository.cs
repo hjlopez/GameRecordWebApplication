@@ -21,6 +21,12 @@ namespace API.Data.Billiards
             this.context = context;
         }
 
+        public async Task<BilliardsMatch> CheckIfLastModeIsPlayed(int modeId, int seasonNumberId, int tournamentId, int typeId)
+        {
+            return await context.BilliardsMatches.Where(x => x.ModeId == modeId && x.SeasonNumberId == seasonNumberId &&
+                                                        x.TournamentId == tournamentId && x.TypeId == typeId).FirstOrDefaultAsync();
+        }
+
         public void DeleteMatch(BilliardsMatch billiardsMatch)
         {
             context.BilliardsMatches.Remove(billiardsMatch);

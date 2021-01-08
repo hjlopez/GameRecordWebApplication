@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Season } from '../_models/billiards/Season';
+import { SeasonHistory } from '../_models/billiards/SeasonHistory';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,24 @@ export class BilliardsSeasonService {
   updateTournamentSeason(season: Season): Observable<any>
   {
     return this.http.put(environment.apiUrl + 'billiards/update-tournament-season', season).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  insertSeasonHistory(seasonHistory: Partial<SeasonHistory>): Observable<any>
+  {
+    return this.http.post(environment.apiUrl + 'seasonHistory/insert-history', seasonHistory).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  deleteSeasonHistory(matchId: number): Observable<any>
+  {
+    return this.http.delete(environment.apiUrl + 'seasonHistory/delete-history/' + matchId).pipe(
       map((response: any) => {
         return response;
       })

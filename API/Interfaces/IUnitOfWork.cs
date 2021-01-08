@@ -14,6 +14,7 @@ namespace API.Interfaces
         IBilliardsRepository BilliardsRepository {get;}
         IBilliardsGameRepository BilliardsGameRepository {get;}
         IUserWins UserWins {get;}
+        ISeasonHistoryRepository SeasonHistoryRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

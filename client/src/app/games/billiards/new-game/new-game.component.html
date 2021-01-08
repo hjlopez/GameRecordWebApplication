@@ -5,6 +5,8 @@
         <h4 class="title text-center">Add new match to {{tournament.tournamentName}}</h4>
 
         <div class="container-values" >
+
+            <!-- winner and loser -->
             <div class="controls">
                 <div class="data">
                     <span class="label-info mr-3">Winner</span>
@@ -31,6 +33,7 @@
                 </div>
             </div>
 
+            <!-- type -->
             <div class="controls">
 
                 <div class="data">
@@ -44,6 +47,7 @@
                 </div>
             </div>
 
+            <!-- mode -->
             <div class="controls">
 
                 <div class="data">
@@ -57,6 +61,7 @@
                 </div>
             </div>
 
+            <!-- season -->
             <div class="controls">
 
                 <div class="data">
@@ -70,6 +75,7 @@
                 </div>
             </div>
 
+            <!-- number of wins -->
             <div class="controls">
 
                 <div class="data">
@@ -89,6 +95,7 @@
                 </div>
             </div>
 
+            <!-- games played -->
             <div class="controls">
                 <div class="data">
                     <span class="label-info w-200" >Total Games Played: </span>
@@ -100,8 +107,9 @@
             
         </div>
 
+        <!-- buttons -->
         <div class="controls">
-            <button class="btn btn-danger mr-4" type="button" (click)="change()">Close</button>
+            <button class="btn btn-danger mr-4" type="button" (click)="change(false)">Close</button>
             <button class="btn btn-success" type="submit" (click)="insert()">Insert Match</button>
         </div>
     </form>

@@ -14,6 +14,7 @@ namespace API.Interfaces.Billiards
         Task<IEnumerable<BilliardsMatch>> GetMatchesByTypeAsync(int typeId);
         Task<IEnumerable<BilliardsMatch>> GetMatchesByModeAsync(int modeId);
         Task<IEnumerable<BilliardsMatch>> GetMatchesBySeasonAsync(int seasonNumberId);
+        Task<BilliardsMatch> CheckIfLastModeIsPlayed(int modeId, int seasonNumberId, int tournamentId, int typeId);
         Task<PagedList<BilliardsMatchDto>> GetMatchesByTournamentAsync(BilliardsMatchParams matchParams);
         Task<PagedList<BilliardsMatchDto>> GetFilteredMatches(BilliardsMatchParams matchParams);
         void InsertMatch(BilliardsMatch billiardsMatch);

@@ -42,6 +42,7 @@ import { NewGameComponent } from './games/billiards/new-game/new-game.component'
 import { AddSeasonComponent } from './games/billiards/add-season/add-season.component';
 import { ViewGameComponent } from './games/billiards/view-game/view-game.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     ModesModalComponent,
     NewGameComponent,
     AddSeasonComponent,
-    ViewGameComponent
+    ViewGameComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,

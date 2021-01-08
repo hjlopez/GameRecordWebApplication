@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs.Billiards;
 using API.Entities;
@@ -8,6 +9,7 @@ using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Billiards
@@ -17,8 +19,10 @@ namespace API.Controllers.Billiards
     {
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
-        public BilliardsGameController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly UserManager<AppUser> userManager;
+        public BilliardsGameController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager)
         {
+            this.userManager = userManager;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
@@ -47,7 +51,7 @@ namespace API.Controllers.Billiards
             var matches = await unitOfWork.BilliardsGameRepository.GetMatchesByUserAsync(user.Id);
             return Ok(mapper.Map<IEnumerable<BilliardsMatchDto>>(matches));
         }
-        
+
         [HttpGet("get-match-type/{typeId}")]
         public async Task<ActionResult<IEnumerable<BilliardsMatchDto>>> GetMatchesByType(int typeId)
         {
@@ -82,7 +86,7 @@ namespace API.Controllers.Billiards
         [HttpGet("get-match-tournament")]
         public async Task<ActionResult<IEnumerable<BilliardsMatchDto>>> GetMatchesByTournament([FromQuery] BilliardsMatchParams matchParams)
         {
-            
+
             var tournament = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(matchParams.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
 
@@ -129,7 +133,7 @@ namespace API.Controllers.Billiards
         {
             return await unitOfWork.BilliardsTournamentRepository.GetTournamentById(tournamentId);
         }
-        
+
         [HttpPost("insert-match")]
         public async Task<ActionResult> InsertMatch(BilliardsMatchDto billiardsMatchDto)
         {
@@ -138,7 +142,7 @@ namespace API.Controllers.Billiards
             user = CheckUser(billiardsMatchDto.LoseUserId);
             if (user == null) return BadRequest("Invalid user.");
 
-            var type = CheckType(billiardsMatchDto.TypeId);
+            var type = await unitOfWork.BilliardsMatchTypesRepository.GetMatchTypeByIdAsync(billiardsMatchDto.TypeId);
             if (type == null) return BadRequest("Invalid type.");
 
             var mode = CheckMode(billiardsMatchDto.ModeId);
@@ -149,6 +153,14 @@ namespace API.Controllers.Billiards
 
             var tournament = CheckTournament(billiardsMatchDto.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
+
+            // before insert, check first if the final mode is already inserted for the type, season and tournament
+            var lastMode = await unitOfWork.BilliardsModeRepository.GetTournamentLastModeAsync(billiardsMatchDto.TournamentId);
+            
+            // check if last mode is already inserted to prevent new matches
+            var history = await unitOfWork.BilliardsGameRepository.CheckIfLastModeIsPlayed(lastMode.ModeId, billiardsMatchDto.SeasonNumberId,
+                    billiardsMatchDto.TournamentId, billiardsMatchDto.TypeId);
+            if (history != null) return BadRequest("Cannot insert anymore to " + type.Type + " for this season");
 
             unitOfWork.BilliardsGameRepository.InsertMatch(mapper.Map<BilliardsMatch>(billiardsMatchDto));
             if (await unitOfWork.Complete()) return NoContent();

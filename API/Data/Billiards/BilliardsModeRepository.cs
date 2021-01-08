@@ -46,6 +46,12 @@ namespace API.Data.Billiards
             return mapper.Map<IEnumerable<BilliardsModeDto>>(mode);
         }
 
+        public async Task<TournamentMode> GetTournamentLastModeAsync(int tournamentId)
+        {
+            return await context.TournamentModes.Where(w => w.TournamentId == tournamentId && w.IsLast == true)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<TournamentMode> GetTournamentModeAsync(int tournamentId, int modeId)
         {
             return await context.TournamentModes.Where(w => w.TournamentId == tournamentId && w.ModeId == modeId)

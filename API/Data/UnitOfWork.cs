@@ -35,6 +35,8 @@ namespace API.Data
 
         public IUserWins UserWins => new UserWins(context, mapper);
 
+        public ISeasonHistoryRepository SeasonHistoryRepository => new SeasonHistoryRepository(context, mapper);
+
         public async Task<bool> Complete()
         {
             return await context.SaveChangesAsync() > 0;

@@ -154,10 +154,20 @@ export class BilliardsMatchService {
       })
     );
 
-    // return this.http.get<UserWins>(environment.apiUrl + 'billiardsGame/get-match-type?userId=' + userId + '&opponentId=' + oppId).pipe(
-    //   map((response: UserWins) => {
-    //     return response;
-    //   })
-    // );
+  }
+
+  getSeasonMatchUp(wins: UserWins): Observable<UserWins>
+  {
+    let param = new HttpParams();
+    param = param.append('userId', wins.userId.toString());
+    param = param.append('opponentUserId', wins.opponentUserId.toString());
+    param = param.append('seasonNumberId', wins.seasonNumberId.toString());
+    param = param.append('tournamentId', wins.tournamentId.toString());
+
+    return this.http.get(environment.apiUrl + 'userWins/get-season-matchup', {params: param}).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
   }
 }

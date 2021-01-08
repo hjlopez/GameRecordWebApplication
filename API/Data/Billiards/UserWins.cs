@@ -91,30 +91,7 @@ namespace API.Data.Billiards
             dto.UserId = userId;
             return dto;
         }
-
-        // public async Task<UserWinsDto> GetTotalUserWinsVsUserType(UserWinsDto dto)
-        // {
-
-        //     var query1 = await context.BilliardsMatches
-        //         .Where((x => x.WinUserId == dto.UserId && x.LoseUserId == dto.OpponentUserId 
-        //                 && x.TournamentId == dto.TournamentId && x.SeasonNumberId == dto.SeasonNumberId && x.TypeId == dto.TypeId)).ToListAsync();
-
-        //     var query2 = await context.BilliardsMatches
-        //         .Where((y => y.LoseUserId == dto.UserId && y.WinUserId == dto.OpponentUserId 
-        //                 && y.TournamentId == dto.TournamentId && y.SeasonNumberId == dto.SeasonNumberId && y.TypeId == dto.TypeId)).ToListAsync();
-
-        //     foreach (var item in query1)
-        //     {
-        //         dto.UserWins += item.WinnerWins;
-        //     }
-
-        //     foreach (var item in query2)
-        //     {
-        //         dto.UserWins += item.LoserWins;
-        //     }
-
-        //     return dto;
-        // }
+        
         public async Task<UserWinsDto> GetTotalUserWinsVsUserType(int userId, int opponentUserId, int tournamentId, int seasonId, int typeId)
         {
             var dto = new UserWinsDto();

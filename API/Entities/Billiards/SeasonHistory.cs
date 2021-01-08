@@ -15,6 +15,8 @@ namespace API.Entities.Billiards
         public AppUser AppUser { get; set; }
         public int UserId { get; set; }
         public int Rank { get; set; }
+        public int MatchId { get; set; }
+        public int ModeId { get; set; }
 
         public bool IsDone { get; set; }
 

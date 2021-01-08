@@ -19,14 +19,14 @@
                 <!-- picture and username -->
                 <div class="d-flex flex-row mb-2">
                     <div class="col-sm " >
-                      <img class="userPic" src="{{match?.winPhotoUrl || './assets/user.png'}}" alt=""><br>
+                      <img class="gamePic" src="{{match?.winPhotoUrl || './assets/user.png'}}" alt=""><br>
                       <span>{{getNames(match?.winUserId || 0) | titlecase}}</span>
                     </div>
                     <div class="col-sm">
                         
                     </div>
                     <div class="col-sm" style="text-align: center;">
-                      <img class="userPic" src="{{match?.losePhotoUrl || './assets/user.png'}}" alt=""><br>
+                      <img class="gamePic" src="{{match?.losePhotoUrl || './assets/user.png'}}" alt=""><br>
                       <span>{{getNames(match?.loseUserId || 0) | titlecase}}</span>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                 <div class="d-flex flex-row mb-2">
                     <div class="col-sm">
                         <span style="font-weight: bold;">
-                            {{winId}}
+                            {{winType}}
                         </span>
                     </div>
                     <div class="col-sm">
@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-sm">
                         <span style="font-weight: bold;">
-                            {{loseId}}
+                            {{loseType}}
                         </span>
                     </div>
                 </div>
@@ -64,13 +64,13 @@
                 <!-- season head to head -->
                 <div class="d-flex flex-row mb-2">
                     <div class="col-sm">
-                        <span style="font-weight: bold;">{{match?.winnerWins}}</span>
+                        <span style="font-weight: bold;">{{winSeason}}</span>
                     </div>
                     <div class="col-sm">
                         This Season
                     </div>
                     <div class="col-sm">
-                        <span style="font-weight: bold;">{{match?.loserWins}}</span>
+                        <span style="font-weight: bold;">{{loseSeason}}</span>
                     </div>
                 </div>
 

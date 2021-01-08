@@ -42,6 +42,8 @@ namespace API.Helpers
             CreateMap<TournamentMembers, BilliardsTournamentDto>();
             CreateMap<BilliardsMatchDto, BilliardsMatch>();
             CreateMap<BilliardsMatch, BilliardsMatchDto>();
+            CreateMap<SeasonHistory, SeasonHistoryDto>();
+            CreateMap<SeasonHistoryDto, SeasonHistory>();
         }
 
         

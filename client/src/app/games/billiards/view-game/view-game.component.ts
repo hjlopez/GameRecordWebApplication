@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BilliardsMatch } from 'src/app/_models/billiards/BilliardsMatch';
 import { BilliardsTournamentMembers } from 'src/app/_models/billiards/BilliardsTournamentMembers';
@@ -9,6 +8,7 @@ import { TournamentModes } from 'src/app/_models/billiards/TournamentModes';
 import { UserWins } from 'src/app/_models/billiards/UserWins';
 import { AccountService } from 'src/app/_services/account.service';
 import { BilliardsMatchService } from 'src/app/_services/billiards-match.service';
+import { BilliardsSeasonService } from 'src/app/_services/billiards-season.service';
 
 @Component({
   selector: 'app-view-game',
@@ -19,8 +19,6 @@ export class ViewGameComponent implements OnInit {
   name = '';
   winPhotoUrl = '';
   losePhotoUrl = '';
-  winId = 0;
-  loseId = 154;
   matchId = 0;
   members = [] as BilliardsTournamentMembers[];
   match = {} as BilliardsMatch;
@@ -28,28 +26,46 @@ export class ViewGameComponent implements OnInit {
   typeList = [] as TournamentMatchType[];
   seasonList = [] as Season[];
 
-
+  winType = 0;
+  loseType = 0;
+  winSeason = 0;
+  loseSeason = 0;
 
   @Input() confirm = new EventEmitter();
 
-  constructor(public bsModalRef: BsModalRef, private matchService: BilliardsMatchService, private accountService: AccountService) { }
+  constructor(public bsModalRef: BsModalRef, private matchService: BilliardsMatchService, private accountService: AccountService,
+              private seasonService: BilliardsSeasonService) { }
 
   ngOnInit(): void {
-    // const wins = {} as UserWins;
-    // wins.userId = this.match.winUserId;
-    // wins.opponentUserId = this.match.loseUserId;
-    // wins.typeId = this.match.typeId;
-    // wins.seasonNumberId = this.match.seasonNumberId;
-    // wins.tournamentId = this.match.tournamentId;
+    if (this.name !== 'Delete Match?')
+    {
+      this.getSeasonTypeMatchup(this.match.winUserId, this.match.loseUserId, 'w');
+      this.getSeasonTypeMatchup(this.match.loseUserId, this.match.winUserId, 'l');
 
-    // this.matchService.getSeasonTournamentMatchUp(wins).subscribe(response => {
-    //   console.log(response);
-    // });
-    this.getSeasonTypeMatchup(this.match.winUserId, this.match.loseUserId, 'w');
-    this.getSeasonTypeMatchup(this.match.loseUserId, this.match.winUserId, 'l');
+      this.getSeasonMatchup(this.match.winUserId, this.match.loseUserId, 'w');
+      this.getSeasonMatchup(this.match.loseUserId, this.match.winUserId, 'l');
+    }
+  }
 
-    // console.log(this.winId);
-    // console.log(this.loseId);
+  getSeasonMatchup(userId: number, opponentUserId: number, tag: string): void
+  {
+    const wins = {} as UserWins;
+    wins.userId = userId;
+    wins.opponentUserId = opponentUserId;
+    wins.seasonNumberId = this.match.seasonNumberId;
+    wins.tournamentId = this.match.tournamentId;
+
+    this.matchService.getSeasonMatchUp(wins).subscribe(response => {
+
+      if (tag === 'w')
+      {
+        this.winSeason = response.userWins;
+      }
+      else
+      {
+        this.loseSeason = response.userWins;
+      }
+    });
   }
 
   getSeasonTypeMatchup(userId: number, opponentUserId: number, tag: string): void
@@ -63,22 +79,16 @@ export class ViewGameComponent implements OnInit {
     wins.tournamentId = this.match.tournamentId;
 
     this.matchService.getSeasonTournamentMatchUp(wins).subscribe(response => {
-      // console.log(response.userWins);
-      // return response.userWins;
-      // win = response.userWins;
 
       if (tag === 'w')
       {
-        this.winId = response.userWins;
+        this.winType = response.userWins;
       }
       else
       {
-        this.loseId = response.userWins;
+        this.loseType = response.userWins;
       }
     });
-
-    // console.log(win);
-    // return win;
   }
 
   getNames(userId: number): string
@@ -115,10 +125,23 @@ export class ViewGameComponent implements OnInit {
     // delete
     if (this.name === 'Delete Match?')
     {
-      this.matchService.deleteMatch(this.matchId).subscribe(() => {
-        this.confirm.emit('Match deleted.');
-        this.bsModalRef.hide();
-      });
+      if (this.modeList.find(x => x.modeId === this.match.modeId)?.isConsolation ||
+          this.modeList.find(x => x.modeId === this.match.modeId)?.isLast)
+      {
+        this.seasonService.deleteSeasonHistory(this.matchId).subscribe(() => {
+          this.matchService.deleteMatch(this.matchId).subscribe(() => {
+            this.confirm.emit('Match deleted.');
+            this.bsModalRef.hide();
+          });
+        });
+      }
+      else
+      {
+        this.matchService.deleteMatch(this.matchId).subscribe(() => {
+          this.confirm.emit('Match deleted.');
+          this.bsModalRef.hide();
+        });
+      }
     }
   }
 

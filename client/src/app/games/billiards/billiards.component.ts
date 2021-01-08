@@ -134,10 +134,20 @@ export class BilliardsComponent implements OnInit {
 
   changeStatus(event: any): void
   {
-    this.showAddForm = event;
+    this.showAddForm = event.isRetain;
+
+    // to refresh season list if final
+    if (event.lastType)
+    {
+      this.seasonService.getTournamentSeasons(this.selectedValue).subscribe(seasons => this.seasonList = seasons);
+    }
     this.loadMatchTournament(this.selectedValue, this.currentPage);
   }
 
+  // removeTrashIcon(): void
+  // {
+
+  // }
   addSeason(seasonNumber: number): void
   {
     const currentTournamentId = this.tournament.id;
@@ -236,11 +246,10 @@ export class BilliardsComponent implements OnInit {
       };
     }
 
-
     this.bsModalRef = this.modalService.show(ViewGameComponent, config);
 
     this.bsModalRef.content.confirm.subscribe((message: string) => {
-      this.loadMatchTournament(this.selectedValue, this.currentPage);
+      this.loadMatchTournament(this.selectedValue, 1);
     });
   }
 

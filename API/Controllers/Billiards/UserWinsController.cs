@@ -25,5 +25,12 @@ namespace API.Controllers.Billiards
             // return Ok();     
             return Ok(await unitOfWork.UserWins.GetTotalUserWinsVsUserType(userId, opponentUserId, tournamentId, seasonNumberId, typeId));
         }
+
+        [HttpGet("get-season-matchup")]
+        public async Task<ActionResult<UserWinsDto>> GetSeasonTypeMatchUp([FromQuery] int userId, int opponentUserId,
+                                                                                int seasonNumberId, int tournamentId)
+        {
+            return Ok(await unitOfWork.UserWins.GetTotalUserWinsVsUserSeason(userId, opponentUserId, tournamentId, seasonNumberId));
+        }
     }
 }

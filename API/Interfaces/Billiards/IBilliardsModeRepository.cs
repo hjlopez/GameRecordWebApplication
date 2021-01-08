@@ -18,6 +18,7 @@ namespace API.Interfaces.Billiards
         Task<IEnumerable<TournamentModeDto>> GetTournamentModesAsync(int tournamentId);
         Task<IEnumerable<TournamentModeDto>> GetTournamentModesAsyncWithName(int tournamentId);
         Task<TournamentMode> GetTournamentModeAsync(int tournamentId, int modeId);
+        Task<TournamentMode> GetTournamentLastModeAsync(int tournamentId);
         Task<TournamentMode> GetTournamentModeAsync(int id);
         void InsertTournamentMode(TournamentMode mode);
         void DeleteTournamentMode(TournamentMode mode);
