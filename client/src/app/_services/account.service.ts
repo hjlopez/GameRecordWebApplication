@@ -67,9 +67,9 @@ export class AccountService {
   {
     user.roles = [];
 
-    // console.log(user);
     const roles = this.getDecodedToken(user.token).role; // the role is not an array if there is only 1 role
 
+    // console.log(this.getDecodedToken(user.token));
     // check if return is an array
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
 

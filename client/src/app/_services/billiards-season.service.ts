@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -61,6 +61,21 @@ export class BilliardsSeasonService {
   deleteSeasonHistory(matchId: number): Observable<any>
   {
     return this.http.delete(environment.apiUrl + 'seasonHistory/delete-history/' + matchId).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getRank(tournamentId: number, seasonNumberId: number, typeId: number): Observable<SeasonHistory[]>
+  {
+    let param = new HttpParams();
+
+    param = param.append('tournamentId', tournamentId.toString());
+    param = param.append('seasonNumberId', seasonNumberId.toString());
+    param = param.append('typeId', typeId.toString());
+
+    return this.http.get(environment.apiUrl + 'seasonHistory/get-rank', {params: param}).pipe(
       map((response: any) => {
         return response;
       })

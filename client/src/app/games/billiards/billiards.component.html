@@ -1,6 +1,7 @@
-<div class="container">
-  <div class="tab-panel">
-    <tabset class="member-tabset">
+<div class="container" style="max-width: 95%;">
+
+  <div class="tab-panel col-lg-12 col-sm" style="max-width: 100%;">
+    <tabset class="member-tabset" #billiardsTabs>
         <tab heading="Matches" >
             <div class="container" >
 
@@ -37,7 +38,7 @@
                   <select name="types" class="form-control ml-1 mr-2" (change)="changeDropDownValue($event)" style="width: 95%;">
                     <option *ngIf="typeList.length === 0">-- N/A --</option>
                     <ng-container *ngIf="typeList.length !== 0">
-                      <option *ngIf="typeList.length !== 0" [value]="0">All</option>
+                      <option *ngIf="typeList.length !== 0" [value]="0">All Types</option>
                       <option *ngFor="let type of typeList" [value]="type.matchTypeId">
                         {{type.matchType}}
                       </option>
@@ -50,7 +51,7 @@
                   <select name="modes" class="form-control ml-1 mr-2" (change)="changeDropDownValue($event)" style="width: 95%;">
                     <option *ngIf="modeList.length === 0">-- N/A --</option>
                     <ng-container *ngIf="modeList.length !== 0">
-                      <option *ngIf="modeList.length !== 0" [value]="0">All</option>
+                      <option *ngIf="modeList.length !== 0" [value]="0">All Modes</option>
                       <option *ngFor="let mode of modeList" [value]="mode.modeId">
                         {{mode.modeName}}
                       </option>
@@ -63,7 +64,7 @@
                   <select name="seasons" class="form-control ml-1 mr-2" (change)="changeDropDownValue($event)" style="width: 95%;">
                     <option *ngIf="seasonList.length === 0">-- N/A --</option>
                     <ng-container *ngIf="seasonList.length !== 0">
-                      <option *ngIf="seasonList.length !== 0" [value]="0">All</option>
+                      <option *ngIf="seasonList.length !== 0" [value]="0">All Seasons</option>
                       <option *ngFor="let season of seasonList" [value]="season.id">
                         Season {{season.seasonNumber}}
                       </option>
@@ -123,11 +124,13 @@
           
                 </div>
 
+                <!-- pagination -->
                 <div class="d-flex justify-content-center" *ngIf="pagination">
                   <pagination 
                       [boundaryLinks]="true" 
                       [totalItems]="pagination.totalItems"
                       [itemsPerPage]="pagination.itemsPerPage"
+                      [maxSize]="5"
                       [(ngModel)]="pagination.currentPage"
                       (pageChanged)="pageChanged($event)"
                       previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
@@ -142,17 +145,23 @@
 
         </tab>
 
-        <tab heading="Individual">
-            <div class="container">
-              b
-            </div>
+        <!-- individual stats -->
+        <tab heading="Individual" #individual="tab">
+          <app-individual-stats
+            *ngIf="individual.active"
+            [tournamentName]="tournament.tournamentName"
+            [members]="members"
+            [seasonList]="seasonList"
+            [typeList]="typeList"
+          >
+          </app-individual-stats>
         </tab>
 
-        <tab heading="Tournament">
+        <tab heading="Tournament" #tour="tab" (selectTab)="selectTab($event)">
           <div class="container">
 
             <!-- DIV FOR ADD SEASON -->
-            <div class="collapseBasic" class="ml-5 mr-5 mb-3" [collapse]="false" [isAnimated]="true" 
+            <div class="collapseBasic mb-3" [collapse]="false" [isAnimated]="true" 
               *ngIf="(accountService.currentUser$ | async)">
               <div class="well well-sm card card-block card-header" style="width: 100%; margin: auto; overflow-x: auto;">
                   Add Season
@@ -166,15 +175,24 @@
                       <tr>
                         <td>{{tournament.tournamentName}}</td>
                         <td *ngIf="seasonList.length === 0">0</td>
-                        <td *ngIf="seasonList.length !== 0">{{seasonList[seasonList.length-1].seasonNumber}}</td>
+                        <td *ngIf="seasonList.length !== 0">{{seasonList[0].seasonNumber}}</td>
                         <td><span class="fa fa-plus" style="cursor: pointer;" 
-                          (click)="addSeason(seasonList[seasonList.length-1]?.seasonNumber || 0)"></span></td>
+                          (click)="addSeason(seasonList[0]?.seasonNumber || 0)"></span></td>
                       </tr>
                   </table>
               </div>
             </div>
 
           </div>
+
+          <app-tournament-stats
+            *ngIf="tour.active"
+            [typeList]="typeList"
+            [seasonList]="seasonList"
+            [tournamentId]="selectedValue"
+          >
+
+          </app-tournament-stats>
         </tab>
     </tabset>
   </div>

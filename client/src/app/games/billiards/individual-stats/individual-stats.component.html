@@ -1,0 +1,341 @@
+<!-- <div class="d-flex flex-row">
+   
+
+</div> -->
+
+<div class="col-sm col-lg-12 ">
+    <h4 class="text-center">{{tournamentName}}</h4>
+
+    <div class="form-group text-center" style="color: darkslateblue;">
+        <input type="checkbox" #allTime name="allTime" checked (click)="changeCheckboxStatus($event)"> All Time
+        <input type="checkbox" #perSeason name="season" (click)="changeCheckboxStatus($event)"> Per Season
+        <input type="checkbox" #perType name="type" (click)="changeCheckboxStatus($event)"> Per Type
+        <input type="checkbox" #nonPlayoff name="nonPlayoff" (click)="changeCheckboxStatus($event)"> Non-Playoff
+        <input type="checkbox" #playoff name="playoff" (click)="changeCheckboxStatus($event)"> Playoff
+    </div>
+
+    <ng-container class="container" >
+        <h4 class="text-center" *ngIf="(accountService.currentUser$ | async)">Your record for this tournament</h4>
+        
+        <!-- not logged -->
+        <ng-container *ngIf="!(accountService.currentUser$ | async)" >
+            <div class="text-center mb-3">
+                <span >Select Member: </span>
+
+                <select name="members" (change)="getSelectedUser()" [(ngModel)]="selectedMember"
+                    class="form-control" style="display: inline; width: 50%;">
+                    <option *ngIf="allMembers.length === 0" [value]="0">-- N/A --</option>
+                    <ng-container *ngIf="allMembers.length !== 0">
+                        <option *ngFor="let member of allMembers" [value]="member.userId">
+                            {{member.username}}
+                        </option>
+                    </ng-container>
+                </select>
+
+                
+            </div>
+            <h5 class="text-center">Records vs Other Members</h5>
+        </ng-container>
+
+
+        <!-- class="ml-5 mr-5 mb-3" -->
+        <!-- all time -->
+        <div class="collapseBasic" *ngIf="allTime.checked" 
+            [collapse]="false" [isAnimated]="true">
+          <div class="well well-sm card card-block card-header" style="overflow-x: auto;">
+            
+            <span style="font-weight: bolder;" class="text-center">ALL TIME</span>
+            <table class="table" style="text-align: center;">
+                <tr>
+                    <th>Members</th>
+                    <th>Wins</th>
+                    <th>Games Played</th>
+                    <th>Win %</th>
+                </tr>
+
+                <tr *ngFor="let member of members">
+                    <td>
+                        <img class="userPic mt-2 mr-2 inline" src="{{member?.photoUrl || './assets/user.png'}}" 
+                            alt="{{member?.username || member?.gamerTag}}"> 
+                        <span>{{member.username}}</span>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.wins === undefined">
+                            {{0}}
+                        </ng-container>
+
+                        <ng-container *ngIf="member.wins !== undefined">
+                            {{member.wins}}
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.totalGamesPlayed === undefined">
+                            {{0}}
+                        </ng-container>
+
+                        <ng-container *ngIf="member.totalGamesPlayed !== undefined">
+                            {{member?.totalGamesPlayed}}
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.wins === undefined">
+                            0 %
+                        </ng-container>
+
+                        <ng-container *ngIf="member.wins !== undefined">
+                            {{(member.wins / member.totalGamesPlayed) * 100 | number}} %
+                        </ng-container>
+                    </td>
+                </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- Per season -->
+        <div class="collapseBasic" *ngIf="perSeason.checked" [collapse]="false" [isAnimated]="true" >
+          <div class="well well-sm card card-block card-header" style="max-width: 100%;overflow-x: auto;">
+            
+            <span style="font-weight: bolder; display: inline;" class="text-center">PER SEASON</span>
+            <div class="form-group">
+                <select name="seasons" (change)="loadSeasonWins()" [(ngModel)]="seasonValue" class="form-control ml-1 mr-2" style="display: inline;">
+                  <option *ngIf="seasonList.length === 0" [value]="0">-- N/A --</option>
+                  <ng-container *ngIf="seasonList.length !== 0">
+                    <option *ngFor="let season of seasonList" [value]="season.id">
+                      Season {{season.seasonNumber}}
+                    </option>
+                  </ng-container>
+                </select>
+              </div>
+
+            <table class="table" style="text-align: center;">
+                <tr>
+                    <th>Members</th>
+                    <th>Wins</th>
+                    <th>Games Played</th>
+                    <th>Win %</th>
+                </tr>
+
+                <tr *ngFor="let member of members">
+                    <td>
+                        <img class="userPic mt-2 mr-2 inline" src="{{member?.photoUrl || './assets/user.png'}}" 
+                            alt="{{member?.username || member?.gamerTag}}"> 
+                        <span>{{member.username}}</span>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.seasonWins === undefined">
+                            {{0}}
+                        </ng-container>
+
+                        <ng-container *ngIf="member.seasonWins !== undefined">
+                            {{member.seasonWins}}
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.seasonPlayed === undefined">
+                            {{0}}
+                        </ng-container>
+
+                        <ng-container *ngIf="member.seasonPlayed !== undefined">
+                            {{member.seasonPlayed}}
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="member.seasonWins === undefined">
+                            0 %
+                        </ng-container>
+
+                        <ng-container *ngIf="member.seasonWins !== undefined">
+                            {{(member.seasonWins / member.seasonPlayed) * 100 | number}} %
+                        </ng-container>
+                    </td>
+                </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Per type -->
+        <div class="collapseBasic" *ngIf="perType.checked" [collapse]="false" [isAnimated]="true" >
+         <div class="well well-sm card card-block card-header" style="max-width: 100%;overflow-x: auto;">
+           
+           <span style="font-weight: bolder; display: inline;" class="text-center">PER TYPE</span>
+           <div class="form-group">
+               <select name="seasons" (change)="loadTypeWins()" [(ngModel)]="typeValue" class="form-control ml-1 mr-2" style="display: inline;">
+                 <option *ngIf="typeList.length === 0">-- N/A --</option>
+                 <ng-container *ngIf="typeList.length !== 0">
+                   <option *ngFor="let type of typeList" [value]="type.matchTypeId">
+                        {{type.matchType}}
+                   </option>
+                 </ng-container>
+               </select>
+             </div>
+
+           <table class="table" style="text-align: center;">
+               <tr>
+                   <th>Members</th>
+                   <th>Wins</th>
+                   <th>Games Played</th>
+                   <th>Win %</th>
+               </tr>
+
+               <tr *ngFor="let member of members">
+                   <td>
+                       <img class="userPic mt-2 mr-2 inline" src="{{member?.photoUrl || './assets/user.png'}}" 
+                           alt="{{member?.username || member?.gamerTag}}"> 
+                       <span>{{member.username}}</span>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.typeWins === undefined">
+                           {{0}}
+                       </ng-container>
+
+                       <ng-container *ngIf="member.typeWins !== undefined">
+                           {{member.typeWins}}
+                       </ng-container>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.typePlayed === undefined">
+                           {{0}}
+                       </ng-container>
+
+                       <ng-container *ngIf="member.typePlayed !== undefined">
+                           {{member.typePlayed}}
+                       </ng-container>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.typeWins === undefined">
+                           0 %
+                       </ng-container>
+
+                       <ng-container *ngIf="member.typeWins !== undefined">
+                           {{(member.typeWins / member.typePlayed) * 100 | number}} %
+                       </ng-container>
+                   </td>
+               </tr>
+           </table>
+         </div>
+        </div>
+
+         <!-- NON-PLAYOFF -->
+        <div class="collapseBasic" *ngIf="nonPlayoff.checked" [collapse]="false" [isAnimated]="true" >
+            <div class="well well-sm card card-block card-header" style="max-width: 100%;overflow-x: auto;">
+           
+                <span style="font-weight: bolder; display: inline;" class="text-center">NON-PLAYOFF</span>
+                
+                <table class="table" style="text-align: center;">
+                    <tr>
+                        <th>Members</th>
+                        <th>Wins</th>
+                        <th>Games Played</th>
+                        <th>Win %</th>
+                    </tr>
+
+                    <tr *ngFor="let member of members">
+                        <td>
+                            <img class="userPic mt-2 mr-2 inline" src="{{member?.photoUrl || './assets/user.png'}}" 
+                                alt="{{member?.username || member?.gamerTag}}"> 
+                            <span>{{member.username}}</span>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="member.nonPlayoffWins === undefined">
+                                {{0}}
+                            </ng-container>
+
+                            <ng-container *ngIf="member.nonPlayoffWins !== undefined">
+                                {{member.nonPlayoffWins}}
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="member.nonPlayoffPlayed === undefined">
+                                {{0}}
+                            </ng-container>
+
+                            <ng-container *ngIf="member.nonPlayoffPlayed !== undefined">
+                                {{member.nonPlayoffPlayed}}
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="member.nonPlayoffWins === undefined">
+                                0 %
+                            </ng-container>
+
+                            <ng-container *ngIf="member.nonPlayoffWins !== undefined">
+                                {{(member.nonPlayoffWins / member.nonPlayoffPlayed) * 100 | number}} %
+                            </ng-container>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+         <!-- Playoff -->
+         <div class="collapseBasic" *ngIf="playoff.checked" [collapse]="false" [isAnimated]="true" >
+         <div class="well well-sm card card-block card-header" style="max-width: 100%;overflow-x: auto;">
+           
+           <span style="font-weight: bolder; display: inline;" class="text-center">PLAYOFF</span>
+
+           <table class="table" style="text-align: center;">
+               <tr>
+                   <th>Members</th>
+                   <th>Wins</th>
+                   <th>Games Played</th>
+                   <th>Win %</th>
+               </tr>
+
+               <tr *ngFor="let member of members">
+                   <td>
+                       <img class="userPic mt-2 mr-2 inline" src="{{member?.photoUrl || './assets/user.png'}}" 
+                           alt="{{member?.username || member?.gamerTag}}"> 
+                       <span>{{member.username}}</span>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.playoffWins === undefined">
+                           {{0}}
+                       </ng-container>
+
+                       <ng-container *ngIf="member.playoffWins !== undefined">
+                           {{member.playoffWins}}
+                       </ng-container>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.playoffPlayed === undefined">
+                           {{0}}
+                       </ng-container>
+
+                       <ng-container *ngIf="member.playoffPlayed !== undefined">
+                           {{member.playoffPlayed}}
+                       </ng-container>
+                   </td>
+                   <td>
+                       <ng-container *ngIf="member.playoffWins === undefined">
+                           0 %
+                       </ng-container>
+
+                       <ng-container *ngIf="member.playoffWins !== undefined">
+                           {{(member.playoffWins / member.playoffPlayed) * 100 | number}} %
+                       </ng-container>
+                   </td>
+               </tr>
+           </table>
+         </div>
+        </div>
+    </ng-container>
+
+    <!-- <div>
+        <div>
+            <input type="checkbox"> All Time
+        </div>
+        <div>
+            <input type="checkbox"> Per Season
+        </div>
+        <div>
+            <input type="checkbox"> Per Type
+        </div>
+        <div>
+            <input type="checkbox"> Non-Playoff
+        </div>
+        <div>
+            <input type="checkbox"> Playoff
+        </div>
+    </div> -->
+</div>

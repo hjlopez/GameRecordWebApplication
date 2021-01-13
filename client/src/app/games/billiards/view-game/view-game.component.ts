@@ -37,6 +37,7 @@ export class ViewGameComponent implements OnInit {
               private seasonService: BilliardsSeasonService) { }
 
   ngOnInit(): void {
+    this.matchId = this.match.id;
     if (this.name !== 'Delete Match?')
     {
       this.getSeasonTypeMatchup(this.match.winUserId, this.match.loseUserId, 'w');

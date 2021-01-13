@@ -20,6 +20,9 @@ namespace API.Interfaces.Billiards
         void InsertMatch(BilliardsMatch billiardsMatch);
         void DeleteMatch(BilliardsMatch billiardsMatch);
         void UpdateMatch(BilliardsMatch billiardsMatch);
+        Task<bool> CheckIfSeasonIsDone(int tournamentId, int seasonNumberId, int modeId);
+        Task<bool> CheckIfSeasonIsDone(int seasonNumberId);
+
 
     }
 }

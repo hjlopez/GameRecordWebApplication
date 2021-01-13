@@ -43,6 +43,8 @@ import { AddSeasonComponent } from './games/billiards/add-season/add-season.comp
 import { ViewGameComponent } from './games/billiards/view-game/view-game.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { IndividualStatsComponent } from './games/billiards/individual-stats/individual-stats.component';
+import { TournamentStatsComponent } from './games/billiards/tournament-stats/tournament-stats.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
     NewGameComponent,
     AddSeasonComponent,
     ViewGameComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    IndividualStatsComponent,
+    TournamentStatsComponent
   ],
   imports: [
     BrowserModule,

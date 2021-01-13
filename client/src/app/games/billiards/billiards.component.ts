@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
 import { BilliardsMatch } from 'src/app/_models/billiards/BilliardsMatch';
 import { BilliardsTournament } from 'src/app/_models/billiards/BilliardsTournament';
@@ -27,6 +28,7 @@ import { ViewGameComponent } from './view-game/view-game.component';
   styleUrls: ['./billiards.component.css']
 })
 export class BilliardsComponent implements OnInit {
+  @ViewChild('billiardsTabs', {static: true}) billiardsTabs!: TabsetComponent;
   currentUser!: User;
   members = [] as BilliardsTournamentMembers[];
   tournamentList: BilliardsTournament[] = [];
@@ -58,7 +60,7 @@ export class BilliardsComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe(users => this.currentUser = users);
     this.loadTournaments();
-
+    this.billiardsTabs.tabs[0].active = true;
   }
 
 
@@ -99,6 +101,10 @@ export class BilliardsComponent implements OnInit {
 
   }
 
+  selectTab(event: any): void
+  {
+    // console.log(event);
+  }
 
   loadTournaments(): void
   {
@@ -144,10 +150,6 @@ export class BilliardsComponent implements OnInit {
     this.loadMatchTournament(this.selectedValue, this.currentPage);
   }
 
-  // removeTrashIcon(): void
-  // {
-
-  // }
   addSeason(seasonNumber: number): void
   {
     const currentTournamentId = this.tournament.id;
@@ -164,6 +166,7 @@ export class BilliardsComponent implements OnInit {
     this.bsModalRef.content.confirm.subscribe((season: Season) => {
       this.seasonService.insertTournamentSeason(season).subscribe(() => {
         this.toastr.success('Season' + season.seasonNumber + ' added!');
+        this.seasonService.getTournamentSeasons(currentTournamentId).subscribe(seasons => this.seasonList = seasons);
       });
     });
   }
@@ -217,7 +220,8 @@ export class BilliardsComponent implements OnInit {
       config = {
         class: 'modal-dialog-centered modal-sm',
         initialState: {
-          matchId: match.id,
+          match,
+          modeList: this.modeList,
           name: title,
         }
       };

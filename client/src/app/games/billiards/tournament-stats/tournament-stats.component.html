@@ -1,0 +1,42 @@
+<div class="container">
+
+    <h2 class="text-center">Final Ranking Per Season</h2>
+
+    <!-- season dropdown -->
+    <select name="seasons" (change)="changeSeason(season.value)" #season class="form-control" style="display: inline; margin-bottom: 7px;">
+        <option *ngIf="seasonList.length === 0" [value]="0">-- N/A --</option>
+        <ng-container *ngIf="seasonList.length !== 0">
+          <option *ngFor="let season of seasonList" [value]="season.id">
+            Season {{season.seasonNumber}}
+          </option>
+        </ng-container>
+    </select>
+
+      <!-- loop each type -->
+    <ng-container *ngFor="let type of typeList">
+        <div class="collapseBasic" [collapse]="false" [isAnimated]="true">
+              <div class="well well-sm card card-block card-header" style=" overflow-x: auto;">
+                  <h3 style="font-weight: bolder; text-align: center; color: indigo;">{{type.matchType}}</h3>
+                  <table class="table" style="text-align: center;">
+                      <tr>
+                        <th>Rank</th>
+                        <th>Member</th>
+                        <th>Wins</th>
+                      </tr>
+
+                      <ng-container *ngFor="let list of seasonHistoryList">
+                        <!-- display the appropriate ranking for the types -->
+                        <tr *ngIf="list.typeId === type.matchTypeId">
+                          <td>{{list.rank}}</td>
+                          <td>
+                            <img class="userPic" src="{{list.url|| './assets/user.png'}}" alt=""><br>
+                            {{list.member}}</td>
+                          <td>{{list.wins}}</td>
+                        </tr>
+                      </ng-container>
+                     
+                  </table>
+              </div>
+            </div>
+    </ng-container>
+</div>

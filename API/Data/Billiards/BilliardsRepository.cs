@@ -72,7 +72,9 @@ namespace API.Data.Billiards
 
         public async Task<IEnumerable<Season>> GetSeasonsForTournamentsAsync(int tournamentId)
         {
-            return await context.Seasons.Where(t => t.TournamentId == tournamentId).ToListAsync();
+            return await context.Seasons.Where(t => t.TournamentId == tournamentId)
+                .OrderByDescending(s => s.SeasonNumber)
+                .ToListAsync();
             
         }
 

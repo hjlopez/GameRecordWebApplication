@@ -27,6 +27,34 @@ namespace API.Data.Billiards
                                                         x.TournamentId == tournamentId && x.TypeId == typeId).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> CheckIfSeasonIsDone(int tournamentId, int seasonNumberId, int modeId)
+        {
+            // modeId is always the last mode for the tournament
+            var types = await context.TournamentMatchTypes.Where(x => x.TournamentId == tournamentId).ToListAsync();
+
+            foreach (var type in types)
+            {
+                var allPresent = await context.BilliardsMatches.Where(s => s.TournamentId == tournamentId && s.SeasonNumberId == seasonNumberId
+                    && s.TypeId == type.MatchTypeId && s.ModeId == modeId).FirstOrDefaultAsync();
+                
+                // if certain type of last mode is still not in match table, season is not yet done
+                if (allPresent == null) return false;
+            }
+            
+            // update current season to done
+            var season = await context.Seasons.Where(s => s.Id == seasonNumberId).SingleOrDefaultAsync();
+            season.IsDone = true;
+            context.Entry(season).State = EntityState.Modified;
+            return true;
+            
+        }
+
+        public async Task<bool> CheckIfSeasonIsDone(int seasonNumberId)
+        {
+            var season = await context.Seasons.Where(s => s.Id == seasonNumberId).SingleOrDefaultAsync();
+            return season.IsDone;
+        }
+
         public void DeleteMatch(BilliardsMatch billiardsMatch)
         {
             context.BilliardsMatches.Remove(billiardsMatch);
@@ -42,7 +70,7 @@ namespace API.Data.Billiards
             if (matchParams.ModeId != 0) query = query.Where(x => x.ModeId == matchParams.ModeId);
             if (matchParams.SeasonNumberId != 0) query = query.Where(x => x.SeasonNumberId == matchParams.SeasonNumberId); 
 
-            query = query.OrderByDescending(s => s.Id).ThenByDescending(s => s.SeasonNumberId);
+            query = query.OrderByDescending(s => s.SeasonNumberId).ThenByDescending(s => s.Id);
 
             return await PagedList<BilliardsMatchDto>.CreateAsync(query.ProjectTo<BilliardsMatchDto>(mapper.ConfigurationProvider), 
                 matchParams.PageNumber, matchParams.PageSize);

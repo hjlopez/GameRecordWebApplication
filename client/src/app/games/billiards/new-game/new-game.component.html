@@ -39,7 +39,7 @@
                 <div class="data">
                     <span class="label-info">Type:</span> 
 
-                    <select class="form-control ml-3" style="width: 200px;" formControlName="typeId" name="typeId">
+                    <select class="form-control  ml-3" formControlName="typeId" name="typeId">
                         <option *ngFor="let type of typeList" [value]="type.matchTypeId">
                             {{type.matchType}}
                         </option>

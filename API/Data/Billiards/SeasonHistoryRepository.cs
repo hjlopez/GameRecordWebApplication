@@ -59,6 +59,16 @@ namespace API.Data.Billiards
                                                             x.UserId == userId).ToListAsync();
         }
 
+        public async Task<IEnumerable<SeasonHistoryDto>> GetSeasonRank(int tournamentId, int seasonNumberId, int typeId)
+        {
+            var history = await context.SeasonHistories
+                .Where(x => x.TournamentId == tournamentId && x.SeasonNumberId == seasonNumberId && x.TypeId == typeId)
+                .OrderBy(r => r.Rank)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<SeasonHistoryDto>>(history);
+        }
+
         public void InsertSeasonHistory(SeasonHistory seasonHistory)
         {
             context.SeasonHistories.Add(seasonHistory);

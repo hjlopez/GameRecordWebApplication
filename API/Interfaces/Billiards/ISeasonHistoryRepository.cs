@@ -16,6 +16,8 @@ namespace API.Interfaces.Billiards
         Task<SeasonHistoryDto> GetSeasonHistoryBySeason(int seasonNumberId);
         Task<SeasonHistoryDto> GetSeasonHistoryByTournament(int tournamentId);
         Task<SeasonHistoryDto> GetSeasonHistoryByType(int typeId);
+
+        Task<IEnumerable<SeasonHistoryDto>> GetSeasonRank(int tournamentId, int seasonNumberId, int typeId);
         
     }
 }

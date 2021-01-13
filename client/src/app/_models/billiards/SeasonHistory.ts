@@ -13,4 +13,6 @@ export interface SeasonHistory
     matchId: number;
     modeId: number;
     isDone: boolean;
+    url: string;
+    wins: number;
 }

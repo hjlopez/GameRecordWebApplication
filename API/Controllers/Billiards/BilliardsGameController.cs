@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
 using API.DTOs.Billiards;
 using API.Entities;
 using API.Entities.Billiards;
@@ -154,6 +155,10 @@ namespace API.Controllers.Billiards
             var tournament = CheckTournament(billiardsMatchDto.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
 
+            // check if season is done by checking if all type for tournament and season has final mode
+            // if (await unitOfWork.BilliardsGameRepository.CheckIfSeasonIsDone(billiardsMatchDto.SeasonNumberId))
+            //     return BadRequest("This season is done. You cannot edit it anymore.");
+            
             // before insert, check first if the final mode is already inserted for the type, season and tournament
             var lastMode = await unitOfWork.BilliardsModeRepository.GetTournamentLastModeAsync(billiardsMatchDto.TournamentId);
             
@@ -163,7 +168,30 @@ namespace API.Controllers.Billiards
             if (history != null) return BadRequest("Cannot insert anymore to " + type.Type + " for this season");
 
             unitOfWork.BilliardsGameRepository.InsertMatch(mapper.Map<BilliardsMatch>(billiardsMatchDto));
-            if (await unitOfWork.Complete()) return NoContent();
+            if (await unitOfWork.Complete())
+            {
+                return NoContent();
+                // update season if last mode id of tournament is inserted
+                // if (billiardsMatchDto.ModeId == lastMode.ModeId) 
+                // {
+                //     // if last, check if all of the type for the season is now inserted in match
+                //     if (await unitOfWork.BilliardsGameRepository.CheckIfSeasonIsDone(billiardsMatchDto.TournamentId,
+                //             billiardsMatchDto.SeasonNumberId, lastMode.ModeId))
+                //     {
+                //         // save changes
+                //         if (await unitOfWork.Complete()) return NoContent(); 
+                //     }
+                //     else
+                //     {
+                //         return NoContent();
+                //     }
+                // }
+                // else
+                // {
+                //     return NoContent();
+                // }
+                        
+            } 
 
             return BadRequest("Insert failed.");
         }
@@ -187,10 +215,24 @@ namespace API.Controllers.Billiards
             var match = await unitOfWork.BilliardsGameRepository.GetSingleMatchAsync(id);
             if (match == null) return BadRequest("Match does not exist.");
 
+            // before insert, check first if the final mode is already inserted for the type, season and tournament
+            var lastMode = await unitOfWork.BilliardsModeRepository.GetTournamentLastModeAsync(match.TournamentId);
+            
+            // check if last mode is already inserted to prevent new matches
+            if (match.ModeId != lastMode.ModeId)
+            {
+                var history = await unitOfWork.BilliardsGameRepository.CheckIfLastModeIsPlayed(lastMode.ModeId, match.SeasonNumberId,
+                    match.TournamentId, match.TypeId);
+                if (history != null) return BadRequest("Delete the last game for this type first.");
+            }
+            
+
             unitOfWork.BilliardsGameRepository.DeleteMatch(match);
             if (await unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Delete failed.");
         }
+
+        
     }
 }

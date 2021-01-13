@@ -170,4 +170,78 @@ export class BilliardsMatchService {
       })
     );
   }
+
+  getAllTimeWins(userId: number, opponentUserId: number, tournamentId: number): Observable<BilliardsTournamentMembers>
+  {
+    const param = {
+      userId,
+      opponentUserId,
+      tournamentId
+    };
+    return this.http.post(environment.apiUrl + 'userWins/get-alltime-match', param).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getSeasonWins(userId: number, opponentUserId: number, tournamentId: number,
+                seasonNumberId: number): Observable<BilliardsTournamentMembers>
+  {
+    const param = {
+      userId,
+      opponentUserId,
+      tournamentId,
+      seasonNumberId
+    };
+    return this.http.post(environment.apiUrl + 'userWins/get-season-match', param).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getTypeWins(userId: number, opponentUserId: number, tournamentId: number,
+              typeId: number): Observable<BilliardsTournamentMembers>
+  {
+    const param = {
+      userId,
+      opponentUserId,
+      tournamentId,
+      typeId
+    };
+    return this.http.post(environment.apiUrl + 'userWins/get-type-match', param).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getNonPlayoffWins(userId: number, opponentUserId: number, tournamentId: number): Observable<BilliardsTournamentMembers>
+  {
+    const param = {
+      userId,
+      opponentUserId,
+      tournamentId
+    };
+    return this.http.post(environment.apiUrl + 'userWins/get-nonplayoff-match', param).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
+
+  getPlayoffWins(userId: number, opponentUserId: number, tournamentId: number): Observable<BilliardsTournamentMembers>
+  {
+    const param = {
+      userId,
+      opponentUserId,
+      tournamentId
+    };
+    return this.http.post(environment.apiUrl + 'userWins/get-playoff-match', param).pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+  }
 }

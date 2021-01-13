@@ -15,5 +15,7 @@ namespace API.DTOs.Billiards
         public int MatchId { get; set; }
         public int ModeId { get; set; }
         public bool IsDone { get; set; }
+        public string Url { get; set; }
+        public int Wins { get; set; }
     }
 }

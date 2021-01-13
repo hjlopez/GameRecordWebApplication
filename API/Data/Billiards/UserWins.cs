@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs.Billiards;
+using API.Entities.Billiards;
 using API.Interfaces.Billiards;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -138,6 +140,89 @@ namespace API.Data.Billiards
 
             dto.UserId = userId;
 
+            return dto;
+        }
+    
+        public async Task<IEnumerable<BilliardsMatchDto>> GetAllMatchesVsUser(int userId, int opponentUserId, int tournamentId)
+        {
+            var matches = await context.BilliardsMatches
+                .Where(t => t.TournamentId == tournamentId
+                        && ((t.WinUserId == userId && t.LoseUserId == opponentUserId)
+                        || (t.WinUserId == opponentUserId && t.LoseUserId == userId)))
+                .ToListAsync();
+            
+            return mapper.Map<BilliardsMatchDto[]>(matches);
+        }
+
+        public async Task<IEnumerable<BilliardsMatchDto>> GetSeasonMatchesVsUser(int userId, int opponentUserId, int tournamentId, 
+                                                                                    int seasonNumberId)
+        {
+            var matches = await context.BilliardsMatches
+                .Where(t => t.TournamentId == tournamentId && t.SeasonNumberId == seasonNumberId
+                        && ((t.WinUserId == userId && t.LoseUserId == opponentUserId)
+                        || (t.WinUserId == opponentUserId && t.LoseUserId == userId)))
+                .ToListAsync();
+            
+            return mapper.Map<BilliardsMatchDto[]>(matches);
+        }
+
+        public async Task<IEnumerable<BilliardsMatchDto>> GetTypeMatchesVsUser(int userId, int opponentUserId, int tournamentId, 
+                                                                                int typeId)
+        {
+            var matches = await context.BilliardsMatches
+                .Where(t => t.TournamentId == tournamentId && t.TypeId == typeId
+                        && ((t.WinUserId == userId && t.LoseUserId == opponentUserId)
+                        || (t.WinUserId == opponentUserId && t.LoseUserId == userId)))
+                .ToListAsync();
+            
+            return mapper.Map<BilliardsMatchDto[]>(matches);
+        }
+
+        public async Task<IEnumerable<BilliardsMatchDto>> GetNonPlayoffMatchesVsUser(int userId, int opponentUserId, int tournamentId)
+        {
+            var matches = await context.BilliardsMatches
+                .Where(t => t.TournamentId == tournamentId
+                        && ((t.WinUserId == userId && t.LoseUserId == opponentUserId)
+                        || (t.WinUserId == opponentUserId && t.LoseUserId == userId)))
+                .ToListAsync();
+            return mapper.Map<BilliardsMatchDto[]>(matches);
+        }
+
+        public async Task<IEnumerable<BilliardsMatchDto>> GetPlayoffMatchesVsUser(int userId, int opponentUserId, int tournamentId)
+        {
+            var matches = await context.BilliardsMatches
+                .Where(t => t.TournamentId == tournamentId
+                        && ((t.WinUserId == userId && t.LoseUserId == opponentUserId)
+                        || (t.WinUserId == opponentUserId && t.LoseUserId == userId)))
+                .ToListAsync();
+            return mapper.Map<BilliardsMatchDto[]>(matches);
+        }
+
+        public async Task<UserWinsDto> GetUserTotalWinsSeasonType(int userId, int seasonNumberId, int typeId)
+        {
+            var dto = new UserWinsDto();
+
+            var query1 = await context.BilliardsMatches
+                .Where((x => x.WinUserId == userId
+                        && x.SeasonNumberId == seasonNumberId
+                        && x.TypeId == typeId)).ToListAsync();
+
+            var query2 = await context.BilliardsMatches
+                .Where((y => y.LoseUserId == userId
+                        && y.SeasonNumberId == seasonNumberId
+                        && y.TypeId == typeId)).ToListAsync();
+
+            foreach (var item in query1)
+            {
+                dto.UserWins += item.WinnerWins;
+            }
+
+            foreach (var item in query2)
+            {
+                dto.UserWins += item.LoserWins;
+            }
+
+            dto.UserId = userId;
             return dto;
         }
     }

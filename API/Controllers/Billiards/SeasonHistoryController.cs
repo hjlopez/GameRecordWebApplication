@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs.Billiards;
 using API.Entities;
@@ -46,8 +47,6 @@ namespace API.Controllers.Billiards
             return BadRequest("Error in season history insert.");
         }
 
-
-
         [HttpDelete("delete-history/{matchId}")]
         public async Task<ActionResult> DeleteSeasonHistory(int matchId)
         {
@@ -65,6 +64,30 @@ namespace API.Controllers.Billiards
             if (!await unitOfWork.Complete()) return BadRequest("Cannot delete loser");
 
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("get-rank")]
+        public async Task<ActionResult<SeasonHistoryDto>> GetRank([FromQuery] RankParams rankParams)
+        {
+            var history = await unitOfWork.SeasonHistoryRepository
+                .GetSeasonRank(rankParams.TournamentId, rankParams.SeasonNumberId, rankParams.TypeId);
+
+            foreach (var his in history)
+            {
+                var user = await unitOfWork.UserRepository.GetUserByIdAsync(his.UserId);
+                his.Username = user.UserName;
+
+                var photo = await unitOfWork.UserRepository.GetPhoto(his.UserId);
+                if (photo == null) his.Url = "";
+                else his.Url = photo.Url;
+
+                var userWins = await unitOfWork.UserWins.GetUserTotalWinsSeasonType(his.UserId, his.SeasonNumberId, his.TypeId);
+                his.Wins = userWins.UserWins;
+            }
+
+            return Ok(history);
+
         }
     }
 }

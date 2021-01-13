@@ -36,6 +36,15 @@ export class NavComponent implements OnInit {
 
       if (user.roles.length > 1) {this.isAdmin = true; }
       else { this.isAdmin = false; }
+
+      // token checker
+      const expiry = (JSON.parse(atob(this.currentUser.token.split('.')[1]))).exp;
+
+      if ((Math.floor((new Date()).getTime() / 1000)) >= expiry)
+      {
+        this.toastr.error('Session expired');
+        this.logout();
+      }
     });
 
     this.getGames();
