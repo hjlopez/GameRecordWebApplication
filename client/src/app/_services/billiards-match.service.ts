@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { BilliardsMatch } from '../_models/billiards/BilliardsMatch';
@@ -16,6 +16,7 @@ import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
   providedIn: 'root'
 })
 export class BilliardsMatchService {
+  matchCache = new Map();
 
   constructor(private http: HttpClient) { }
 
@@ -98,6 +99,12 @@ export class BilliardsMatchService {
 
   getFilteredMatch(matchParams: MatchParams): Observable<PaginatedResult<BilliardsMatch[]>>
   {
+    const res = this.matchCache.get(Object.values(matchParams).join('-')); // get caching here
+    if (res)
+    {
+      return of(res);
+    }
+
     let params = getPaginationHeaders(matchParams.pageNumber, matchParams.pageSize);
     params = params.append('tournamentId', matchParams.tournamentId.toString());
     params = params.append('typeId', matchParams.typeId.toString());
@@ -107,6 +114,7 @@ export class BilliardsMatchService {
     return getPaginatedResult<PaginatedResult<BilliardsMatch[]>>(environment.apiUrl + 'billiardsGame/get-filtered-match',
         params , this.http).pipe(
       map((response: any) => {
+        this.matchCache.set(Object.values(matchParams).join('-'), response); // set caching here
         return response;
       })
     );
@@ -141,6 +149,7 @@ export class BilliardsMatchService {
 
   getSeasonTournamentMatchUp(wins: UserWins): Observable<UserWins>
   {
+
     let param = new HttpParams();
     param = param.append('userId', wins.userId.toString());
     param = param.append('opponentUserId', wins.opponentUserId.toString());
@@ -158,6 +167,7 @@ export class BilliardsMatchService {
 
   getSeasonMatchUp(wins: UserWins): Observable<UserWins>
   {
+
     let param = new HttpParams();
     param = param.append('userId', wins.userId.toString());
     param = param.append('opponentUserId', wins.opponentUserId.toString());

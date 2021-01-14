@@ -123,7 +123,10 @@ export class BilliardsComponent implements OnInit {
       {
         this.billiards.getTournaments(this.currentUser.id).subscribe(list => {
           this.tournamentList = list;
-          this.loadOtherValues(list[0].id);
+          if (list.length > 0)
+          {
+            this.loadOtherValues(list[0].id);
+          }
         });
       }
     }
@@ -269,11 +272,20 @@ export class BilliardsComponent implements OnInit {
     return this.seasonList.find(x => x.id === seasonNumberId)?.seasonNumber || 0;
   }
 
-  findType(typeId: number): string
+  findType(event: any, typeId: number): void
   {
     const name = this.typeList.find(x => x.matchTypeId === typeId)?.matchType || '';
-    return './assets/' + name + '.jpg';
+
+    if (name === '')
+    {
+      event.target.src = './assets/8 Ball.jpg';
+    }
+    else
+    {
+      event.target.src = './assets/' + name + '.jpg';
+    }
   }
+
 
   findMode(modeId: number): string
   {

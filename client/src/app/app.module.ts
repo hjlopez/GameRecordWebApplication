@@ -45,6 +45,9 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { IndividualStatsComponent } from './games/billiards/individual-stats/individual-stats.component';
 import { TournamentStatsComponent } from './games/billiards/tournament-stats/tournament-stats.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,8 @@ import { TournamentStatsComponent } from './games/billiards/tournament-stats/tou
     ViewGameComponent,
     ConfirmModalComponent,
     IndividualStatsComponent,
-    TournamentStatsComponent
+    TournamentStatsComponent,
+    GeneralSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +89,7 @@ import { TournamentStatsComponent } from './games/billiards/tournament-stats/tou
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     FileUploadModule,
     CollapseModule.forRoot(),
     BsDropdownModule.forRoot(),
@@ -98,6 +103,7 @@ import { TournamentStatsComponent } from './games/billiards/tournament-stats/tou
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
     {provide: UrlSerializer, useClass: LowerCaseUrlSerializer}
   ],
   bootstrap: [AppComponent]

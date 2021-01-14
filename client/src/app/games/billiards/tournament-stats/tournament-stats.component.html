@@ -15,28 +15,28 @@
       <!-- loop each type -->
     <ng-container *ngFor="let type of typeList">
         <div class="collapseBasic" [collapse]="false" [isAnimated]="true">
-              <div class="well well-sm card card-block card-header" style=" overflow-x: auto;">
-                  <h3 style="font-weight: bolder; text-align: center; color: indigo;">{{type.matchType}}</h3>
-                  <table class="table" style="text-align: center;">
-                      <tr>
-                        <th>Rank</th>
-                        <th>Member</th>
-                        <th>Wins</th>
-                      </tr>
+          <div class="well well-sm card card-block card-header" style=" overflow-x: auto;">
+              <h3 style="font-weight: bolder; text-align: center; color: indigo;">{{type.matchType}}</h3>
+              <table class="table" style="text-align: center;">
+                  <tr>
+                    <th>Rank</th>
+                    <th>Member</th>
+                    <th>Wins</th>
+                  </tr>
 
-                      <ng-container *ngFor="let list of seasonHistoryList">
-                        <!-- display the appropriate ranking for the types -->
-                        <tr *ngIf="list.typeId === type.matchTypeId">
-                          <td>{{list.rank}}</td>
-                          <td>
-                            <img class="userPic" src="{{list.url|| './assets/user.png'}}" alt=""><br>
-                            {{list.member}}</td>
-                          <td>{{list.wins}}</td>
-                        </tr>
-                      </ng-container>
-                     
-                  </table>
-              </div>
-            </div>
+                  <ng-container *ngFor="let list of seasonHistoryList">
+                    <!-- display the appropriate ranking for the types -->
+                    <tr *ngIf="list.typeId === type.matchTypeId">
+                      <td>{{list.rank}}</td>
+                      <td>
+                        <img class="userPic" src="{{list.url|| './assets/user.png'}}" alt=""><br>
+                        {{list.member}}</td>
+                      <td>{{list.wins}}</td>
+                    </tr>
+                  </ng-container>
+                  
+              </table>
+          </div>
+        </div>
     </ng-container>
 </div>

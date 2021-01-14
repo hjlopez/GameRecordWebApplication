@@ -1,9 +1,15 @@
 <div class="container" style="max-width: 95%;">
 
+  
   <div class="tab-panel col-lg-12 col-sm" style="max-width: 100%;">
     <tabset class="member-tabset" #billiardsTabs>
         <tab heading="Matches" >
-            <div class="container" >
+            <div class="container" *ngIf="tournamentList.length === 0">
+              <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+            </div>
+
+
+            <div class="container" *ngIf="tournamentList.length > 0">
 
               <!-- add new game form -->
               <ng-container class="add-match" *ngIf="showAddForm">
@@ -101,7 +107,9 @@
                         <div class="card-body">
                           <h5 class="card-title">{{findUser(match.winUserId) | titlecase}} vs {{findUser(match.loseUserId) | titlecase}}</h5>
                           <p class="card-text">Season {{findSeason(match.seasonNumberId)}} - 
-                              <img class="userPic" src="{{findType(match?.typeId || 0)}}" alt="8 ball"> </p>
+                              <img class="userPic" src="https://cdn.pixabay.com/photo/2017/08/16/18/35/pug-2648774_960_720.jpg" 
+                                alt="https://cdn.pixabay.com/photo/2017/08/16/18/35/pug-2648774_960_720.jpg" (load)="findType($event, match?.typeId || 0)">
+                          </p>
                         </div>
                         <ul class="list-group list-group-flush"></ul>
   
@@ -147,18 +155,29 @@
 
         <!-- individual stats -->
         <tab heading="Individual" #individual="tab">
-          <app-individual-stats
-            *ngIf="individual.active"
-            [tournamentName]="tournament.tournamentName"
-            [members]="members"
-            [seasonList]="seasonList"
-            [typeList]="typeList"
-          >
-          </app-individual-stats>
+
+          <div class="container" *ngIf="tournamentList.length === 0">
+            <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+          </div>
+
+          <ng-container *ngIf="tournamentList.length > 0">
+            <app-individual-stats
+              *ngIf="individual.active"
+              [tournamentName]="tournament.tournamentName"
+              [members]="members"
+              [seasonList]="seasonList"
+              [typeList]="typeList"
+            >
+            </app-individual-stats>
+          </ng-container>
         </tab>
 
         <tab heading="Tournament" #tour="tab" (selectTab)="selectTab($event)">
-          <div class="container">
+          <div class="container" *ngIf="tournamentList.length === 0">
+            <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+          </div>
+
+          <div class="container" *ngIf="tournamentList.length > 0">
 
             <!-- DIV FOR ADD SEASON -->
             <div class="collapseBasic mb-3" [collapse]="false" [isAnimated]="true" 
@@ -185,14 +204,17 @@
 
           </div>
 
-          <app-tournament-stats
-            *ngIf="tour.active"
-            [typeList]="typeList"
-            [seasonList]="seasonList"
-            [tournamentId]="selectedValue"
-          >
+          <ng-container *ngIf="tournamentList.length > 0">
+            <app-tournament-stats
+              *ngIf="tour.active"
+              [typeList]="typeList"
+              [seasonList]="seasonList"
+              [tournamentId]="selectedValue"
+            >
 
-          </app-tournament-stats>
+            </app-tournament-stats>
+          </ng-container>
+          
         </tab>
     </tabset>
   </div>

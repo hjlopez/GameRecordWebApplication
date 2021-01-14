@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Login } from '../_models/Login';
@@ -11,6 +11,7 @@ import { User } from '../_models/User';
   providedIn: 'root'
 })
 export class AccountService {
+  userPhotoCache = new Map();
 
   // 1 -> number of previous value that we want to restore
   // only null or current user object

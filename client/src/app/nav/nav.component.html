@@ -11,13 +11,18 @@
         <div class="dropdown-menu" *dropdownMenu >
           <ng-container *ngFor="let game of gameList">
             <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" 
-            routerLink={{game.loggedOutLink}} routerLinkActive="active">{{game.name}}</a>
+              routerLink={{game.loggedOutLink}} routerLinkActive="active" 
+              [class.disabled]="game.name === 'Billiards' ? false : true"
+            >
+            {{game.name}}
+          </a>
           </ng-container>
           
           <ng-container *ngFor="let game of gameList">
             <a class="dropdown-item" *ngIf="(accountService.currentUser$ | async)" 
             routerLink={{game.loggedInLink}} routerLinkActive="active" 
-            [routerLinkActiveOptions]="{exact: true}">{{game.name}}</a>
+            [routerLinkActiveOptions]="{exact: true}" 
+            [class.disabled]="game.name === 'Billiards' ? false : true" >{{game.name}}</a>
           </ng-container>
 
         </div>
@@ -42,8 +47,12 @@
       </li>
 
       <li class="nav-item" *ngIf="!(accountService.currentUser$ | async)">
-        <a class="nav-link" routerLink='forgot' routerLinkActive="active">Forgot Password</a>
+        <a class="nav-link" href='https://github.com/hjlopez/GameRecordWebApplication' target="_blank">Source Code</a>
       </li>
+
+      <!-- <li class="nav-item" *ngIf="!(accountService.currentUser$ | async)">
+        <a class="nav-link" routerLink='forgot' routerLinkActive="active">Forgot Password</a>
+      </li> -->
 
       <li class="nav-item" *ngIf="(accountService.currentUser$ | async) && isAdmin">
         <a class="nav-link" routerLink='user/user-management' routerLinkActive="active">User Management</a>

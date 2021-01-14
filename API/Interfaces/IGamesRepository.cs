@@ -8,5 +8,6 @@ namespace API.Interfaces
     public interface IGamesRepository
     {
         Task<IEnumerable<GamesDto>> GetGames();
+        // void InsertGames(GamesDto gamesDto);
     }
 }
