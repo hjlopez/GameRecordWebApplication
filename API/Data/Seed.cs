@@ -14,14 +14,14 @@ namespace API.Data
             if (await context.Games.AnyAsync()) return;
 
             // insert values
-            context.GameTypes.Add(new GameTypes{Type = "Cue"});
-            context.GameTypes.Add(new GameTypes{Type = "RPG"});
-            context.GameTypes.Add(new GameTypes{Type = "MOBA"});
+            // context.GameTypes.Add(new GameTypes{Type = "Cue"});
+            // context.GameTypes.Add(new GameTypes{Type = "RPG"});
+            // context.GameTypes.Add(new GameTypes{Type = "MOBA"});
 
-            await context.SaveChangesAsync();
+            // await context.SaveChangesAsync();
 
-            context.Games.Add(new Games{Name = "Billiards", GameTypesId = 1, LoggedInLink = "user/billiards", LoggedOutLink = "billiards"});
             context.Games.Add(new Games{Name = "Monster Hunter", GameTypesId = 1, LoggedInLink = "user/mh", LoggedOutLink = "mh"});
+            context.Games.Add(new Games{Name = "Billiards", GameTypesId = 1, LoggedInLink = "user/billiards", LoggedOutLink = "billiards"});
             context.Games.Add(new Games{Name = "DOTA 2", GameTypesId = 1, LoggedInLink = "user/dota", LoggedOutLink = "dota"});
 
             await context.SaveChangesAsync();
