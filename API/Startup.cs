@@ -75,7 +75,7 @@ namespace API
                 endpoints.MapControllers();
 
                 // for fallback in publishing
-                //endpoints.MapFallbackToController("Index", "Fallback");
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
     }
