@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Register Here!</h1>
+<h1 style="text-align: center;">Register here to join the games!</h1>
 <div class="register-container">
     
     <form [formGroup]="registerForm" autocomplete="off">
@@ -14,7 +14,7 @@
         <ng-container *ngIf="registerForm.controls['gamerTag'].invalid && (registerForm.controls['gamerTag'].dirty 
                 || registerForm.controls['gamerTag'].touched)" class="alert" >
                 <label style="color: red;" *ngIf="registerForm.controls['gamerTag'].errors?.required">Please enter a gamer tag!</label>
-                <label style="color: red;" *ngIf="registerForm.controls['gamerTag'].errors?.maxlength">Maximum length is 15 characters!</label>
+                <label style="color: red;" *ngIf="registerForm.controls['gamerTag'].errors?.maxlength">Maximum length is 20 characters!</label>
         </ng-container>
 
         <div class="form-group mt-2" >

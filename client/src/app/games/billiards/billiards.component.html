@@ -5,7 +5,7 @@
     <tabset class="member-tabset" #billiardsTabs>
         <tab heading="Matches" >
             <div class="container" *ngIf="tournamentList.length === 0">
-              <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+              <h3 class="text-center">You are not included in any Billiards Tournament yet. Wait for the admin to add you.</h3>
             </div>
 
 
@@ -157,7 +157,7 @@
         <tab heading="Individual" #individual="tab">
 
           <div class="container" *ngIf="tournamentList.length === 0">
-            <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+            <h3 class="text-center">You are not included in any Billiards Tournament yet. Wait for the admin to add you.</h3>
           </div>
 
           <ng-container *ngIf="tournamentList.length > 0">
@@ -174,7 +174,7 @@
 
         <tab heading="Tournament" #tour="tab" (selectTab)="selectTab($event)">
           <div class="container" *ngIf="tournamentList.length === 0">
-            <h3 class="text-center">You are not included in any Billiards Tournament yet.</h3>
+            <h3 class="text-center">You are not included in any Billiards Tournament yet. Wait for the admin to add you.</h3>
           </div>
 
           <div class="container" *ngIf="tournamentList.length > 0">

@@ -1,4 +1,5 @@
-<div class="row" style="margin: auto;">
+<!-- <div class="row" style="margin: auto;"> -->
+<div class="row">
     <h2>New Match Form</h2>
 
     <form style="width: 100%; border: 1px solid black;" [formGroup]="newMatch">
@@ -11,7 +12,7 @@
                 <div class="data">
                     <span class="label-info mr-3">Winner</span>
 
-                    <select class="form-control mr-3" #winner
+                    <select class="form-control mb-2" #winner
                         formControlName="winUserId" name="winUserId" (change)="getWinner(winner.value)">
                         <option *ngFor="let member of members" [value]="member.userId">
                             {{member.username}}
@@ -21,7 +22,7 @@
                 </div>
     
                 <div class="data">
-                    <span class="label-info mr-3">Loser</span>
+                    <span class="label-info ml-3 mr-3">Loser</span>
 
                     <select class="form-control" #loser
                         formControlName="loseUserId" name="loseUserId" (change)="getLoser(loser.value)">
@@ -109,7 +110,7 @@
 
         <!-- buttons -->
         <div class="controls">
-            <button class="btn btn-danger mr-4" type="button" (click)="change(false)">Close</button>
+            <button class="btn btn-danger mr-4 mb-2" type="button" (click)="change(false)">Close</button>
             <button class="btn btn-success" type="submit" (click)="insert()">Insert Match</button>
         </div>
     </form>
