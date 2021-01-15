@@ -256,7 +256,6 @@ export class BilliardsComponent implements OnInit {
     this.bsModalRef = this.modalService.show(ViewGameComponent, config);
 
     this.bsModalRef.content.confirm.subscribe((message: string) => {
-      console.log('reload');
       this.loadMatchTournament(this.selectedValue, 1);
     });
   }
