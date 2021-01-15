@@ -24,7 +24,7 @@ export class TournamentStatsComponent implements OnInit {
   ngOnInit(): void {
     this.seasonHistoryList = [];
     this.selectedSeason = this.seasonList[0].id;
-
+    this.changeSeason(this.selectedSeason);
   }
 
   loopType(): void
