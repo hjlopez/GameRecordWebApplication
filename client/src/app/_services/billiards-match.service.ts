@@ -99,11 +99,11 @@ export class BilliardsMatchService {
 
   getFilteredMatch(matchParams: MatchParams): Observable<PaginatedResult<BilliardsMatch[]>>
   {
-    const res = this.matchCache.get(Object.values(matchParams).join('-')); // get caching here
-    if (res)
-    {
-      return of(res);
-    }
+    // const res = this.matchCache.get(Object.values(matchParams).join('-')); // get caching here
+    // if (res)
+    // {
+    //   return of(res);
+    // }
 
     let params = getPaginationHeaders(matchParams.pageNumber, matchParams.pageSize);
     params = params.append('tournamentId', matchParams.tournamentId.toString());
@@ -114,7 +114,7 @@ export class BilliardsMatchService {
     return getPaginatedResult<PaginatedResult<BilliardsMatch[]>>(environment.apiUrl + 'billiardsGame/get-filtered-match',
         params , this.http).pipe(
       map((response: any) => {
-        this.matchCache.set(Object.values(matchParams).join('-'), response); // set caching here
+        // this.matchCache.set(Object.values(matchParams).join('-'), response); // set caching here
         return response;
       })
     );

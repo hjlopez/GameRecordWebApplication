@@ -138,19 +138,9 @@ namespace API.Controllers.Billiards
         [HttpPost("insert-match")]
         public async Task<ActionResult> InsertMatch(BilliardsMatchDto billiardsMatchDto)
         {
-            // var user = CheckUser(billiardsMatchDto.WinUserId);
-            // if (user == null) return BadRequest("Invalid user.");
-            // user = CheckUser(billiardsMatchDto.LoseUserId);
-            // if (user == null) return BadRequest("Invalid user.");
 
             var type = await unitOfWork.BilliardsMatchTypesRepository.GetMatchTypeByIdAsync(billiardsMatchDto.TypeId);
             if (type == null) return BadRequest("Invalid type.");
-
-            // var mode = CheckMode(billiardsMatchDto.ModeId);
-            // if (mode == null) return BadRequest("Invalid mode.");
-
-            // var season = CheckSeason(billiardsMatchDto.SeasonNumberId);
-            // if (season == null) return BadRequest("Invalid season.");
 
             var tournament = await unitOfWork.BilliardsTournamentRepository.GetTournamentById(billiardsMatchDto.TournamentId);
             if (tournament == null) return BadRequest("Invalid tournament.");
