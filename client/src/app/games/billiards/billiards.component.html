@@ -25,6 +25,7 @@
 
               <!-- filters -->
               <form autocomplete="off" class="form-inline" *ngIf="!showAddForm">
+                <!-- tournament -->
                 <div class="form-group">
                   <select name="tournaments" #tournament class="form-control" 
                     (change)="loadOtherValues(tournament.value)"
@@ -91,6 +92,7 @@
                 </div>
               </form>
 
+              <!-- add match button -->
               <div class="form-group" *ngIf="(accountService.currentUser$ | async) && (!showAddForm)">
                 <button class="btn btn-dark ml-1" (click)='toggleAddMatch()' type="button">Add Match</button>
               </div>
@@ -135,10 +137,10 @@
                 <!-- pagination -->
                 <div class="d-flex justify-content-center" *ngIf="pagination">
                   <pagination 
-                      [boundaryLinks]="true" 
+                      [boundaryLinks]="false" 
                       [totalItems]="pagination.totalItems"
                       [itemsPerPage]="pagination.itemsPerPage"
-                      [maxSize]="5"
+                      [maxSize]="maxPage"
                       [(ngModel)]="pagination.currentPage"
                       (pageChanged)="pageChanged($event)"
                       previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
@@ -172,7 +174,7 @@
           </ng-container>
         </tab>
 
-        <tab heading="Tournament" #tour="tab" (selectTab)="selectTab($event)">
+        <tab heading="Tournament" #tour="tab">
           <div class="container" *ngIf="tournamentList.length === 0">
             <h3 class="text-center">You are not included in any Billiards Tournament yet. Wait for the admin to add you.</h3>
           </div>

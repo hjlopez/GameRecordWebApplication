@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
@@ -47,6 +47,7 @@ export class BilliardsComponent implements OnInit {
   selectedType = 0;
   selectedMode = 0;
   selectedSeason = 0;
+  maxPage = 5;
 
   url1 = '';
   url2 = '';
@@ -60,9 +61,24 @@ export class BilliardsComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe(users => this.currentUser = users);
     this.loadTournaments();
-    this.billiardsTabs.tabs[0].active = true;
+    this.checkScreenSize();
   }
 
+  checkScreenSize(): void
+  {
+    if (window.innerWidth < 640) // small
+    {
+      this.maxPage = 3;
+    }
+    else if (window.innerWidth < 1008) // medium
+    {
+      this.maxPage = 6;
+    }
+    else // large
+    {
+      this.maxPage = 10;
+    }
+  }
 
   loadOtherValues(id: any): void
   {
@@ -71,15 +87,18 @@ export class BilliardsComponent implements OnInit {
     this.selectedValue = this.tournament.id;
 
     this.billiardsService.getTournamentModesName(tournamentId).subscribe(modes => this.modeList = modes);
-    this.billiardsService.getTournamentTypes(tournamentId).subscribe(types => this.typeList = types);
-    this.seasonService.getTournamentSeasons(tournamentId).subscribe(seasons => this.seasonList = seasons);
+    this.billiardsService.getTournamentTypes(tournamentId).subscribe(types => {
+      this.typeList = types;
+    });
+    this.seasonService.getTournamentSeasons(tournamentId).subscribe(seasons => {
+      this.seasonList = seasons;
+    });
     this.billiardsService.getMembersTournament(tournamentId).subscribe(members => this.members = members);
-    this.loadMatchTournament(tournamentId, this.currentPage);
 
-
+    this.loadMatchTournament(tournamentId, this.currentPage, 1);
   }
 
-  loadMatchTournament(tournamentId: number, currentPage: number): void
+  loadMatchTournament(tournamentId: number, currentPage: number, tag: number): void
   {
     this.currentPage = currentPage;
     this.matchParams.pageNumber = currentPage;
@@ -89,7 +108,9 @@ export class BilliardsComponent implements OnInit {
     this.matchParams.typeId = this.selectedType;
     this.matchParams.modeId = this.selectedMode;
 
+
     this.billiards.getFilteredMatch(this.matchParams).subscribe(matches => {
+      // console.log(this.matchParams);
       this.matches = matches.result;
       this.pagination = matches.pagination;
     });
@@ -150,7 +171,7 @@ export class BilliardsComponent implements OnInit {
     {
       this.seasonService.getTournamentSeasons(this.selectedValue).subscribe(seasons => this.seasonList = seasons);
     }
-    this.loadMatchTournament(this.selectedValue, this.currentPage);
+    this.loadMatchTournament(this.selectedValue, this.currentPage, 0);
   }
 
   addSeason(seasonNumber: number): void
@@ -168,7 +189,7 @@ export class BilliardsComponent implements OnInit {
 
     this.bsModalRef.content.confirm.subscribe((season: Season) => {
       this.seasonService.insertTournamentSeason(season).subscribe(() => {
-        this.toastr.success('Season' + season.seasonNumber + ' added!');
+        this.toastr.success('Season ' + season.seasonNumber + ' added!');
         this.seasonService.getTournamentSeasons(currentTournamentId).subscribe(seasons => this.seasonList = seasons);
       });
     });
@@ -193,7 +214,7 @@ export class BilliardsComponent implements OnInit {
   pageChanged(event: any): void
   {
     this.currentPage = event.page;
-    this.loadMatchTournament(this.selectedValue, this.currentPage);
+    this.loadMatchTournament(this.selectedValue, this.currentPage, 0);
   }
 
   changeDropDownValue(event: any): void
@@ -256,7 +277,7 @@ export class BilliardsComponent implements OnInit {
     this.bsModalRef = this.modalService.show(ViewGameComponent, config);
 
     this.bsModalRef.content.confirm.subscribe((message: string) => {
-      this.loadMatchTournament(this.selectedValue, 1);
+      this.loadMatchTournament(this.selectedValue, 1, 0);
     });
   }
 

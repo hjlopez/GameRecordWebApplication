@@ -67,8 +67,23 @@ namespace API.Data.Billiards
             query = query.Where(x => x.TournamentId == matchParams.TournamentId); 
 
             if (matchParams.TypeId != 0) query = query.Where(x => x.TypeId == matchParams.TypeId); 
-            if (matchParams.ModeId != 0) query = query.Where(x => x.ModeId == matchParams.ModeId);
+            else
+            {
+                // temporarily removed
+                // added to automatically get first type of tournament
+                // var firstType = await context.BilliardsMatchTypes.OrderBy(s => s.Id).FirstOrDefaultAsync();
+                // query = query.Where(x => x.TypeId == firstType.Id); 
+            }
+
             if (matchParams.SeasonNumberId != 0) query = query.Where(x => x.SeasonNumberId == matchParams.SeasonNumberId); 
+            else
+            {
+                // temporarily removed
+                // added to automatically get latest season of tournament
+                // var firstSeason = await context.Seasons.OrderByDescending(s => s.Id).FirstOrDefaultAsync();
+                // query = query.Where(x => x.SeasonNumberId == firstSeason.Id); 
+            }
+            if (matchParams.ModeId != 0) query = query.Where(x => x.ModeId == matchParams.ModeId);
 
             query = query.OrderByDescending(s => s.SeasonNumberId).ThenByDescending(s => s.Id);
 
