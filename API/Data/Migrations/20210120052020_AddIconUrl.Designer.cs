@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210120052020_AddIconUrl")]
+    partial class AddIconUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,9 +340,6 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<string>("FlagshipIconUrl")
-                        .HasColumnType("text");
-
                     b.Property<string>("FlagshipMonster")
                         .HasColumnType("text");
 
@@ -380,8 +379,8 @@ namespace API.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("FirstIntroduced")
-                        .HasColumnType("text");
+                    b.Property<int>("FirstIntroduced")
+                        .HasColumnType("integer");
 
                     b.Property<string>("IconUrl")
                         .HasColumnType("text");

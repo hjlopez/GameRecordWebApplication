@@ -1,5 +1,6 @@
 using API.Entities;
 using API.Entities.Billiards;
+using API.Entities.MH;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +25,21 @@ namespace API.Data
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonHistory> SeasonHistories { get; set; }
         public DbSet<BilliardsMatch> BilliardsMatches { get; set; }
+        public DbSet<WeaponType> WeaponTypes { get; set; }
+        public DbSet<MHGames> MHGames { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+
+            // ----------------------------------------- MONSTER HUNTER ---------------------------------------------
+            
+
+            // ---------------------------------------- END MONSTER HUNTER ------------------------------------------
+
+
+            // ------------------------------------------- BILLIARDS ----------------------------------------
             // creating user entity
             builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
@@ -189,6 +200,8 @@ namespace API.Data
                 .HasForeignKey(u => u.TournamentId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
+            // ----------------------------------------- END BILLIARDS ----------------------------------------------
+
         }
     }
 }
