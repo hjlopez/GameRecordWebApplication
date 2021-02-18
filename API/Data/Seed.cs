@@ -10,6 +10,124 @@ namespace API.Data
     // insert admin on first run
     public class Seed
     {
+        public static async Task InsertLocale(DataContext context)
+        {
+            if (await context.Locales.AnyAsync()) return;
+
+            context.Locales.Add(new Locale{
+                Location = "Ancient Forest",
+                PhotoUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/monster-hunter-world-ancient-forest-location-information-300.jpg",
+                Description = "\tThe Ancient Forest is a new location in base Monster Hunter World. As the name suggests, it's a very vast"+
+                            " forest with a lush and leafy setting, making it a good area to harvest some resources. It has an ancient "+
+                            "tree that streches to the sky, where the King of the Skies and Queen of the Land (Rathalos and Rathian) build their nest."+
+                            "\t\nEarly game monsters a hunter may encounter includes the Anjanath, Kulu-Ya-Ku and Great Jagras. As the hunter "+
+                            "progresses through the game, strong monsters such as the Rathalos, Yian Garuga and Zinogre may spawn in this area.",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Ancient+Forest"
+            });
+            context.Locales.Add(new Locale{
+                Location = "Wildspire Waste",
+                PhotoUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/monster-hunter-world-wildspire-waste-location-information-300.jpg",
+                Description = "\tThe Wildspire Waste is a large desert with poor vegetation. Many rare monsters may show up here since some can "+
+                            "withstand the conditions. There are some hazards for a hunter in this zone, including a deep water section where it "+
+                            "will slow down hunters without a specific skill set. Another is the quicksand patch where if destroyed, can suck "+
+                            "the hunter and the monster down an underground section of the map."+
+                            "\t\nEarly game monsters a hunter may encounter includes the Barroth, Jyuratodus and Kulu-Ya-Ku. As the hunter "+
+                            "progresses through the game, strong monsters such as the Diablos, Glavenus and Rathian may spawn in this area.",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Wildspire+Waste"
+            });
+            context.Locales.Add(new Locale{
+                Location = "Coral Highlands",
+                PhotoUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/coral-highland-monster-hunter-world-wiki-mhw-locations.jpg",
+                Description = "\tThe Coral Highlands is like a coral reef site. It's vibrant, colorful and beautiful when a hunter explores the area. "+
+                            "It has a rising current where it helps the eggs of the corals to be spread upon the New World. It has high peaks, as "+
+                            "well as some mysterious peaks deep below."+
+                            "\t\nThe first monsters a hunter may encounter includes Legiana, Paolumu and Tzitzi-Ya-Ku. As the hunter "+
+                            "progresses through the game, other strong monsters such as the Kirin, Nargacuga and Rajang may spawn in this area.",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Coral+Highlands"
+            });
+            context.Locales.Add(new Locale{
+                Location = "Rotten Vale",
+                PhotoUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rotten-vale-monster-hunter-world-wiki-mhw-location.jpg",
+                Description = "The Rotten Vale a very hazardous area can drive monsters aggressive. It's basically a cemetery where the monster goes to"+
+                            "when they are about to die. As such, corpses and bones pile up. It's even said that the whole Rotten Vale is the bones of a "+
+                            "dead Dalamadur! (Basically, a whole dead monster is the Rotten Vale)"+
+                            "\t\nThe first monsters a hunter may encounter includes Great Girros, Odogaron and Radobaan. As the hunter "+
+                            "progresses through the game, other strong monsters such as the Tigrex, Acidic Glavenus and Ebony Odogaron may spawn in this area.",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Rotten+Vale"
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+            context.Locales.Add(new Locale{
+                Location = "",
+                PhotoUrl = "",
+                Description = "",
+                WikiUrl = ""
+            });
+        }
         public static async Task InsertWeaponTypes(DataContext context)
         {
             if (await context.WeaponTypes.AnyAsync()) return;
@@ -22,7 +140,8 @@ namespace API.Data
                             "Originally they had three main attacks: the sideswipe, the upswing, and the downstrike." + 
                             " The great sword has a long reach and powerful attacks. Because its sheer weight limits the speed "+
                             "of your movement and attacks, it lends itself well to hit-and-run combat tactics.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-greatsword-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-greatsword-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Great+Sword"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -33,7 +152,8 @@ namespace API.Data
                         "(In the west, it was introduced in Monster Hunter Freedom 2). The long sword is a"+
                         "A nimble weapon capable of extended combos.Charge up energy with each attack to use your powerful Spirit Blade."+
                         " It enables fast, fluid movement and combos, but it cannot be used to guard.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-longsword-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-longsword-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Long+Sword"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -42,7 +162,8 @@ namespace API.Data
                 Description = "The Sword and Shield, also known as SnS, were first introduced in Monster Hunter. "+
                             "These weapons are small and accompanied by a shield that allows the Hunter to block most attacks. "+
                             "Although they deal relatively low damage in one strike, they are very quick, and it is possible to perform fairly long combos",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-sword-shield-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-sword-shield-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Sword+&+Shield"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -51,7 +172,8 @@ namespace API.Data
                 Description = "Dual Blades, also known as DB (formally known as Dual Swords and 'DS'), are similar to Sword and Shields "+
                             "but with a stronger focus on offense (at the expense of defense). Like Sword and Shields, individual"+
                             " Dual Blade attacks cause a small amount of damage, but they are fast and flow easily into combos.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-dual-blades-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-dual-blades-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Dual+Blades"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -60,7 +182,8 @@ namespace API.Data
                 Description = "Hammers are large, heavy weapons which are capable of dealing the vast amounts of damage in a single combo."+
                                 "Their tremendous size only slightly hinders mobility, and Hunters are still able to run with them,"+
                                 " unlike with the Great Sword and Lance",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-hammer-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-hammer-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Hammer"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -70,7 +193,8 @@ namespace API.Data
                             "damage and able to K.O a monster when they connect with the head. " +
                             "The hunting horn is a blunt weapon that can bestow positive status effects on yourself and your allies."+
                             " Use it to perform melodies that can boost attack power, restore health, and grant other beneficial effects.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-hunting-horn-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-hunting-horn-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Hunting+Horn"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -79,7 +203,8 @@ namespace API.Data
                 Description = "Lances are long weapons that can strike from a distance. The Lance is always "+
                             "accompanied by a large shield which grants a powerful defense against most attacks. "+
                             "Although slow and difficult to travel with, the weapon's damage output can be considerable.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-lance-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-lance-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Lance"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -88,7 +213,8 @@ namespace API.Data
                 Description = "Gunlances, also known as GL, are long, piercing weapons with a mechanism inside which can fire an explosive round"+
                             "Its distinctive feature is its ability to shoot blank shells that "+
                             "explode in front of the hunter, dealing damage to monsters caught in the explosion.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-gunlance-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-gunlance-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Gunlance"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -98,7 +224,8 @@ namespace API.Data
                             " Axe and Sword. It is possible to transform between the two near-instantly. "+
                             "While the weapon is drawn, the running speed in Axe-mode is similar to that of a Long Sword; "+
                             "however, Sword-mode's running speed is similar to the Great Sword.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-switch-axe-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-switch-axe-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Switch+Axe"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -108,7 +235,8 @@ namespace API.Data
                             "This double-ended rod is capable of quick, fluid attacks (like the Long Sword) and "+
                             "allows the hunter to jump at any time in a pole-vaulting fashion. It also is capable "+
                             "of summoning a Kinsect and using it to attack monsters.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-insect-glaive-mhw_tree_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-insect-glaive-mhw_tree_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Insect+Glaive"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Melee",
@@ -118,7 +246,8 @@ namespace API.Data
                             "It is similar to the Switch Axe with its ability to switch between two different weapon modes. "+
                             "While in Sword Mode, hunters will be able to perform fast combo attacks with a sword and guard with a"+
                             " shield, making it very similar to the Sword and Shield class. The Axe Mode boasts superior reach and power with its strikes. ",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-charge-blade-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-charge-blade-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Charge+Blade"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Range",
@@ -127,7 +256,8 @@ namespace API.Data
                 Description = "Light Bowguns, also known simply as LBG, are ranged weapons. As the name suggests, they are "+
                             "light enough to allow Hunters to run with the weapon drawn, and they can be sheathed and unsheathed very quickly."+
                             "It utilizes a variety of ammo to do everything from rapidly shooting targets to providing support with status-changing ammo.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-light-bowgun-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-light-bowgun-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Light+Bowgun"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Range",
@@ -136,7 +266,8 @@ namespace API.Data
                 Description = "Heavy Bowguns, also known as HBG, are ranged weapons that deal considerable damage, but due to their size "+
                             "and weight, do not allow Hunters to run when drawn. Heavy Bowguns are able to use a wide range of Ammo."+
                             "It is the artillery of ranged weapons. It specializes in high damage rounds at a range.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-heavy-bowgun-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-heavy-bowgun-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Heavy+Bowgun"
             });
             context.WeaponTypes.Add(new WeaponType{
                 WeaponClass = "Range",
@@ -146,7 +277,8 @@ namespace API.Data
                             "although each individual doesn't do a great deal of damage. "+
                             "It has a variety of shots, including the long-ranged Arc Shot and the damaging Power Shot, "+
                             "and allows its user to be highly mobile as they fire off coated arrows as support.",
-                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-bow-mhw_tree.png"
+                IconUrl = "https://monsterhunterworld.wiki.fextralife.com/file/Monster-Hunter-World/rare-1-bow-mhw_tree.png",
+                WikiUrl = "https://monsterhunterworld.wiki.fextralife.com/Bow"
             });
 
             await context.SaveChangesAsync();
@@ -163,6 +295,7 @@ namespace API.Data
                 JapShortName = "MH",
                 FlagshipMonster = "Rathalos",
                 InitialYearRelease = 2004,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/c/c9/Logo-MH1.png/revision/latest/scale-to-width-down/300?cb=20140731093534",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/8c/MHW-Rathalos_Icon.png/revision/latest/scale-to-width-down/475?cb=20181008232240"
             });
@@ -174,6 +307,7 @@ namespace API.Data
                 JapShortName = "MHP",
                 FlagshipMonster = "Rathalos",
                 InitialYearRelease = 2005,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_Freedom",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/a/a5/Logo-MHF1.png/revision/latest/scale-to-width-down/200?cb=20100102083225",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/8c/MHW-Rathalos_Icon.png/revision/latest/scale-to-width-down/475?cb=20181008232240"
             });
@@ -185,6 +319,7 @@ namespace API.Data
                 JapShortName = "MHP2",
                 FlagshipMonster = "Tigrex",
                 InitialYearRelease = 2007,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_Freedom_2",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/2/29/Logo-MHF2.png/revision/latest/scale-to-width-down/150?cb=20100102083216",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/8b/MHWI-Tigrex_Icon.png/revision/latest/scale-to-width-down/61?cb=20190704205459"
             });
@@ -196,6 +331,7 @@ namespace API.Data
                 JapShortName = "MHP2G",
                 FlagshipMonster = "Nargacuga",
                 InitialYearRelease = 2008,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_Freedom_Unite",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/9/92/Logo-MHFU.png/revision/latest/scale-to-width-down/250?cb=20100101125755",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/b/ba/MHWI-Nargacuga_Icon.png/revision/latest/scale-to-width-down/62?cb=20200825145336"
             });
@@ -207,6 +343,7 @@ namespace API.Data
                 JapShortName = "MH3",
                 FlagshipMonster = "Lagiacrus",
                 InitialYearRelease = 2009,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_3",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/86/Logo-MH3_EN.png/revision/latest/scale-to-width-down/150?cb=20100130073006",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/6/69/MH10th-Lagiacrus_Icon.png/revision/latest/scale-to-width-down/132?cb=20140805045923"
             });
@@ -218,6 +355,7 @@ namespace API.Data
                 JapShortName = "MH3G",
                 FlagshipMonster = "Brachydios",
                 InitialYearRelease = 2011,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_3_Ultimate",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/8b/Logo-MH3U.png/revision/latest/scale-to-width-down/150?cb=20120914171355",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/6/66/MHWI-Brachydios_Icon.png/revision/latest/scale-to-width-down/62?cb=20190908022508"
             });
@@ -229,6 +367,7 @@ namespace API.Data
                 JapShortName = "MH4G",
                 FlagshipMonster = "Seregios",
                 InitialYearRelease = 2014,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_4_Ultimate",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/1/1f/Logo-MH4U.png/revision/latest/scale-to-width-down/150?cb=20140610183737",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/6/66/MH4U-Seregios_Icon.png/revision/latest/scale-to-width-down/62?cb=20161212031455"                
             });
@@ -240,6 +379,7 @@ namespace API.Data
                 JapShortName = "MHX",
                 FlagshipMonster = "Glavenus",
                 InitialYearRelease = 2015,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_Generations",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/e/e2/Logo-MHGen.png/revision/latest/scale-to-width-down/150?cb=20160304000212",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/87/MHWI-Glavenus_Icon.png/revision/latest/scale-to-width-down/62?cb=20190802225011"
             });
@@ -251,6 +391,7 @@ namespace API.Data
                 JapShortName = "MHXX",
                 FlagshipMonster = "Valstrax",
                 InitialYearRelease = 2017,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_Generations_Ultimate",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/3/31/Logo-MHXX.png/revision/latest/scale-to-width-down/150?cb=20161027123645",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/9/95/MHGU-Valstrax_Icon.png/revision/latest/scale-to-width-down/62?cb=20170317181136"
             });
@@ -262,6 +403,7 @@ namespace API.Data
                 JapShortName = "MHW",
                 FlagshipMonster = "Nergigante",
                 InitialYearRelease = 2018,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter:_World",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/4/42/Logo-MHW.png/revision/latest/scale-to-width-down/150?cb=20170613042934",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/4/4c/MHW-Nergigante_Icon.png/revision/latest/scale-to-width-down/61?cb=20201125145713"
             });
@@ -273,6 +415,7 @@ namespace API.Data
                 JapShortName = "MHWI",
                 FlagshipMonster = "Velkhana",
                 InitialYearRelease = 2019,
+                WikiUrl = "https://monsterhunter.fandom.com/wiki/Monster_Hunter_World:_Iceborne",
                 IconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/e/e1/Logo-MHWI.png/revision/latest?cb=20181212004914",
                 FlagshipIconUrl = "https://static.wikia.nocookie.net/monsterhunter/images/8/85/MHWI-Velkhana_Icon.png/revision/latest/scale-to-width-down/62?cb=20190802234311"
             });

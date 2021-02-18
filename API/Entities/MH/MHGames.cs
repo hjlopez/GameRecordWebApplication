@@ -12,5 +12,6 @@ namespace API.Entities.MH
         public int InitialYearRelease { get; set; }
         public string IconUrl { get; set; }
         public string FlagshipIconUrl { get; set; }
+        public string WikiUrl { get; set; }
     }
 }

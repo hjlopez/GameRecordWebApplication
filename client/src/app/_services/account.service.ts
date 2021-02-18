@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -34,6 +34,34 @@ export class AccountService {
 
           // const user1: User = JSON.parse(localStorage.getItem('user') || '{}');
         }
+      })
+    );
+  }
+
+  getMh(user: User): Observable<any>
+  {
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   Authorization: 'Bearer ' + user.token,
+    //   'Access-Control-Allow-Origin': 'https://docs.mhw-db.com/',
+    // });
+
+    // const httpOptions = {
+    //   headers,
+    //   withCredentials: false
+    // };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Access-Control-Allow-Origin': 'https://mhw-db.com',
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + user.token
+    //   }),
+    //  // withCredentials: true
+    // };
+    // return this.http.get('https://mhw-db.com/locations').pipe(
+    return this.http.get(environment.apiUrl + 'account/get-locale').pipe(
+      map((response: any) => {
+        return response;
       })
     );
   }

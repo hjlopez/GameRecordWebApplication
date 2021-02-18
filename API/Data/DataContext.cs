@@ -27,6 +27,7 @@ namespace API.Data
         public DbSet<BilliardsMatch> BilliardsMatches { get; set; }
         public DbSet<WeaponType> WeaponTypes { get; set; }
         public DbSet<MHGames> MHGames { get; set; }
+        public DbSet<Locale> Locales { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

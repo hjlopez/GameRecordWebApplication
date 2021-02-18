@@ -8,5 +8,6 @@ namespace API.Entities.MH
         public string FirstIntroduced { get; set; }
         public string Description { get; set; }
         public string IconUrl { get; set; }
+        public string WikiUrl { get; set; }
     }
 }

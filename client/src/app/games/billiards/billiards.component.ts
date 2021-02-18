@@ -78,6 +78,8 @@ export class BilliardsComponent implements OnInit {
     {
       this.maxPage = 10;
     }
+
+    this.accountService.getMh(this.currentUser).subscribe(response => console.log(response));
   }
 
   loadOtherValues(id: any): void

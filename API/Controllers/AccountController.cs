@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
@@ -114,6 +115,29 @@ namespace API.Controllers
             else dto.PhotoUrl = photo.Url;
             
             return Ok(dto);
+        }
+
+        [HttpGet("get-locale")]
+        public async Task<ActionResult> GetLocale()
+        {
+            string baseUrl = "https://mhw-db.com/locations";
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage res = await client.GetAsync(baseUrl))
+                {
+                    using (HttpContent content = res.Content)
+                    {
+                        string data = await content.ReadAsStringAsync();
+                        if (data != null)
+                        {
+                            return Ok(data);
+                        }
+
+                        return BadRequest("Error in getting data");
+                    }
+                }
+            }
         }
 
     }

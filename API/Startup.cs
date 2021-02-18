@@ -60,7 +60,7 @@ namespace API
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
                 .AllowCredentials() // for SignalR
-                .WithOrigins("https://localhost:4200"));
+                .WithOrigins("https://localhost:4200", "https://mhw-db.com"));
 
             app.UseAuthentication();
 
