@@ -29,6 +29,8 @@ export class NewGameComponent implements OnInit {
   @Input() members = [] as BilliardsTournamentMembers[];
   @Output() formEmit = new EventEmitter();
 
+  currentDay = new Date();
+
   newMatch = new FormGroup({
     winnerWins: new FormControl(1),
     loserWins: new FormControl(0)
@@ -74,9 +76,16 @@ export class NewGameComponent implements OnInit {
       tournamentId: ['', Validators.required],
       winnerWins: [1, Validators.minLength(1)],
       loserWins: [0, Validators.minLength(0)],
-      totalGamesPlayed: [1, Validators.minLength(0)]
+      totalGamesPlayed: [1, Validators.minLength(0)],
+      datePlayed: [new Date()]
     });
 
+  }
+
+  changeDate(value: Date): void
+  {
+    this.newMatch.controls.datePlayed.setValue(value);
+    // console.log(this.newMatch.get('datePlayed')?.value);
   }
 
   change(isLast: boolean): void
@@ -89,7 +98,7 @@ export class NewGameComponent implements OnInit {
     // validations
     if (this.newMatch.get('winUserId')?.value === null || this.newMatch.get('loseUserId')?.value === null
         || this.newMatch.get('typeId')?.value === '' || this.newMatch.get('modeId')?.value === ''
-        || this.newMatch.get('seasonNumberId')?.value === '')
+        || this.newMatch.get('seasonNumberId')?.value === '' || this.newMatch.get('datePlayed')?.value === null)
     {
       this.toastr.error('All fields are required.');
       return;
@@ -121,7 +130,9 @@ export class NewGameComponent implements OnInit {
         this.setRank(this.newMatch.get('loseUserId')?.value, Number(this.modeList.find(x => x.modeId === modeIndex)?.highestRank) + 1);
       }
     }
-    // check if mode is final, if final user must enter their password to confirm
+
+    // console.log(this.newMatch.value);
+    // check if mode is final, if final user must enter their password to confirm/*
     else if (this.modeList.find(x => x.modeId === modeIndex)?.isLast)
     {
       const config: any = {

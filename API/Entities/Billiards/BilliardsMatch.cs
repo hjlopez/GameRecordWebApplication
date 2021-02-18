@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Entities.Billiards
@@ -22,6 +23,7 @@ namespace API.Entities.Billiards
         public int WinnerWins { get; set; }
         public int LoserWins { get; set; }
         public int TotalGamesPlayed { get; set; }
+        public DateTime DatePlayed { get; set; }
 
 
     }

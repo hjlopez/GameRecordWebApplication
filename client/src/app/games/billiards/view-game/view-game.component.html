@@ -10,9 +10,23 @@
         <ng-container *ngIf="name !== 'Delete Match?' && match">
             
             <div class="container match-details" style="text-align: center">
+                
+                <!-- date played, if no date display "Pre-Covid" -->
+                <div class="row">
+                    <div class="col-sm" ></div>
+                    <div class="col-sm" *ngIf="!preCovid">
+                        <p style="font-weight: bold; color: red;">{{match?.datePlayed | date}}</p>
+                    </div>
+                    <div class="col-sm" *ngIf="preCovid">
+                        <p style="font-weight: bold; color: red;">Pre-Covid</p>
+                    </div>
+                    <div class="col-sm" ></div>
+                </div>
+
+                <!-- head to head -->
                 <div class="row" >
                     <div class="col-sm" ></div>
-                    <div class="col-sm" >Head-to-Head Matchup</div>
+                    <div class="col-sm" style="font-weight: bold;">Head-to-Head Matchup</div>
                     <div class="col-sm" ></div>
                 </div>
                 

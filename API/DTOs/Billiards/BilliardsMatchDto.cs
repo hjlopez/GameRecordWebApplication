@@ -1,3 +1,5 @@
+using System;
+
 namespace API.DTOs.Billiards
 {
     public class BilliardsMatchDto
@@ -14,5 +16,6 @@ namespace API.DTOs.Billiards
         public int WinnerWins { get; set; }
         public int LoserWins { get; set; }
         public int TotalGamesPlayed { get; set; }
+        public DateTime DatePlayed { get; set; }
     }
 }

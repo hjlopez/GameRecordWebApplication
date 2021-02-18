@@ -161,26 +161,6 @@ namespace API.Controllers.Billiards
             if (await unitOfWork.Complete())
             {
                 return NoContent();
-                // update season if last mode id of tournament is inserted
-                // if (billiardsMatchDto.ModeId == lastMode.ModeId) 
-                // {
-                //     // if last, check if all of the type for the season is now inserted in match
-                //     if (await unitOfWork.BilliardsGameRepository.CheckIfSeasonIsDone(billiardsMatchDto.TournamentId,
-                //             billiardsMatchDto.SeasonNumberId, lastMode.ModeId))
-                //     {
-                //         // save changes
-                //         if (await unitOfWork.Complete()) return NoContent(); 
-                //     }
-                //     else
-                //     {
-                //         return NoContent();
-                //     }
-                // }
-                // else
-                // {
-                //     return NoContent();
-                // }
-                        
             } 
 
             return BadRequest("Insert failed.");

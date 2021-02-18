@@ -48,6 +48,8 @@ import { TournamentStatsComponent } from './games/billiards/tournament-stats/tou
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -98,13 +100,15 @@ import { GeneralSettingsComponent } from './general-settings/general-settings.co
     }),
     ModalModule.forRoot(),
     TabsModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
-    {provide: UrlSerializer, useClass: LowerCaseUrlSerializer}
+    {provide: UrlSerializer, useClass: LowerCaseUrlSerializer},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
