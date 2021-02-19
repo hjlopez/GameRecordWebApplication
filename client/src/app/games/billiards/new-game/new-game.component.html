@@ -9,6 +9,8 @@
 
             <!-- winner and loser -->
             <div class="controls">
+                
+
                 <div class="data">
                     <span class="label-info mr-3">Winner</span>
 
@@ -104,6 +106,24 @@
                         value="{{newMatch.get('winnerWins')?.value 
                         + newMatch.get('loserWins')?.value}}">
                 </div>
+            </div>
+
+            <!-- date played -->
+            <div class="controls">
+                <div class="data">
+                    <span class="label-info w-200" >Date Played: </span>
+                    <input type="text"
+                        placeholder="Date Played"
+                        formGroupName="datePlayed" 
+                        name="datePlayed"
+                        class="form-control"
+                        autocomplete="off"
+                        (bsValueChange)="changeDate($event)"
+                        [bsConfig]="{ dateInputFormat: 'MM/DD' }"
+                        bsDatepicker>
+                </div>
+                 
+                
             </div>
             
         </div>

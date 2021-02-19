@@ -12,4 +12,5 @@ export interface BilliardsMatch
     winnerWins: number;
     loserWins: number;
     totalGamesPlayed: number;
+    datePlayed: Date;
 }

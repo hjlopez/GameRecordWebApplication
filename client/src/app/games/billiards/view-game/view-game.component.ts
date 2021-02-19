@@ -9,6 +9,7 @@ import { UserWins } from 'src/app/_models/billiards/UserWins';
 import { AccountService } from 'src/app/_services/account.service';
 import { BilliardsMatchService } from 'src/app/_services/billiards-match.service';
 import { BilliardsSeasonService } from 'src/app/_services/billiards-season.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-view-game',
@@ -31,10 +32,12 @@ export class ViewGameComponent implements OnInit {
   winSeason = 0;
   loseSeason = 0;
 
+  preCovid = false;
+
   @Input() confirm = new EventEmitter();
 
   constructor(public bsModalRef: BsModalRef, private matchService: BilliardsMatchService, private accountService: AccountService,
-              private seasonService: BilliardsSeasonService) { }
+              private seasonService: BilliardsSeasonService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.matchId = this.match.id;
@@ -45,6 +48,11 @@ export class ViewGameComponent implements OnInit {
 
       this.getSeasonMatchup(this.match.winUserId, this.match.loseUserId, 'w');
       this.getSeasonMatchup(this.match.loseUserId, this.match.winUserId, 'l');
+
+      if (this.datePipe.transform(this.match.datePlayed, 'yyyy-MM-dd')?.toString() === '0001-01-01')
+      {
+        this.preCovid = true;
+      }
     }
   }
 
