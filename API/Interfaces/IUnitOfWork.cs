@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using API.Interfaces.Billiards;
+using API.Interfaces.PBA;
 
 namespace API.Interfaces
 {
@@ -15,6 +16,8 @@ namespace API.Interfaces
         IBilliardsGameRepository BilliardsGameRepository {get;}
         IUserWins UserWins {get;}
         ISeasonHistoryRepository SeasonHistoryRepository {get;}
+        ITeamRepository TeamRepository {get;}
+        IScheduleRepository ScheduleRepository {get;}
         Task<bool> Complete();
         bool HasChanges();
     }

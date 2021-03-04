@@ -1,0 +1,42 @@
+
+
+<div class="pba-settings ml-2 mr-2">
+    <p style="font-weight: bold;">Schedule Settings</p>
+    <button type="button" class="btn btn-primary mb-2">Add Schedule</button>
+
+    <!-- SCHEDULE GROUP -->
+    <select class="form-control mb-5" name="schedGroup" style="margin: auto; width: 50%;"
+        #schedDropDown
+        (change)="loadSchedule(schedDropDown.value)">
+        <option [value]=0>
+            ------------------------------------
+        </option>
+        <option *ngFor="let s of schedGroup" [value]="s?.id">
+            {{s?.groupName}}
+        </option>
+    </select>
+
+    <!-- DIV FOR SCHEDULE -->
+    <div class="collapseBasic" >
+        <div class="well well-sm card card-block card-header" style="overflow-x: auto;">
+            <table class="table" style="text-align: center;">
+                <tr>
+                    <th>Game Number</th>
+                    <th>Team A</th>
+                    <th>Team B</th>
+                </tr>
+
+                <tr *ngFor="let s of sched">
+                    <td>{{s?.id}}</td>
+                    <td>{{s?.teamA}}</td>
+                    <td>{{s?.teamB}}</td>
+                    <!-- <td>1</td>
+                    <td>Barangay Ginebra San Miguel</td>
+                    <td>Magnolia Hotshots Pambansang Manok</td> -->
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+

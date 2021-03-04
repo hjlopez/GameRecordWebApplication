@@ -1,10 +1,12 @@
 using System;
 using API.Data;
 using API.Data.Billiards;
+using API.Data.PBA;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using API.Interfaces.Billiards;
+using API.Interfaces.PBA;
 using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +35,8 @@ namespace API.Extensions
             services.AddScoped<IBilliardsModeRepository, BilliardsModeRepository>();
             services.AddScoped<IBilliardsGameRepository, BilliardsGameRepository>();
             services.AddScoped<ISeasonHistoryRepository, SeasonHistoryRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
             services.AddScoped<IUserWins, UserWins>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options => 

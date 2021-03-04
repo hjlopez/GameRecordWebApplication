@@ -10,24 +10,30 @@
         </a>
         <div class="dropdown-menu" *dropdownMenu >
           <ng-container *ngFor="let game of gameList">
-            <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" 
+            <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async) && game.name === 'Billiards'"  
               routerLink={{game.loggedOutLink}} routerLinkActive="active" 
-              [class.disabled]="game.name === 'Billiards' ? false : true"
-            >
-            {{game.name}}
-          </a>
+              [class.disabled]="game.name === 'Billiards' ? false : true">{{game.name}}</a>
           </ng-container>
           
+          <!-- add routerLinkActiveOptions -->
           <ng-container *ngFor="let game of gameList">
-            <a class="dropdown-item" *ngIf="(accountService.currentUser$ | async)" 
+            <a class="dropdown-item" *ngIf="(accountService.currentUser$ | async) && game.name === 'Billiards'" 
             routerLink={{game.loggedInLink}} routerLinkActive="active" 
             [routerLinkActiveOptions]="{exact: true}" 
             [class.disabled]="game.name === 'Billiards' ? false : true" >{{game.name}}</a>
           </ng-container>
 
+          <!-- pba dice game -->
+          <a class="dropdown-item" *ngIf="(accountService.currentUser$ | async)" routerLink="user/pba" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Solo Game</a>
+
+          <!-- <a class="dropdown-item" *ngIf="!(accountService.currentUser$ | async)" routerLink="user/pba" routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}">Solo Game</a> -->
+
         </div>
       </li>
 
+      <!-- admin nav -->
       <li class="nav-item dropdown" *ngIf="(accountService.currentUser$ | async) && isAdmin" dropdown>
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"  dropdownToggle>
           Settings
@@ -38,6 +44,7 @@
             <a class="dropdown-item" routerLink="{{game.loggedInLink}}/settings"
               routerLinkActive="active">{{game.name}}</a>
           </ng-container>
+          <a class="dropdown-item" routerLink="user/pba/settings" routerLinkActive="active">Solo Game</a>
         </div>
         
       </li>

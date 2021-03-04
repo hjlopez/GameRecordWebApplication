@@ -14,6 +14,7 @@ import { AdminGuard } from './_guards/admin.guard';
 import { BilliardsSettingsComponent } from './games/billiards/settings/billiards-settings/billiards-settings.component';
 import { NewGameComponent } from './games/billiards/new-game/new-game.component';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
+import { PbaSettingsComponent } from './games/pba/pba-settings/pba-settings.component';
 
 // angular follows first match wins policy
 const routes: Routes = [
@@ -30,6 +31,8 @@ const routes: Routes = [
       canActivate: [AuthGuard], pathMatch: 'full'},
   {path: 'user/photo-edit', component: PhotoEditComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard], pathMatch: 'full'},
   {path: 'user/user-management', component: UserManagementComponent, runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard, AdminGuard] , pathMatch: 'full'},
+  {path: 'user/pba/settings', component: PbaSettingsComponent, runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard, AdminGuard] , pathMatch: 'full'},
   {path: 'user/edit', component: UserEditComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard], pathMatch: 'full'},
   {path: 'user/changepassword', component: ChangePasswordComponent, runGuardsAndResolvers: 'always', canActivate: [AuthGuard], pathMatch: 'full'},

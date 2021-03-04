@@ -2,8 +2,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Billiards;
+using API.DTOs.PBA;
 using API.Entities;
 using API.Entities.Billiards;
+using API.Entities.PBA;
 using AutoMapper;
 
 namespace API.Helpers
@@ -42,6 +44,10 @@ namespace API.Helpers
             CreateMap<TournamentMembers, BilliardsTournamentDto>();
             CreateMap<BilliardsMatchDto, BilliardsMatch>();
             CreateMap<BilliardsMatch, BilliardsMatchDto>();
+            CreateMap<Team, TeamDto>();
+            CreateMap<TeamDto, Team>();
+            CreateMap<Schedule, ScheduleDto>();
+            CreateMap<ScheduleDto, Schedule>();
         }
 
         

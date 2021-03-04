@@ -32,6 +32,7 @@ namespace API
                 await context.Database.MigrateAsync();
                 await Seed.SeedAdmins(userManager, roleManager);
                 await Seed.AddGamesAndTypes(context);
+                await Seed.SeedPBA(context);
 
             }
             catch (Exception ex)

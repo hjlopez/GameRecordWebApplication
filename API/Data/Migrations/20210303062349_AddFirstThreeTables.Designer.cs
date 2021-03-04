@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210303062349_AddFirstThreeTables")]
+    partial class AddFirstThreeTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,8 +343,8 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<string>("ConferenceName")
-                        .HasColumnType("text");
+                    b.Property<int>("ConferenceName")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -356,9 +358,6 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("TeamA")
                         .HasColumnType("integer");
 
@@ -367,30 +366,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
-
                     b.ToTable("Schedules");
-                });
-
-            modelBuilder.Entity("API.Entities.PBA.ScheduleGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupName")
-                        .IsUnique();
-
-                    b.ToTable("ScheduleGroups");
                 });
 
             modelBuilder.Entity("API.Entities.PBA.Team", b =>
@@ -755,17 +731,6 @@ namespace API.Data.Migrations
                     b.Navigation("Games");
                 });
 
-            modelBuilder.Entity("API.Entities.PBA.Schedule", b =>
-                {
-                    b.HasOne("API.Entities.PBA.ScheduleGroup", "ScheduleGroup")
-                        .WithMany("Schedules")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ScheduleGroup");
-                });
-
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
@@ -913,11 +878,6 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Games", b =>
                 {
                     b.Navigation("GameTypes");
-                });
-
-            modelBuilder.Entity("API.Entities.PBA.ScheduleGroup", b =>
-                {
-                    b.Navigation("Schedules");
                 });
 
             modelBuilder.Entity("API.Entities.Tournament", b =>

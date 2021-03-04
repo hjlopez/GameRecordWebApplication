@@ -1,5 +1,6 @@
 using API.Entities;
 using API.Entities.Billiards;
+using API.Entities.PBA;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,10 @@ namespace API.Data
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonHistory> SeasonHistories { get; set; }
         public DbSet<BilliardsMatch> BilliardsMatches { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Conference> Conferences { get; set; }
+        public DbSet<ScheduleGroup> ScheduleGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -189,6 +194,17 @@ namespace API.Data
                 .HasForeignKey(u => u.TournamentId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
+
+
+            builder.Entity<Schedule>()
+                .HasOne(x => x.ScheduleGroup)
+                .WithMany(x => x.Schedules)
+                .HasForeignKey(x => x.GroupId)
+                .OnDelete(DeleteBehavior.Restrict)
+                .IsRequired();
+            builder.Entity<ScheduleGroup>()
+                .HasIndex(s => s.GroupName)
+                .IsUnique();
         }
     }
 }

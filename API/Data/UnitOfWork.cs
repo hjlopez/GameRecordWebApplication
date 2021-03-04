@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using API.Data.Billiards;
+using API.Data.PBA;
 using API.Interfaces;
 using API.Interfaces.Billiards;
+using API.Interfaces.PBA;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
@@ -36,6 +38,10 @@ namespace API.Data
         public IUserWins UserWins => new UserWins(context, mapper);
 
         public ISeasonHistoryRepository SeasonHistoryRepository => new SeasonHistoryRepository(context, mapper);
+
+        public ITeamRepository TeamRepository => new TeamRepository(context, mapper);
+
+        public IScheduleRepository ScheduleRepository => new ScheduleRepository(context, mapper);
 
         public async Task<bool> Complete()
         {

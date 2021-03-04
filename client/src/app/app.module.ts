@@ -50,6 +50,8 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { GeneralSettingsComponent } from './general-settings/general-settings.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePipe } from '@angular/common';
+import { PbaComponent } from './games/pba/pba.component';
+import { PbaSettingsComponent } from './games/pba/pba-settings/pba-settings.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { DatePipe } from '@angular/common';
     ConfirmModalComponent,
     IndividualStatsComponent,
     TournamentStatsComponent,
-    GeneralSettingsComponent
+    GeneralSettingsComponent,
+    PbaComponent,
+    PbaSettingsComponent
   ],
   imports: [
     BrowserModule,
